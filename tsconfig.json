@@ -1,8 +1,6 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
-    "sourceRoot": "src",
-    "outDir": "lib",
     "sourceMap": true,
     "declaration": true,
     "moduleResolution": "node",
