@@ -101,7 +101,7 @@ pipeline {
                         "kangaroo-angular-oauth2": {
                             sh("""
                                 cd kangaroo-angular-oauth2
-                                yarn test --single-run --reporters=coverage-istanbul,junit,spec
+                                yarn test --single-run
                             """)
                         },
                         "kangaroo-authz-ui": {
@@ -113,7 +113,7 @@ pipeline {
                         "kangaroo-jwt-util": {
                             sh("""
                                 cd kangaroo-jwt-util
-                                yarn test --single-run --reporters=coverage-istanbul,junit,spec
+                                yarn test --single-run
                             """)
                         }
                 )
@@ -145,15 +145,18 @@ pipeline {
 
             junit '*/reports/junit/*.xml'
 
-            step([
-                    $class             : 'CoberturaPublisher',
-                    autoUpdateHealth   : false,
-                    autoUpdateStability: false,
-                    coberturaReportFile: '*/reports/cobertura.xml',
-                    maxNumberOfBuilds  : 0,
-                    onlyStable         : false,
-                    sourceEncoding     : 'ASCII',
-                    zoomCoverageChart  : false
+            cobertura([
+                    classCoverageTargets      : '100, 0, 0',
+                    coberturaReportFile       : '**/reports/**/cobertura.xml',
+                    conditionalCoverageTargets: '100, 0, 0',
+                    fileCoverageTargets       : '100, 0, 0',
+                    lineCoverageTargets       : '100, 0, 0',
+                    maxNumberOfBuilds         : 0,
+                    methodCoverageTargets     : '100, 0, 0',
+                    onlyStable                : false,
+                    packageCoverageTargets    : '100, 0, 0',
+                    sourceEncoding            : 'ASCII',
+                    zoomCoverageChart         : false
             ])
 
             /**
