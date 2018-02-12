@@ -44,19 +44,19 @@ pipeline {
                         },
                         "kangaroo-angular-oauth2": {
                             sh("""
-                                cd kangaroo-angular-oauth2
+                                cd @kangaroo/angular-oauth2
                                 yarn --silent lint --format checkstyle --force > ./reports/checkstyle-result.xml
                             """)
                         },
                         "kangaroo-authz-ui": {
                             sh("""
-                                cd kangaroo-authz-ui
+                                cd @kangaroo/authz-ui
                                 yarn --silent lint --format checkstyle --force > ./reports/checkstyle-result.xml
                             """)
                         },
                         "kangaroo-jwt-util": {
                             sh("""
-                                cd kangaroo-jwt-util
+                                cd @kangaroo/jwt
                                 yarn --silent lint --format checkstyle --force > ./reports/checkstyle-result.xml
                             """)
                         }
@@ -72,19 +72,19 @@ pipeline {
                 parallel(
                         "kangaroo-angular-oauth2": {
                             sh("""
-                                cd kangaroo-angular-oauth2
+                                cd @kangaroo/angular-oauth2
                                 yarn nsp
                             """)
                         },
                         "kangaroo-authz-ui": {
                             sh("""
-                                cd kangaroo-authz-ui
+                                cd @kangaroo/authz-ui
                                 yarn nsp
                             """)
                         },
                         "kangaroo-jwt-util": {
                             sh("""
-                                cd kangaroo-jwt-util
+                                cd @kangaroo/jwt
                                 yarn nsp
                             """)
                         }
@@ -100,19 +100,19 @@ pipeline {
                 parallel(
                         "kangaroo-angular-oauth2": {
                             sh("""
-                                cd kangaroo-angular-oauth2
+                                cd @kangaroo/angular-oauth2
                                 yarn test --single-run
                             """)
                         },
                         "kangaroo-authz-ui": {
                             sh("""
-                                cd kangaroo-authz-ui
+                                cd @kangaroo/authz-ui
                                 yarn test -w false --progress=false --code-coverage --reporters=coverage-istanbul,junit,spec
                             """)
                         },
                         "kangaroo-jwt-util": {
                             sh("""
-                                cd kangaroo-jwt-util
+                                cd @kangaroo/jwt
                                 yarn test --single-run
                             """)
                         }
@@ -135,7 +135,7 @@ pipeline {
                     failedTotalLow     : '0',
                     failedTotalNormal  : '0',
                     healthy            : '100',
-                    pattern            : '*/reports/checkstyle-result.xml',
+                    pattern            : '**/reports/checkstyle-result.xml',
                     unHealthy          : '99',
                     unstableTotalAll   : '0',
                     unstableTotalHigh  : '0',
@@ -143,7 +143,7 @@ pipeline {
                     unstableTotalNormal: '0'
             ])
 
-            junit '*/reports/junit/*.xml'
+            junit '**/reports/junit/*.xml'
 
             cobertura([
                     classCoverageTargets      : '100, 0, 0',

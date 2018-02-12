@@ -15,15 +15,17 @@
  * limitations under the License.
  */
 
-const commonConfig = require('../common/karma.conf');
+const commonConfig = require('../../common/karma.conf');
 
 module.exports = function (config) {
+
     config.set(commonConfig);
+
     config.set({
-        frameworks: ['jasmine', 'karma-typescript'],
+        basePath: '',
+        frameworks: ['jasmine'],
         plugins: [
             require('karma-jasmine'),
-            require('karma-typescript'),
 
             require('karma-chrome-launcher'),
             require('karma-webdriver-launcher'),
@@ -31,12 +33,8 @@ module.exports = function (config) {
 
             require('karma-junit-reporter'),
             require('karma-coverage-istanbul-reporter'),
-            require('karma-spec-reporter'),
+            require('karma-spec-reporter')
         ],
-        files: ['src/**/*.ts'],
-        preprocessors: {
-            'src/**/*.ts': ['karma-typescript'],
-        },
-        reporters: ['spec', 'junit', 'karma-typescript']
+        files: ['src/**/*.spec.ts']
     });
 };
