@@ -1,5 +1,5 @@
 {
-  "name": "@kangaroo/jwt-util",
+  "name": "@kangaroo/jwt",
   "version": "1.0.0",
   "description": "A Javascript-Web-Token decoder, written in Typescript",
   "license": "Apache-2.0",

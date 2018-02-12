@@ -33,9 +33,9 @@
     "lint": "git log -1 --pretty=%B | commitlint"
   },
   "workspaces": [
-    "kangaroo-jwt-util",
-    "kangaroo-angular-oauth2",
-    "kangaroo-authz-ui"
+    "@kangaroo/jwt",
+    "@kangaroo/angular-oauth2",
+    "@kangaroo/authz-ui"
   ],
   "config": {
     "commitizen": {
