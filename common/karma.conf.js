@@ -72,6 +72,22 @@ module.exports = {
             }
         }
     },
+    karmaTypescriptConfig: {
+        coverageOptions: {
+            exclude: /spec\.ts$/i
+        },
+        reports: {
+            html: {
+                directory: '.',
+                subdirectory: 'reports'
+            },
+            cobertura: {
+                directory: 'reports/cobertura',
+                filename: 'cobertura.xml'
+            },
+            "text-summary": ""
+        }
+    },
     junitReporter: {
         outputDir: './reports/junit'
     },

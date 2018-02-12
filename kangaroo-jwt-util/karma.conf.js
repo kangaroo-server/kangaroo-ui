@@ -20,9 +20,10 @@ const commonConfig = require('../common/karma.conf');
 module.exports = function (config) {
     config.set(commonConfig);
     config.set({
-        frameworks: ['jasmine'],
+        frameworks: ['jasmine', 'karma-typescript'],
         plugins: [
             require('karma-jasmine'),
+            require('karma-typescript'),
 
             require('karma-chrome-launcher'),
             require('karma-webdriver-launcher'),
@@ -32,6 +33,10 @@ module.exports = function (config) {
             require('karma-coverage-istanbul-reporter'),
             require('karma-spec-reporter'),
         ],
-        files: ['src/**/*.spec.ts']
+        files: ['src/**/*.ts'],
+        preprocessors: {
+            'src/**/*.ts': ['karma-typescript'],
+        },
+        reporters: ['spec', 'junit', 'karma-typescript']
     });
 };
