@@ -1,15 +1,19 @@
 {
-  "name": "@kangaroo/angular-oauth2",
+  "$schema": "../../node_modules/ng-packagr/package.schema.json",
+  "name": "@kangaroo/angular-logger",
   "version": "1.0.0",
-  "description": "OAuth2 API Injectees for Angular2+",
+  "description": "A logging façade for Angular.",
   "license": "Apache-2.0",
   "author": {
     "name": "Michael Krotscheck",
     "email": "krotscheck@gmail.com",
     "url": "https://krotscheck.net/"
   },
-  "typings": "lib/index.d.ts",
-  "main": "lib/index.js",
+  "typings": "lib/kangaroo-angular-logger.d.ts",
+  "main": "lib/bundles/kangaroo-angular-logger.umd.js",
+  "module": "lib/esm5/kangaroo-angular-logger.js",
+  "es2015": "lib/esm2015/kangaroo-angular-logger.js",
+  "metadata": "lib/kangaroo-angular-logger.metadata.json",
   "scripts": {
     "test": "ng test --code-coverage",
     "lint": "ng lint",

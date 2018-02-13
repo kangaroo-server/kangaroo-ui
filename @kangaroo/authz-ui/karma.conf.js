@@ -36,9 +36,6 @@ module.exports = function (config) {
       require('karma-spec-reporter'),
 
       require('@angular/cli/plugins/karma')
-    ],
-    angularCli: {
-      environment: 'dev'
-    }
+    ]
   });
 };

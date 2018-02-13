@@ -33,7 +33,7 @@ export namespace TextUtil {
      * convert it back to a regular DOMstring with appropriate character escaping.
      *
      * @param encoded The encoded string to decode.
-     * @returns {string} The decoded string.
+     * @returns The decoded string.
      * @see https://developer.mozilla.org/en-US/docs/Web/API/WindowBase64/Base64_encoding_and_decoding
      */
     export function a2bUnicode(encoded) {
@@ -47,7 +47,7 @@ export namespace TextUtil {
      * any 16-byte characters.
      *
      * @param original The original string to decode.
-     * @returns {string} The encoded string.
+     * @returns The encoded string.
      * @see https://developer.mozilla.org/en-US/docs/Web/API/WindowBase64/Base64_encoding_and_decoding
      */
     export function b2aUnicode(original) {

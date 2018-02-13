@@ -61,7 +61,7 @@ module.exports = {
      */
     coverageIstanbulReporter: {
         dir: './reports',
-        reports: ['html', 'cobertura'],
+        reports: ['html', 'cobertura', 'text-summary'],
         fixWebpackSourcePaths: true,
         'report-config': {
             html: {
@@ -99,5 +99,8 @@ module.exports = {
         suppressSkipped: true,
         showSpecTiming: true
     },
-    reporters: ['spec', 'junit', 'coverage-istanbul']
+    reporters: ['spec', 'junit', 'coverage-istanbul'],
+    angularCli: {
+        environment: 'dev'
+    }
 };

@@ -16,18 +16,29 @@ pipeline {
                 sh 'env'
                 sh 'node --version'
                 sh 'yarn --version'
-                sh 'lerna --version'
                 sh 'chromium-browser --version'
             }
         }
 
         /**
-         * Build dependencies.
+         * Install && Link.
          */
         stage('Bootstrap') {
             steps {
-                sh('lerna bootstrap')
-                sh('lerna run build')
+                // This does a global install of all dependencies.
+                sh('yarn install')
+            }
+        }
+
+        /**
+         * Build the projects in order.
+         */
+        stage('Build') {
+            steps {
+                sh('yarn workspace @kangaroo/jwt build')
+                sh('yarn workspace @kangaroo/angular-oauth2 build')
+                sh('yarn workspace @kangaroo/angular-logger build')
+                sh('yarn workspace @kangaroo/authz-ui build')
             }
         }
 
@@ -38,27 +49,19 @@ pipeline {
             steps {
                 parallel(
                         "root": {
-                            sh("""
-                                yarn run lint
-                            """)
+                            sh('yarn run lint')
                         },
-                        "kangaroo-angular-oauth2": {
-                            sh("""
-                                cd @kangaroo/angular-oauth2
-                                yarn --silent lint --format checkstyle --force > ./reports/checkstyle-result.xml
-                            """)
+                        "@kangaroo/angular-logger": {
+                            sh('yarn --silent workspace @kangaroo/angular-logger -- --silent lint --format checkstyle --force > @kangaroo/angular-logger/reports/checkstyle-result.xml')
                         },
-                        "kangaroo-authz-ui": {
-                            sh("""
-                                cd @kangaroo/authz-ui
-                                yarn --silent lint --format checkstyle --force > ./reports/checkstyle-result.xml
-                            """)
+                        "@kangaroo/angular-oauth2": {
+                            sh('yarn --silent workspace @kangaroo/angular-oauth2 -- --silent lint --format checkstyle --force > @kangaroo/angular-oauth2/reports/checkstyle-result.xml')
                         },
-                        "kangaroo-jwt-util": {
-                            sh("""
-                                cd @kangaroo/jwt
-                                yarn --silent lint --format checkstyle --force > ./reports/checkstyle-result.xml
-                            """)
+                        "@kangaroo/authz-ui": {
+                            sh('yarn --silent workspace @kangaroo/authz-ui -- --silent lint --format checkstyle --force > @kangaroo/authz-ui/reports/checkstyle-result.xml')
+                        },
+                        "@kangaroo/jwt": {
+                            sh('yarn --silent workspace @kangaroo/jwt -- --silent lint --format checkstyle --force > @kangaroo/jwt/reports/checkstyle-result.xml')
                         }
                 )
             }
@@ -70,51 +73,70 @@ pipeline {
         stage('nsp') {
             steps {
                 parallel(
-                        "kangaroo-angular-oauth2": {
-                            sh("""
-                                cd @kangaroo/angular-oauth2
-                                yarn nsp
-                            """)
+                        "@kangaroo/angular-logger": {
+                            sh('yarn workspace @kangaroo/angular-logger nsp')
                         },
-                        "kangaroo-authz-ui": {
-                            sh("""
-                                cd @kangaroo/authz-ui
-                                yarn nsp
-                            """)
+                        "@kangaroo/angular-oauth2": {
+                            sh('yarn workspace @kangaroo/angular-oauth2 nsp')
                         },
-                        "kangaroo-jwt-util": {
-                            sh("""
-                                cd @kangaroo/jwt
-                                yarn nsp
-                            """)
+                        "@kangaroo/authz-ui": {
+                            sh('yarn workspace @kangaroo/authz-ui nsp')
+                        },
+                        "@kangaroo/jwt": {
+                            sh('yarn workspace @kangaroo/jwt nsp')
                         }
                 )
             }
         }
 
         /**
-         * Test.
+         * Unit.
          */
-        stage('Test') {
+        stage('Unit') {
             steps {
                 parallel(
-                        "kangaroo-angular-oauth2": {
-                            sh("""
-                                cd @kangaroo/angular-oauth2
-                                yarn test --single-run
-                            """)
+                        "@kangaroo/angular-logger": {
+                            sh('yarn workspace @kangaroo/angular-logger test -- -w false')
                         },
-                        "kangaroo-authz-ui": {
-                            sh("""
-                                cd @kangaroo/authz-ui
-                                yarn test -w false --progress=false --code-coverage --reporters=coverage-istanbul,junit,spec
-                            """)
+                        "@kangaroo/angular-oauth2": {
+                            sh('yarn workspace @kangaroo/angular-oauth2 test -- --single-run')
                         },
-                        "kangaroo-jwt-util": {
-                            sh("""
-                                cd @kangaroo/jwt
-                                yarn test --single-run
-                            """)
+                        "@kangaroo/authz-ui": {
+                            sh('yarn workspace @kangaroo/authz-ui test -- -w false')
+                        },
+                        "@kangaroo/jwt": {
+                            sh('yarn workspace @kangaroo/jwt test -- --single-run')
+                        }
+                )
+            }
+        }
+
+        /**
+         * E2E.
+         */
+        stage('E2E') {
+            steps {
+                sh('yarn workspace @kangaroo/authz-ui e2e')
+            }
+        }
+
+        /**
+         * Pack.
+         */
+        stage('Pack') {
+            steps {
+                parallel(
+                        "@kangaroo/angular-logger": {
+                            sh('yarn workspace @kangaroo/angular-logger pack')
+                        },
+                        "@kangaroo/angular-oauth2": {
+                            sh('yarn workspace @kangaroo/angular-oauth2 pack')
+                        },
+                        "@kangaroo/authz-ui": {
+                            sh('yarn workspace @kangaroo/authz-ui pack')
+                        },
+                        "@kangaroo/jwt": {
+                            sh('yarn workspace @kangaroo/jwt pack')
                         }
                 )
             }
@@ -153,7 +175,7 @@ pipeline {
                     lineCoverageTargets       : '100, 0, 0',
                     maxNumberOfBuilds         : 0,
                     methodCoverageTargets     : '100, 0, 0',
-                    onlyStable                : false,
+                    onlyStable                : true,
                     packageCoverageTargets    : '100, 0, 0',
                     sourceEncoding            : 'ASCII',
                     zoomCoverageChart         : false
