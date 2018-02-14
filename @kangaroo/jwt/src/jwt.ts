@@ -27,8 +27,6 @@ export namespace JWT {
 
     /**
      * Regular expression, matching three sequential base64 strings separated by periods.
-     *
-     * @type {RegExp}
      */
     const jwtRegex = new RegExp(`(${base64Pattern})\.(${base64Pattern})\.(${base64Pattern})`);
 
@@ -36,8 +34,8 @@ export namespace JWT {
      * Given a JWT, encode it, returning the string representation
      * of the token.
      *
-     * @param {JsonWebToken} token A JWT to encode.
-     * @returns {string} The token as an encoded string.
+     * @param token A JWT to encode.
+     * @returns The token as an encoded string.
      */
     export function stringify(token: JsonWebToken): string {
         const header = TextUtil.b2aUnicode(JSON.stringify(token.header));
@@ -51,8 +49,8 @@ export namespace JWT {
      * Given the string representation of a JWT, return the fully decoded
      * version. This method does not validate the signature.
      *
-     * @param {string} token The token to decode.
-     * @returns {JsonWebToken} The decoded token.
+     * @param token The token to decode.
+     * @returns The decoded token.
      */
     export function parse(token: string): JsonWebToken {
         const parts = token && token.match(jwtRegex) || null;

@@ -1,0 +1,8 @@
+reports
+node_modules
+src
+e2e
+karma.conf.js
+.angular-cli.json
+tslint.json
+yarn-error.log

@@ -1,27 +1,56 @@
 {
   "name": "@kangaroo/jwt",
   "version": "1.0.0",
-  "description": "A Javascript-Web-Token decoder, written in Typescript",
+  "description": "A JSON-Web-Token decoder, written in Typescript",
   "license": "Apache-2.0",
   "author": {
     "name": "Michael Krotscheck",
     "email": "krotscheck@gmail.com",
     "url": "https://krotscheck.net/"
   },
-  "typings": "lib/index.d.ts",
-  "main": "lib/index.js",
+  "typings": "lib/kangaroo-jwt.d.ts",
+  "main": "lib/bundles/kangaroo-jwt.umd.js",
+  "module": "lib/esm5/kangaroo-jwt.js",
+  "es2015": "lib/esm2015/kangaroo-jwt.js",
+  "metadata": "lib/kangaroo-jwt.metadata.json",
   "scripts": {
     "test": "karma start ./karma.conf.js",
-    "lint": "tslint -p ./tsconfig.json",
-    "build": "tsc -p ./tsconfig.json",
+    "lint": "tslint -p ./src/tsconfig.json",
+    "build": "ng-packagr -p package.json",
     "nsp": "nsp check ./"
   },
   "devDependencies": {
+    "@angular/compiler": "~5.2.4",
+    "@angular/compiler-cli": "~5.2.4",
+    "@angular/core": "~5.2.4",
+    "@types/jasmine": "~2.8.6",
+    "codelyzer": "~4.1.0",
+    "jasmine-core": "~2.99.1",
     "karma": "~2.0.0",
+    "karma-browserstack-launcher": "~1.3.0",
+    "karma-chrome-launcher": "~2.2.0",
+    "karma-coverage-istanbul-reporter": "~1.4.1",
+    "karma-jasmine": "~1.1.1",
+    "karma-junit-reporter": "~1.2.0",
+    "karma-spec-reporter": "~0.0.32",
+    "karma-typescript": "~3.0.12",
+    "karma-webdriver-launcher": "~1.0.5",
+    "ng-packagr": "~2.0.0",
     "nsp": "~3.1.0",
     "tslint": "~5.9.1",
-    "ts-node": "~4.1.0",
     "tslint-microsoft-contrib": "~5.0.2",
     "typescript": "~2.6"
+  },
+  "ngPackage": {
+    "dest": "lib",
+    "lib": {
+      "entryFile": "src/index.ts",
+      "languageLevel": [
+        "dom",
+        "es2017"
+      ],
+      "comments": "none",
+      "licensePath": "../../LICENSE"
+    }
   }
 }
