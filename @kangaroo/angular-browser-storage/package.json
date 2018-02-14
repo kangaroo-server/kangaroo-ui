@@ -1,19 +1,19 @@
 {
   "$schema": "../../node_modules/ng-packagr/package.schema.json",
-  "name": "@kangaroo/angular-logger",
+  "name": "@kangaroo/angular-browser-storage",
   "version": "1.0.0",
-  "description": "A logging façade for Angular.",
+  "description": "A type-safe, consistent API for browser storage.",
   "license": "Apache-2.0",
   "author": {
     "name": "Michael Krotscheck",
     "email": "krotscheck@gmail.com",
     "url": "https://krotscheck.net/"
   },
-  "typings": "lib/kangaroo-angular-logger.d.ts",
-  "main": "lib/bundles/kangaroo-angular-logger.umd.js",
-  "module": "lib/esm5/kangaroo-angular-logger.js",
-  "es2015": "lib/esm2015/kangaroo-angular-logger.js",
-  "metadata": "lib/kangaroo-angular-logger.metadata.json",
+  "typings": "lib/kangaroo-angular-browser-storage.d.ts",
+  "main": "lib/bundles/kangaroo-angular-browser-storage.umd.js",
+  "module": "lib/esm5/kangaroo-angular-browser-storage.js",
+  "es2015": "lib/esm2015/kangaroo-angular-browser-storage.js",
+  "metadata": "lib/kangaroo-angular-browser-storage.metadata.json",
   "scripts": {
     "test": "ng test --code-coverage",
     "lint": "ng lint",
@@ -29,13 +29,19 @@
         "es2017"
       ],
       "comments": "none",
-      "licensePath": "LICENSE"
+      "licensePath": "LICENSE",
+      "umdModuleIds": {
+        "@kangaroo/angular-logger": "@kangaroo/angular-logger"
+      }
     }
   },
   "devDependencies": {
     "@angular/cli": "~1.6.8",
+    "@angular/common": "~5.2.4",
     "@angular/compiler": "~5.2.4",
     "@angular/compiler-cli": "~5.2.4",
+    "@angular/platform-browser": "~5.2.4",
+    "@angular/platform-browser-dynamic": "~5.2.4",
     "@types/jasmine": "~2.8.6",
     "@types/node": "~8.9.0",
     "codelyzer": "~4.1.0",
@@ -55,10 +61,8 @@
     "typescript": "~2.6"
   },
   "dependencies": {
-    "@angular/common": "~5.2.4",
     "@angular/core": "~5.2.4",
-    "@angular/platform-browser": "~5.2.4",
-    "@angular/platform-browser-dynamic": "~5.2.4",
+    "@kangaroo/angular-logger": "~1.0.0",
     "rxjs": "~5.5.6",
     "zone.js": "~0.8.20"
   }

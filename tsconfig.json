@@ -19,7 +19,7 @@
         "../../../node_modules/@angular/*"
       ],
       "@kangaroo/*": [
-        "../../../@kangaroo/*"
+        "../../../node_modules/@kangaroo/*"
       ],
       "rxjs": [
         "../../../node_modules/rxjs"
