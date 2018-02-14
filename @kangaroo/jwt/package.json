@@ -36,10 +36,10 @@
     "karma-typescript": "~3.0.12",
     "karma-webdriver-launcher": "~1.0.5",
     "ng-packagr": "~2.0.0",
-    "nsp": "~3.1.0",
+    "nsp": "~3.2.1",
     "tslint": "~5.9.1",
     "tslint-microsoft-contrib": "~5.0.2",
-    "typescript": "~2.6"
+    "typescript": "~2.7.2"
   },
   "ngPackage": {
     "dest": "lib",

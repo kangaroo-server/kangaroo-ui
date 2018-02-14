@@ -10,6 +10,7 @@
       "assets": [],
       "index": "index.html",
       "main": "index.ts",
+      "polyfills": "polyfills.ts",
       "test": "test.ts",
       "tsconfig": "tsconfig.lib.json",
       "testTsconfig": "tsconfig.spec.json",

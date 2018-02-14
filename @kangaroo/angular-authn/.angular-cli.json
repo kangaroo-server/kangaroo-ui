@@ -1,7 +1,7 @@
 {
   "$schema": "../../node_modules/@angular/cli/lib/config/schema.json",
   "project": {
-    "name": "@kangaroo/angular-oauth2"
+    "name": "@kangaroo/angular-authn"
   },
   "apps": [
     {
@@ -10,6 +10,7 @@
       "assets": [],
       "index": "index.html",
       "main": "index.ts",
+      "polyfills": "polyfills.ts",
       "test": "test.ts",
       "tsconfig": "tsconfig.lib.json",
       "testTsconfig": "tsconfig.spec.json",

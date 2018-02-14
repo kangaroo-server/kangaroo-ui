@@ -3,6 +3,8 @@
   <component name="NewModuleRootManager" inherit-compiler-output="true">
     <exclude-output />
     <content url="file://$MODULE_DIR$">
+      <excludeFolder url="file://$MODULE_DIR$/@kangaroo/angular-authn/dist" />
+      <excludeFolder url="file://$MODULE_DIR$/@kangaroo/angular-authn/tmp" />
       <excludeFolder url="file://$MODULE_DIR$/@kangaroo/angular-oauth2/dist" />
       <excludeFolder url="file://$MODULE_DIR$/@kangaroo/angular-oauth2/tmp" />
     </content>

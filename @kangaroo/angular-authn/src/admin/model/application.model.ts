@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018 Michael Krotscheck
+ * Copyright (c) 2017 Michael Krotscheck
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy
@@ -15,11 +15,33 @@
  * limitations under the License.
  */
 
-import { NgModule } from '@angular/core';
+import { CommonModel } from './common.model';
 
-@NgModule({
-    imports: [],
-    providers: []
-})
-export class KangarooOAuth2ApiModule {
+/**
+ * This interface describes an application instance.
+ *
+ * @author Michael Krotscheck
+ */
+export interface Application extends CommonModel {
+
+  /**
+   * Entity ID ID of this application's owner.
+   */
+  owner: string;
+
+  /**
+   * Entity ID for the default role.
+   */
+  defaultRole: string;
+
+  /**
+   * Human readable name for this application.
+   */
+  name: string;
+
+  /**
+   * Description for this application.
+   */
+  description: string;
+
 }
