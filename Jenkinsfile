@@ -36,8 +36,9 @@ pipeline {
         stage('Build') {
             steps {
                 sh('yarn workspace @kangaroo/jwt build')
-                sh('yarn workspace @kangaroo/angular-oauth2 build')
                 sh('yarn workspace @kangaroo/angular-logger build')
+                sh('yarn workspace @kangaroo/angular-browser-storage build')
+                sh('yarn workspace @kangaroo/angular-oauth2 build')
                 sh('yarn workspace @kangaroo/authz-ui build')
             }
         }
@@ -53,6 +54,9 @@ pipeline {
                         },
                         "@kangaroo/angular-logger": {
                             sh('yarn --silent workspace @kangaroo/angular-logger -- --silent lint --format checkstyle --force > @kangaroo/angular-logger/reports/checkstyle-result.xml')
+                        },
+                        "@kangaroo/angular-browser-storage": {
+                            sh('yarn --silent workspace @kangaroo/angular-browser-storage -- --silent lint --format checkstyle --force > @kangaroo/angular-browser-storage/reports/checkstyle-result.xml')
                         },
                         "@kangaroo/angular-oauth2": {
                             sh('yarn --silent workspace @kangaroo/angular-oauth2 -- --silent lint --format checkstyle --force > @kangaroo/angular-oauth2/reports/checkstyle-result.xml')
@@ -76,6 +80,9 @@ pipeline {
                         "@kangaroo/angular-logger": {
                             sh('yarn workspace @kangaroo/angular-logger nsp')
                         },
+                        "@kangaroo/angular-browser-storage": {
+                            sh('yarn workspace @kangaroo/angular-browser-storage nsp')
+                        },
                         "@kangaroo/angular-oauth2": {
                             sh('yarn workspace @kangaroo/angular-oauth2 nsp')
                         },
@@ -97,6 +104,9 @@ pipeline {
                 parallel(
                         "@kangaroo/angular-logger": {
                             sh('yarn workspace @kangaroo/angular-logger test -- -w false')
+                        },
+                        "@kangaroo/angular-browser-storage": {
+                            sh('yarn workspace @kangaroo/angular-browser-storage test -- -w false')
                         },
                         "@kangaroo/angular-oauth2": {
                             sh('yarn workspace @kangaroo/angular-oauth2 test -- --single-run')
@@ -128,6 +138,9 @@ pipeline {
                 parallel(
                         "@kangaroo/angular-logger": {
                             sh('yarn workspace @kangaroo/angular-logger pack')
+                        },
+                        "@kangaroo/angular-browser-storage": {
+                            sh('yarn workspace @kangaroo/angular-browser-storage pack')
                         },
                         "@kangaroo/angular-oauth2": {
                             sh('yarn workspace @kangaroo/angular-oauth2 pack')
