@@ -157,6 +157,16 @@ pipeline {
     }
 
     post {
+
+        /**
+         * When the build status changed, send the result.
+         */
+        changed {
+            script {
+                notifySlack(currentBuild.currentResult)
+            }
+        }
+
         /**
          * Actions always to run at the end of a pipeline.
          */
