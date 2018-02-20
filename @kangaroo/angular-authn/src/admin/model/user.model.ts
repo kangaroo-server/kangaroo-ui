@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018 Michael Krotscheck
+ * Copyright (c) 2017 Michael Krotscheck
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy
@@ -15,11 +15,23 @@
  * limitations under the License.
  */
 
-import { NgModule } from '@angular/core';
+import { CommonModel } from './common.model';
 
-@NgModule({
-    imports: [],
-    providers: []
-})
-export class KangarooAdminApiModule {
+/**
+ * This interface describes the user entity.
+ *
+ * @author Michael Krotscheck
+ */
+export interface User extends CommonModel {
+
+  /**
+   * Entity ID UUID of the application this role is registered to.
+   */
+  application: string;
+
+  /**
+   * Entity ID of the role assigned to this user.
+   */
+  role: string;
+
 }

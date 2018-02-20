@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018 Michael Krotscheck
+ * Copyright (c) 2017 Michael Krotscheck
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy
@@ -15,9 +15,21 @@
  * limitations under the License.
  */
 
-describe('Library Root', () => {
+/**
+ * An enumeration of sort orders.
+ *
+ * @author Michael Krotscheck
+ */
+export enum SortOrder {
 
-    it('should run tests', () => {
-        expect(true).toBeTruthy();
-    });
-});
+  /**
+   * The HTTP parameter value used to indicate an ascending sort.
+   */
+  Ascending = 'ASC',
+
+  /**
+   * The HTTP parameter value used to indicate an descending sort.
+   */
+  Descending = 'DESC'
+
+}

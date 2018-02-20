@@ -36,7 +36,7 @@
     }
   },
   "devDependencies": {
-    "@angular/cli": "~1.6.8",
+    "@angular/cli": "~1.7.0",
     "@angular/common": "~5.2.4",
     "@angular/compiler": "~5.2.4",
     "@angular/compiler-cli": "~5.2.4",
@@ -55,10 +55,10 @@
     "karma-spec-reporter": "~0.0.32",
     "karma-webdriver-launcher": "~1.0.5",
     "ng-packagr": "~2.0.0",
-    "nsp": "~3.1.0",
+    "nsp": "~3.2.1",
     "tslint": "~5.9.1",
     "tslint-microsoft-contrib": "~5.0.2",
-    "typescript": "~2.6"
+    "typescript": "~2.7.2"
   },
   "dependencies": {
     "@angular/core": "~5.2.4",
