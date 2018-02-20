@@ -1,7 +1,7 @@
 {
-  "$schema": "../../node_modules/@angular/cli/lib/config/schema.json",
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "project": {
-    "name": "@kangaroo/angular-authn"
+    "name": "@kangaroo/angular-common"
   },
   "apps": [
     {
@@ -30,11 +30,6 @@
     }
   ],
   "test": {
-    "codeCoverage": {
-      "exclude": [
-        "../angular-platform/**/*"
-      ]
-    },
     "karma": {
       "config": "./karma.conf.js"
     }

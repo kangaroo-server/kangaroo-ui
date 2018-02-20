@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { CommonModel } from './common.model';
+import { CommonModel } from '@kangaroo/angular-platform';
 
 /**
  * This interface describes a client redirect url.

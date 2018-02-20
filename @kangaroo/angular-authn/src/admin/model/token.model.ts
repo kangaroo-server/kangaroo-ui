@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { CommonModel } from './common.model';
+import { CommonModel } from '@kangaroo/angular-platform';
 import { TokenType } from './token-type.enum';
 
 /**

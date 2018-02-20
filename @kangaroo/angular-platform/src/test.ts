@@ -13,26 +13,23 @@
  *
  * See the License for the specific language governing permissions and
  * limitations under the License.
- *
  */
 
-import { CommonModel } from '@kangaroo/angular-platform';
+import 'zone.js/dist/zone';
+import 'zone.js/dist/zone-testing';
+import { getTestBed } from '@angular/core/testing';
+import { BrowserDynamicTestingModule, platformBrowserDynamicTesting } from '@angular/platform-browser-dynamic/testing';
 
-/**
- * This interface describes a client referrer url.
- *
- * @author Michael Krotscheck
- */
-export interface ClientReferrer extends CommonModel {
+declare const require: any;
 
-  /**
-   * Entity ID ID of the client to whom this url is registered.
-   */
-  client: string;
+// First, initialize the Angular testing environment.
+getTestBed().initTestEnvironment(
+  BrowserDynamicTestingModule,
+  platformBrowserDynamicTesting()
+);
 
-  /**
-   * The redirection uri.
-   */
-  uri: string;
+// Then we find all the tests.
+const context = require.context('./', true, /\.spec\.ts$/);
 
-}
+// And load the modules.
+context.keys().map(context);

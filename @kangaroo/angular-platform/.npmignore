@@ -1,0 +1,9 @@
+reports
+node_modules
+src
+*.tgz
+karma.conf.js
+.angular-cli.json
+tslint.json
+lib/package.json
+yarn-error.log

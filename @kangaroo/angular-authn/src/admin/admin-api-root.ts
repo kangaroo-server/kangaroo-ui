@@ -17,14 +17,15 @@
  */
 
 import { ObservableInput } from 'rxjs/Observable';
-import { Inject, InjectionToken, Optional } from '@angular/core';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { InjectionToken } from '@angular/core';
 
 /**
+ * Type declaration for the API root provider.
  */
 export type AdminApiRootProvider = ObservableInput<string>;
 
 /**
+ * Use this injection token to provide an external API root.
  */
 export const ADMIN_API_ROOT: InjectionToken<AdminApiRootProvider> =
   new InjectionToken<AdminApiRootProvider>('ADMIN_API_ROOT');
