@@ -17,14 +17,14 @@
  */
 
 import { Injectable } from '@angular/core';
+import { Observable, ObservableInput } from 'rxjs/Observable';
+import { CommonModel } from './common.model';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Observable } from 'rxjs/Observable';
-import { CommonModel, ListResponse } from './model';
-import { AdminApiRootProvider } from './admin-api-root';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/mergeMap';
 import 'rxjs/add/observable/from';
 import 'rxjs/add/observable/of';
+import { ListResponse } from './list-response.model';
 
 /**
  * This class attaches the oauth2 token credentials to API calls.
@@ -32,7 +32,7 @@ import 'rxjs/add/observable/of';
  * @author Michael Krotscheck
  */
 @Injectable()
-export abstract class AbstractResourceService<T extends CommonModel> {
+export abstract class AbstractSubresourceService<P extends CommonModel, E extends CommonModel> {
 
   /**
    * The current calculated API root.
@@ -42,29 +42,33 @@ export abstract class AbstractResourceService<T extends CommonModel> {
   /**
    * Create a new instance of the service.
    *
+   * @param parentStub The short form stub of the parent resource at the target URL. e.g. 'role' or 'client'
    * @param resourcesStub The short form stub of the resource at the target URL. e.g. 'role' or 'client'
    * @param http The HTTP client
    * @param apiRootProvider Observable source of the root URL to the admin API. Optional.
    */
-  protected constructor(private resourcesStub: string,
+  protected constructor(private parentStub: string,
+                        private resourcesStub: string,
                         private http: HttpClient,
-                        apiRootProvider: AdminApiRootProvider) {
+                        apiRootProvider: ObservableInput<string>) {
     this.apiRoot = Observable.from(apiRootProvider || [ '' ]);
   }
 
   /**
    * Search this group of resources.
    *
+   * @param parent The parent entity.
    * @param query The search query, required.
    * @param filters A list of additional filter parameters.
    * @param offset The search result offset.
    * @param limit The number of results returned.
    * @return The search results.
    */
-  public search(query: string,
+  public search(parent: P,
+                query: string,
                 filters?: { [ key: string ]: string },
                 offset?: number,
-                limit?: number): Observable<ListResponse<T>> {
+                limit?: number): Observable<ListResponse<E>> {
     let params: HttpParams = new HttpParams();
     if (filters) {
       Object.keys(filters)
@@ -78,13 +82,14 @@ export abstract class AbstractResourceService<T extends CommonModel> {
       .set('limit', limit && limit.toString() || undefined);
 
     return this.apiRoot
-      .map((root) => this.buildEntityRoot(root, <T>{id: 'search'}))
-      .mergeMap((url) => this.http.get<ListResponse<T>>(url, {params}));
+      .map((root) => this.buildEntityRoot(root, parent, <E>{id: 'search'}))
+      .mergeMap((url) => this.http.get<ListResponse<E>>(url, {params}));
   }
 
   /**
    * Browse the resources exposed by this endpoint.
    *
+   * @param parent The parent entity.
    * @param filters A list of additional filter parameters.
    * @param offset The search result offset.
    * @param limit The number of results returned.
@@ -92,11 +97,12 @@ export abstract class AbstractResourceService<T extends CommonModel> {
    * @param order The sort order, Ascending or Descending.
    * @return Browse results.
    */
-  public browse(filters?: { [ key: string ]: string },
+  public browse(parent: P,
+                filters?: { [ key: string ]: string },
                 sort?: string,
                 order?: string,
                 offset?: number,
-                limit?: number): Observable<ListResponse<T>> {
+                limit?: number): Observable<ListResponse<E>> {
     let params: HttpParams = new HttpParams();
     if (filters) {
       Object.keys(filters).forEach((key) => {
@@ -110,62 +116,66 @@ export abstract class AbstractResourceService<T extends CommonModel> {
       .set('limit', limit && limit.toString() || undefined);
 
     return this.apiRoot
-      .map((root) => this.buildEntityRoot(root, <T>{id: ''}))
-      .mergeMap((url) => this.http.get<ListResponse<T>>(url, {params}));
+      .map((root) => this.buildEntityRoot(root, parent, <E>{id: ''}))
+      .mergeMap((url) => this.http.get<ListResponse<E>>(url, {params}));
   }
 
   /**
    * Create a new entity.
    *
+   * @param parent The parent entity.
    * @param entity The entity for the request body.
-   * @return The results of the request.
+   * @return The request results.
    */
-  public create(entity: T): Observable<T> {
+  public create(parent: P, entity: E): Observable<E> {
     return this.apiRoot
-      .map((root) => this.buildEntityRoot(root, <T>{id: ''}))
-      .mergeMap((url) => this.http.post<T>(url, entity));
+      .map((root) => this.buildEntityRoot(root, parent, <E>{id: ''}))
+      .mergeMap((url) => this.http.post<E>(url, entity));
   }
 
   /**
    * Read an entity by ID.
    *
-   * @param id The ID to read.
-   * @return The results of the request.
+   * @param parent The parent entity.
+   * @param id The id of the entity to retrieve.
+   * @return The request results.
    */
-  public read(id: string): Observable<T> {
+  public read(parent: P, id: string): Observable<E> {
     return this.apiRoot
-      .map((root) => this.buildEntityRoot(root, <T>{id: id}))
-      .mergeMap((url) => this.http.get<T>(url));
+      .map((root) => this.buildEntityRoot(root, parent, <E>{id: id}))
+      .mergeMap((url) => this.http.get<E>(url));
   }
 
   /**
    * Update an entity.
    *
+   * @param parent The parent entity.
    * @param entity The entity for the request body.
-   * @return The results of the request.
+   * @return The request results.
    */
-  public update(entity: T): Observable<T> {
+  public update(parent: P, entity: E): Observable<E> {
     return this.apiRoot
-      .map((root) => this.buildEntityRoot(root, entity))
-      .mergeMap((url) => this.http.put<T>(url, entity));
+      .map((root) => this.buildEntityRoot(root, parent, entity))
+      .mergeMap((url) => this.http.put<E>(url, entity));
   }
 
   /**
    * Delete an entity.
    *
-   * @param entity The entity to delete.
+   * @param parent The parent entity.
+   * @param entity The entity for the request body.
    * @return A void observable.
    */
-  public destroy(entity: T): Observable<void> {
+  public destroy(parent: P, entity: E): Observable<void> {
     return this.apiRoot
-      .map((root) => this.buildEntityRoot(root, entity))
+      .map((root) => this.buildEntityRoot(root, parent, entity))
       .mergeMap((url) => this.http.delete<void>(url));
   }
 
   /**
    * This method should return the root url for the passed entity.
    */
-  private buildEntityRoot(apiRoot: string, entity: T): string {
-    return `${apiRoot}/${this.resourcesStub}/${entity && entity.id || ''}`;
+  private buildEntityRoot(apiRoot: string, parent: P, entity: E): string {
+    return `${apiRoot}/${this.parentStub}/${parent && parent.id || ''}/${this.resourcesStub}/${entity && entity.id || ''}`;
   }
 }

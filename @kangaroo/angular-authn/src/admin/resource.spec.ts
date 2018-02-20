@@ -26,7 +26,7 @@ import { UserService } from './user.service';
 import { UserIdentityService } from './user-identity.service';
 import { ClientRedirectService } from './client-redirect.service';
 import { ClientReferrerService } from './client-referrer.service';
-import { CommonModel } from './model';
+import { CommonModel } from '@kangaroo/angular-platform';
 import { async, inject, TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 

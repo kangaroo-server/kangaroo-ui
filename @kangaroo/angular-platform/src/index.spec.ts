@@ -15,33 +15,19 @@
  * limitations under the License.
  *
  */
+
 import * as all from './index';
-import { KangarooAuthorizationAdminModule } from './index';
-import { TestBed } from '@angular/core/testing';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { BrowserModule } from '@angular/platform-browser';
 
 /**
- * Unit tests for the KangarooAuthorizationAdminModule
+ * Unit tests for the KangarooPlatformModule
  */
-describe('KangarooAuthorizationAdminModule', () => {
+describe('KangarooPlatformModule', () => {
 
   const expectedExports = [
-    'KangarooAuthorizationAdminModule',
-    'ApplicationService',
-    'AuthenticatorService',
-    'ClientService',
-    'ClientRedirectService',
-    'ClientReferrerService',
-    'RoleService',
-    'ScopeService',
-    'TokenService',
-    'UserService',
-    'UserIdentityService',
-
-    'ClientType',
-    'TokenType',
-    'ADMIN_API_ROOT'
+    'AbstractResourceService',
+    'AbstractSubresourceService',
+    'SortOrder',
+    'KangarooPlatformModule'
   ];
 
   expectedExports.forEach((name) => {
@@ -53,20 +39,6 @@ describe('KangarooAuthorizationAdminModule', () => {
   it('should only export expected properties', () => {
     Object.keys(all).forEach((name) => {
       expect(expectedExports.indexOf(name)).not.toEqual(-1, `Unexpected export found: ${name}`);
-    });
-  });
-
-  describe('module', () => {
-
-    it('should permit importing', () => {
-      TestBed.configureTestingModule(
-        {
-          imports: [
-            BrowserModule,
-            HttpClientTestingModule,
-            KangarooAuthorizationAdminModule
-          ]
-        }).compileComponents();
     });
   });
 });

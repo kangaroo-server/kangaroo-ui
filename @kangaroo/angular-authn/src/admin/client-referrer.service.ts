@@ -18,7 +18,7 @@
 
 import { Inject, Injectable, Optional } from '@angular/core';
 import { Client, ClientReferrer } from './model';
-import { AbstractSubresourceService } from './abstract-subresource.service';
+import { AbstractSubresourceService } from '@kangaroo/angular-platform';
 import { HttpClient } from '@angular/common/http';
 import { ADMIN_API_ROOT, AdminApiRootProvider } from './admin-api-root';
 

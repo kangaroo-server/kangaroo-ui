@@ -18,7 +18,7 @@
 
 import { Inject, Injectable, Optional } from '@angular/core';
 import { User } from './model';
-import { AbstractResourceService } from './abstract-resource.service';
+import { AbstractResourceService } from '@kangaroo/angular-platform';
 import { HttpClient } from '@angular/common/http';
 import { ADMIN_API_ROOT, AdminApiRootProvider } from './admin-api-root';
 

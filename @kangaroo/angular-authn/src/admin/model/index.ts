@@ -19,8 +19,6 @@
 /**
  * Export wrapup for this directory.
  */
-export * from './common.model';
-
 export * from './application.model';
 export * from './authenticator.model';
 export * from './client.model';
@@ -33,5 +31,3 @@ export * from './token.model';
 export * from './token-type.enum';
 export * from './user.model';
 export * from './user-identity.model';
-export * from './list-response.model';
-export * from './sort-order.enum';

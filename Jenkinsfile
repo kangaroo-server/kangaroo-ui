@@ -38,6 +38,7 @@ pipeline {
                 sh('yarn workspace @kangaroo/jwt build')
                 sh('yarn workspace @kangaroo/angular-logger build')
                 sh('yarn workspace @kangaroo/angular-browser-storage build')
+                sh('yarn workspace @kangaroo/angular-platform build')
                 sh('yarn workspace @kangaroo/angular-authn build')
                 sh('yarn workspace @kangaroo/authz-ui build')
             }
@@ -57,6 +58,9 @@ pipeline {
                         },
                         "@kangaroo/angular-browser-storage": {
                             sh('yarn --silent workspace @kangaroo/angular-browser-storage -- --silent lint --format checkstyle --force > @kangaroo/angular-browser-storage/reports/checkstyle-result.xml')
+                        },
+                        "@kangaroo/angular-platform": {
+                            sh('yarn --silent workspace @kangaroo/angular-platform -- --silent lint --format checkstyle --force > @kangaroo/angular-platform/reports/checkstyle-result.xml')
                         },
                         "@kangaroo/angular-authn": {
                             sh('yarn --silent workspace @kangaroo/angular-authn -- --silent lint --format checkstyle --force > @kangaroo/angular-authn/reports/checkstyle-result.xml')
@@ -83,6 +87,9 @@ pipeline {
                         "@kangaroo/angular-browser-storage": {
                             sh('yarn workspace @kangaroo/angular-browser-storage nsp')
                         },
+                        "@kangaroo/angular-platform": {
+                            sh('yarn workspace @kangaroo/angular-platform nsp')
+                        },
                         "@kangaroo/angular-authn": {
                             sh('yarn workspace @kangaroo/angular-authn nsp')
                         },
@@ -107,6 +114,9 @@ pipeline {
                         },
                         "@kangaroo/angular-browser-storage": {
                             sh('yarn workspace @kangaroo/angular-browser-storage test -- -w false')
+                        },
+                        "@kangaroo/angular-platform": {
+                            sh('yarn workspace @kangaroo/angular-platform test -- -w false')
                         },
                         "@kangaroo/angular-authn": {
                             sh('yarn workspace @kangaroo/angular-authn test -- --single-run')
@@ -141,6 +151,9 @@ pipeline {
                         },
                         "@kangaroo/angular-browser-storage": {
                             sh('yarn workspace @kangaroo/angular-browser-storage pack')
+                        },
+                        "@kangaroo/angular-platform": {
+                            sh('yarn workspace @kangaroo/angular-platform pack')
                         },
                         "@kangaroo/angular-authn": {
                             sh('yarn workspace @kangaroo/angular-authn pack')
