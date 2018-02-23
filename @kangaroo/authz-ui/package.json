@@ -9,7 +9,8 @@
     "url": "https://krotscheck.net/"
   },
   "scripts": {
-    "start": "ng serve",
+    "prestart": "docker pull krotscheck/kangaroo-authz:latest && docker-compose up -d",
+    "start": "ng serve --proxy-config proxy.conf.js --host 0.0.0.0",
     "build": "ng build --prod",
     "test": "ng test --code-coverage",
     "lint": "ng lint",

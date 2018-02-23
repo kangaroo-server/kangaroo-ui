@@ -19,7 +19,6 @@
 import { Routes } from '@angular/router';
 import { ConfigurationFailedGuard } from './configuration-failed/configuration-failed.guard';
 import { ConfigurationSucceededGuard } from './configuration-failed/configuration-succeeded.guard';
-import { NoopComponent } from './noop.component';
 import { CannotConfigureComponent } from './configuration-failed/cannot-configure.component';
 
 /**
@@ -28,21 +27,20 @@ import { CannotConfigureComponent } from './configuration-failed/cannot-configur
  * @author Michael Krotscheck
  */
 export const ROUTES: Routes = [
-  {
-    path: '',
-    component: NoopComponent,
-    canActivate: [ ConfigurationSucceededGuard ],
-    canActivateChild: [ ConfigurationSucceededGuard ]
-  },
   // {
-  //   path: '**',
-  //   redirectTo: '404'
+  //   path: '',
+  //   component: NoopComponent,
+  //   canActivate: [ ConfigurationSucceededGuard ],
+  //   canActivateChild: [ ConfigurationSucceededGuard ]
   // },
-
-  // Configuration has failed, show the user a useful error message.
   {
     path: 'configuration-failed',
     component: CannotConfigureComponent,
     canActivate: [ ConfigurationFailedGuard ]
+  },
+  {
+    path: '**',
+    redirectTo: '404',
+    canActivate: [ ConfigurationSucceededGuard ]
   }
 ];

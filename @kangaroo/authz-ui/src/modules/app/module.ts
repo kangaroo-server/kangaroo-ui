@@ -19,19 +19,21 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ClrNavigationModule } from '@clr/angular';
+import { RouterModule } from '@angular/router';
 
 import { HeaderComponent } from './header.component';
 import { AppComponent } from './app.component';
 import { ROUTES } from './routes';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NoopComponent } from './noop.component';
 import { RouterOutletComponent } from './router-outlet.component';
-import { ConfigModule } from '../config';
-import { RouterModule } from '@angular/router';
 import { ConfigurationFailedGuard } from './configuration-failed/configuration-failed.guard';
 import { ConfigurationSucceededGuard } from './configuration-failed/configuration-succeeded.guard';
 import { CannotConfigureComponent } from './configuration-failed/cannot-configure.component';
+
+import { ConfigModule } from '../config';
+import { ErrorModule } from '../error';
 
 /**
  * This module contains all the components of the application shell, including header, configuration error cases,
@@ -46,7 +48,9 @@ import { CannotConfigureComponent } from './configuration-failed/cannot-configur
     BrowserModule,
     RouterModule.forRoot(ROUTES),
     ClrNavigationModule,
-    ConfigModule
+
+    ConfigModule,
+    ErrorModule
   ],
   providers: [
     ConfigurationFailedGuard,

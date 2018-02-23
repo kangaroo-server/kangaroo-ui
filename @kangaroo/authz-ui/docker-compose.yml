@@ -1,0 +1,6 @@
+version: '3'
+services:
+  authz:
+    image: 'krotscheck/kangaroo-authz:latest'
+    ports:
+      - "8080:8080"
