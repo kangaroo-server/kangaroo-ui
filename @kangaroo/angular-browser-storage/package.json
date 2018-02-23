@@ -36,12 +36,12 @@
     }
   },
   "devDependencies": {
-    "@angular/cli": "~1.7.0",
-    "@angular/common": "~5.2.4",
-    "@angular/compiler": "~5.2.4",
-    "@angular/compiler-cli": "~5.2.4",
-    "@angular/platform-browser": "~5.2.4",
-    "@angular/platform-browser-dynamic": "~5.2.4",
+    "@angular/cli": "~1.7.1",
+    "@angular/common": "~5.2.6",
+    "@angular/compiler": "~5.2.6",
+    "@angular/compiler-cli": "~5.2.6",
+    "@angular/platform-browser": "~5.2.6",
+    "@angular/platform-browser-dynamic": "~5.2.6",
     "@types/jasmine": "~2.8.6",
     "@types/node": "~8.9.0",
     "codelyzer": "~4.1.0",
@@ -54,14 +54,14 @@
     "karma-junit-reporter": "~1.2.0",
     "karma-spec-reporter": "~0.0.32",
     "karma-webdriver-launcher": "~1.0.5",
-    "ng-packagr": "~2.0.0",
+    "ng-packagr": "~2.1.0",
     "nsp": "~3.2.1",
     "tslint": "~5.9.1",
     "tslint-microsoft-contrib": "~5.0.2",
     "typescript": "~2.7.2"
   },
   "dependencies": {
-    "@angular/core": "~5.2.4",
+    "@angular/core": "~5.2.6",
     "@kangaroo/angular-logger": "~1.0.0",
     "rxjs": "~5.5.6",
     "zone.js": "~0.8.20"
