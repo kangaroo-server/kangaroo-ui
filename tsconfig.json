@@ -21,6 +21,9 @@
       "@kangaroo/*": [
         "../../../node_modules/@kangaroo/*"
       ],
+      "@clr/*": [
+        "../../../node_modules/@clr/*"
+      ],
       "rxjs": [
         "../../../node_modules/rxjs"
       ]

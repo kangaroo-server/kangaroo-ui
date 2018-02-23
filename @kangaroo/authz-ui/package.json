@@ -42,17 +42,24 @@
     "typescript": "~2.7.2"
   },
   "dependencies": {
+    "@angular/animations": "~5.2.5",
     "@angular/common": "~5.2.4",
     "@angular/core": "~5.2.4",
     "@angular/forms": "~5.2.5",
     "@angular/platform-browser": "~5.2.4",
     "@angular/platform-browser-dynamic": "~5.2.4",
     "@angular/router": "~5.2.5",
+    "@clr/angular": "~0.11.5",
+    "@clr/icons": "~0.11.5",
+    "@clr/ui": "~0.11.5",
     "@kangaroo/angular-authn": "~1.0.0",
     "@kangaroo/angular-browser-storage": "~1.0.0",
     "@kangaroo/angular-logger": "~1.0.0",
     "@kangaroo/angular-platform": "~1.0.0",
+    "@webcomponents/custom-elements": "~1.0.8",
+    "mutationobserver-shim": "~0.3.2",
     "rxjs": "~5.5.6",
+    "web-animations-js": "~2.3.1",
     "zone.js": "~0.8.20"
   }
 }

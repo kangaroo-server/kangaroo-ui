@@ -27,6 +27,12 @@
     "@ngtools/json-schema" "^1.1.0"
     rxjs "^5.5.6"
 
+"@angular/animations@~5.2.5":
+  version "5.2.5"
+  resolved "https://registry.yarnpkg.com/@angular/animations/-/animations-5.2.5.tgz#3e72184321c4979305619c74902b8be92d76db70"
+  dependencies:
+    tslib "^1.7.1"
+
 "@angular/cli@~1.7.0":
   version "1.7.0"
   resolved "https://registry.yarnpkg.com/@angular/cli/-/cli-1.7.0.tgz#63c56e6d36d57bcd9d9d9425bd806f590f518211"
@@ -141,6 +147,20 @@
   resolved "https://registry.yarnpkg.com/@angular/router/-/router-5.2.5.tgz#f8f220d5fb85fc10d60fe606b0f2a64732265142"
   dependencies:
     tslib "^1.7.1"
+
+"@clr/angular@~0.11.5":
+  version "0.11.5"
+  resolved "https://registry.yarnpkg.com/@clr/angular/-/angular-0.11.5.tgz#1b793e70bf3b3d8ee03adc45bfe9f3ebed69a099"
+  dependencies:
+    tslib "^1.7.1"
+
+"@clr/icons@~0.11.5":
+  version "0.11.5"
+  resolved "https://registry.yarnpkg.com/@clr/icons/-/icons-0.11.5.tgz#025ba65c4605c46491032907a143535fc16e0b9e"
+
+"@clr/ui@~0.11.5":
+  version "0.11.5"
+  resolved "https://registry.yarnpkg.com/@clr/ui/-/ui-0.11.5.tgz#eb66f3608a4809127da668a24942a26ba942b150"
 
 "@commitlint/cli@~6.1.0":
   version "6.1.0"
@@ -312,6 +332,10 @@
 "@types/strip-json-comments@0.0.30":
   version "0.0.30"
   resolved "https://registry.yarnpkg.com/@types/strip-json-comments/-/strip-json-comments-0.0.30.tgz#9aa30c04db212a9a0649d6ae6fd50accc40748a1"
+
+"@webcomponents/custom-elements@~1.0.8":
+  version "1.0.8"
+  resolved "https://registry.yarnpkg.com/@webcomponents/custom-elements/-/custom-elements-1.0.8.tgz#b7b8ef7248f7681d1ad4286a0ada5fe3c2bc7228"
 
 JSONStream@^1.0.3, JSONStream@^1.0.4:
   version "1.3.2"
@@ -5260,6 +5284,10 @@ multicast-dns@^6.0.1:
     dns-packet "^1.3.1"
     thunky "^1.0.2"
 
+mutationobserver-shim@~0.3.2:
+  version "0.3.2"
+  resolved "https://registry.yarnpkg.com/mutationobserver-shim/-/mutationobserver-shim-0.3.2.tgz#f4d5dae7a4971a2207914fb5a90ebd514b65acca"
+
 mute-stream@0.0.6:
   version "0.0.6"
   resolved "https://registry.yarnpkg.com/mute-stream/-/mute-stream-0.0.6.tgz#48962b19e169fd1dfc240b3f1e7317627bbc47db"
@@ -8224,6 +8252,10 @@ wd@^1.0.0:
     request "2.79.0"
     underscore.string "3.3.4"
     vargs "0.1.0"
+
+web-animations-js@~2.3.1:
+  version "2.3.1"
+  resolved "https://registry.yarnpkg.com/web-animations-js/-/web-animations-js-2.3.1.tgz#3a6d9bc15196377a90f8e2803fa5262165b04510"
 
 webdriver-js-extender@^1.0.0:
   version "1.0.0"

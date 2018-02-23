@@ -15,14 +15,15 @@
  * limitations under the License.
  *
  */
+import { Component } from '@angular/core';
 
-import { Component, Optional } from '@angular/core';
-
+/**
+ * An empty component, useful for development.
+ *
+ * @author Michael Krotscheck
+ */
 @Component({
-    selector: 'app-root',
-    templateUrl: './app.component.html',
-    styleUrls: ['./app.component.css']
+  templateUrl: './noop.component.html'
 })
-export class AppComponent {
-    title = 'app';
+export class NoopComponent {
 }

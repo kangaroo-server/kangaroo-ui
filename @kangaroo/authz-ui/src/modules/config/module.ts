@@ -19,6 +19,7 @@ import { NgModule } from '@angular/core';
 import { KangarooConfigurationSubject } from './kangaroo-configuration.subject';
 import { AdminApiRoot } from './admin-api-root';
 import { OAuthApiRoot } from './oauth-api-root';
+import { HttpClientModule } from '@angular/common/http';
 
 /**
  * This module handles system configuration, environment detection, and all related
@@ -31,6 +32,9 @@ import { OAuthApiRoot } from './oauth-api-root';
     KangarooConfigurationSubject,
     AdminApiRoot,
     OAuthApiRoot
+  ],
+  imports: [
+    HttpClientModule
   ]
 })
 export class ConfigModule {
