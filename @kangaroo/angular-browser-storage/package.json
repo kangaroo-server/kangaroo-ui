@@ -20,22 +20,11 @@
     "build": "ng-packagr -p package.json",
     "nsp": "nsp check ./"
   },
-  "ngPackage": {
-    "dest": "lib",
-    "lib": {
-      "entryFile": "src/index.ts",
-      "languageLevel": [
-        "dom",
-        "es2017"
-      ],
-      "comments": "none",
-      "licensePath": "LICENSE",
-      "umdModuleIds": {
-        "@kangaroo/angular-logger": "@kangaroo/angular-logger"
-      }
-    }
-  },
   "devDependencies": {
+    "@kangaroo/angular-logger": "~1.0.0",
+    "@angular/core": "~5.2.6",
+    "rxjs": "~5.5.6",
+    "zone.js": "~0.8.20",
     "@angular/cli": "~1.7.1",
     "@angular/common": "~5.2.6",
     "@angular/compiler": "~5.2.6",
@@ -60,10 +49,9 @@
     "tslint-microsoft-contrib": "~5.0.2",
     "typescript": "~2.7.2"
   },
-  "dependencies": {
+  "peerDependencies": {
     "@angular/core": "~5.2.6",
-    "@kangaroo/angular-logger": "~1.0.0",
     "rxjs": "~5.5.6",
-    "zone.js": "~0.8.20"
+    "@kangaroo/angular-logger": "~1.0.0"
   }
 }

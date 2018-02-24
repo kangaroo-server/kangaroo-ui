@@ -20,9 +20,14 @@
     "lint": "git log -1 --pretty=%B | commitlint",
     "clean": "find . -type d -name \"node_modules\" | xargs rm -rf"
   },
-  "workspaces": [
-    "@kangaroo/*"
-  ],
+  "workspaces": {
+    "packages": [
+      "@kangaroo/*"
+    ],
+    "nohoist": [
+      "**"
+    ]
+  },
   "config": {
     "commitizen": {
       "path": "./node_modules/cz-conventional-changelog"

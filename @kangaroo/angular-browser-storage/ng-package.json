@@ -1,0 +1,20 @@
+{
+  "$schema": "./node_modules/ng-packagr/package.schema.json",
+  "name": "@kangaroo/angular-browser-storage",
+  "version": "1.0.0",
+  "dest": "lib",
+  "ngPackage": {
+    "comments": "none",
+    "licensePath": "../../LICENSE",
+    "lib": {
+      "entryFile": "src/index.ts"
+    },
+    "languageLevel": [
+      "dom",
+      "es2017"
+    ],
+    "umdModuleIds": {
+      "@kangaroo/angular-logger": "kangaroo.angular-logger"
+    }
+  }
+}

@@ -40,17 +40,5 @@
     "tslint": "~5.9.1",
     "tslint-microsoft-contrib": "~5.0.2",
     "typescript": "~2.7.2"
-  },
-  "ngPackage": {
-    "dest": "lib",
-    "lib": {
-      "entryFile": "src/index.ts",
-      "languageLevel": [
-        "dom",
-        "es2017"
-      ],
-      "comments": "none",
-      "licensePath": "../../LICENSE"
-    }
   }
 }

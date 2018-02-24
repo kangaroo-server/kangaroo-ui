@@ -13,20 +13,6 @@
     "lib": [
       "es2017",
       "dom"
-    ],
-    "paths": {
-      "@angular/*": [
-        "../../../node_modules/@angular/*"
-      ],
-      "@kangaroo/*": [
-        "../../../node_modules/@kangaroo/*"
-      ],
-      "@clr/*": [
-        "../../../node_modules/@clr/*"
-      ],
-      "rxjs": [
-        "../../../node_modules/rxjs"
-      ]
-    }
+    ]
   }
 }
