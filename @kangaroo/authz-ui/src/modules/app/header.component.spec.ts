@@ -20,16 +20,12 @@ import { TestBed } from '@angular/core/testing';
 import { HeaderComponent } from './header.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { By } from '@angular/platform-browser';
-import { Router } from '@angular/router';
 import { ClrNavigationModule } from '@clr/angular';
 
 /**
  * Unit tests for the Header component.
  */
 describe('HeaderComponent', () => {
-
-  let controller: HeaderComponent;
-  let router: Router;
 
   beforeEach(() => {
 
