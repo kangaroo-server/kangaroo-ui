@@ -1,0 +1,17 @@
+{
+  "$schema": "./node_modules/ng-packagr/package.schema.json",
+  "version": "1.0.0",
+  "dest": "lib",
+  "comments": "none",
+  "licensePath": "../../LICENSE",
+  "lib": {
+    "entryFile": "src/index.ts",
+    "umdModuleIds": {
+      "@kangaroo/angular-platform": "kangaroo.angular-platform"
+    }
+  },
+  "languageLevel": [
+    "dom",
+    "es2017"
+  ]
+}

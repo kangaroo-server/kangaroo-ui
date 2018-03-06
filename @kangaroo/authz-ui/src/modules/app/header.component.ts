@@ -13,22 +13,20 @@
  *
  * See the License for the specific language governing permissions and
  * limitations under the License.
+ *
  */
 
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { Component } from '@angular/core';
 
-import { AppComponent } from './app.component';
-
-@NgModule({
-  declarations: [
-    AppComponent
-  ],
-  imports: [
-    BrowserModule
-  ],
-  providers: [],
-  bootstrap: [ AppComponent ]
+@Component({
+  selector: 'kng-header',
+  templateUrl: './header.component.html'
 })
-export class AppModule {
+export class HeaderComponent {
+
+  /**
+   * Create a new header component.
+   */
+  constructor() {
+  }
 }

@@ -1,0 +1,16 @@
+{
+  "$schema": "./node_modules/ng-packagr/package.schema.json",
+  "comments": "none",
+  "licensePath": "../../LICENSE",
+  "dest": "lib",
+  "lib": {
+    "entryFile": "src/index.ts",
+    "umdModuleIds": {
+      "@kangaroo/angular-logger": "kangaroo.angular-logger"
+    }
+  },
+  "languageLevel": [
+    "dom",
+    "es2017"
+  ]
+}

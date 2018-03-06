@@ -1,0 +1,13 @@
+{
+  "$schema": "./node_modules/ng-packagr/package.schema.json",
+  "comments": "none",
+  "dest": "lib",
+  "licensePath": "../../LICENSE",
+  "lib": {
+    "entryFile": "src/index.ts"
+  },
+  "languageLevel": [
+    "dom",
+    "es2017"
+  ]
+}

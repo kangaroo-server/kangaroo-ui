@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-const commonConfig = require('../../common/karma.conf');
+const commonConfig = require('@kangaroo/devkit/karma');
 
 module.exports = function (config) {
 

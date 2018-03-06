@@ -10,15 +10,21 @@
     "url": "https://krotscheck.net/"
   },
   "devDependencies": {
-    "@commitlint/cli": "~6.1.0",
-    "@commitlint/config-conventional": "~6.1.0",
+    "@commitlint/cli": "~6.1.2",
+    "@commitlint/config-conventional": "~6.1.2",
     "commitizen": "~2.9.6",
-    "cz-conventional-changelog": "~2.1.0"
+    "cz-conventional-changelog": "~2.1.0",
+    "wsrun": "~1.7.0"
   },
   "scripts": {
     "cz": "git-cz",
-    "lint": "git log -1 --pretty=%B | commitlint",
-    "clean": "find . -type d -name \"node_modules\" | xargs rm -rf"
+    "prelint": "git log -1 --pretty=%B | commitlint",
+    "lint": "wsrun lint.ci",
+    "nsp": "wsrun nsp --exclude @kangaroo/devkit --collect-output",
+    "build": "wsrun build --stages --fast-exit --collect-output",
+    "test": "wsrun test.ci --fast-exit --serial --exclude @kangaroo/devkit",
+    "clean": "find . -type d -name \"node_modules\" | xargs rm -rf",
+    "pack": "wsrun pack"
   },
   "workspaces": [
     "@kangaroo/*"

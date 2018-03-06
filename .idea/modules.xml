@@ -2,7 +2,14 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/ui.iml" filepath="$PROJECT_DIR$/.idea/ui.iml" />
+      <module fileurl="file://$PROJECT_DIR$/@kangaroo/angular-authn/angular-authn.iml" filepath="$PROJECT_DIR$/@kangaroo/angular-authn/angular-authn.iml" />
+      <module fileurl="file://$PROJECT_DIR$/@kangaroo/angular-browser-storage/angular-browser-storage.iml" filepath="$PROJECT_DIR$/@kangaroo/angular-browser-storage/angular-browser-storage.iml" />
+      <module fileurl="file://$PROJECT_DIR$/@kangaroo/angular-logger/angular-logger.iml" filepath="$PROJECT_DIR$/@kangaroo/angular-logger/angular-logger.iml" />
+      <module fileurl="file://$PROJECT_DIR$/@kangaroo/angular-platform/angular-platform.iml" filepath="$PROJECT_DIR$/@kangaroo/angular-platform/angular-platform.iml" />
+      <module fileurl="file://$PROJECT_DIR$/@kangaroo/authz-ui/authz-ui.iml" filepath="$PROJECT_DIR$/@kangaroo/authz-ui/authz-ui.iml" />
+      <module fileurl="file://$PROJECT_DIR$/@kangaroo/devkit/devkit.iml" filepath="$PROJECT_DIR$/@kangaroo/devkit/devkit.iml" />
+      <module fileurl="file://$PROJECT_DIR$/@kangaroo/jwt/jwt.iml" filepath="$PROJECT_DIR$/@kangaroo/jwt/jwt.iml" />
+      <module fileurl="file://$PROJECT_DIR$/root.iml" filepath="$PROJECT_DIR$/root.iml" />
     </modules>
   </component>
 </project>
