@@ -13,8 +13,23 @@
  *
  * See the License for the specific language governing permissions and
  * limitations under the License.
- *
  */
 
-export * from './admin';
-export * from './oauth2';
+import { LocalStorageSubject } from '@kangaroo/rxjs-storage';
+import { OAuth2Token } from './model/o-auth2-token';
+
+/**
+ * This subject contains our OAuth2 token in its raw form.
+ *
+ * @author Michael Krotscheck
+ */
+export class OAuth2TokenSubject extends LocalStorageSubject<OAuth2Token> {
+
+  /**
+   * Create a new token subject.
+   */
+  constructor() {
+    /* istanbul ignore next */
+    super('_kangaroo_token');
+  }
+}

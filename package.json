@@ -19,7 +19,8 @@
   "scripts": {
     "cz": "git-cz",
     "prelint": "git log -1 --pretty=%B | commitlint",
-    "lint": "wsrun lint.ci",
+    "lint.ci": "wsrun lint.ci",
+    "lint": "wsrun lint --serial",
     "nsp": "wsrun nsp --exclude @kangaroo/devkit --collect-output",
     "build": "wsrun build --stages --fast-exit --collect-output",
     "test": "wsrun test.ci --fast-exit --serial --exclude @kangaroo/devkit",

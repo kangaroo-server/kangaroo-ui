@@ -32,7 +32,8 @@
   "test": {
     "codeCoverage": {
       "exclude": [
-        "../angular-platform/**/*"
+        "../angular-platform/**/*",
+        "../rxjs-storage/**/*"
       ]
     },
     "karma": {

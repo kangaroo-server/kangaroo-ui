@@ -1,0 +1,65 @@
+/*
+ * Copyright (c) 2018 Michael Krotscheck
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License. You may obtain a copy
+ * of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+import { Injectable } from '@angular/core';
+import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
+import { OAuth2TokenSubject } from './o-auth2-token.subject';
+import { Observable } from 'rxjs/Observable';
+import { TokenUtil } from './util/token.util';
+
+/**
+ * This subject contains our OAuth2 token in its raw form.
+ *
+ * @author Michael Krotscheck
+ */
+@Injectable()
+export class OAuth2HttpInterceptor implements HttpInterceptor {
+
+  /**
+   * New instance.
+   *
+   * @param tokenSubject The oauth2 authorization token subject.
+   */
+  public constructor(private tokenSubject: OAuth2TokenSubject) {
+
+  }
+
+  /**
+   * If available, annotate the request.
+   *
+   * @param req The current request.
+   * @param next The next handler in the chain.
+   * @returns The responding event broker.
+   */
+  public intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    return this.tokenSubject
+      .map((t) => {
+        if (TokenUtil.isValid(t)) {
+          // If we have a valid token, attach it.
+          return req.clone({
+            setHeaders: {
+              'Authorization': `${t.token_type} ${t.access_token}`
+            }
+          });
+        } else {
+          // Otherwise, pass it through.
+          return req;
+        }
+      })
+      .mergeMap(r => next.handle(r));
+  }
+}

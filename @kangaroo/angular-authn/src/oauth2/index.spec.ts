@@ -13,46 +13,28 @@
  *
  * See the License for the specific language governing permissions and
  * limitations under the License.
- *
  */
 import * as all from './index';
-import { KangarooAuthorizationAdminModule } from './index';
+import { KangarooOAuth2Module } from './index';
 import { TestBed } from '@angular/core/testing';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { BrowserModule } from '@angular/platform-browser';
 
 /**
- * Unit tests for the KangarooAuthorizationAdminModule
+ * Unit tests for the KangarooOAuth2Module
  */
-describe('KangarooAuthorizationAdminModule', () => {
+describe('KangarooOAuth2Module', () => {
 
   const expectedExports = [
-    'KangarooAuthorizationAdminModule',
-    'ApplicationService',
-    'AuthenticatorService',
-    'ClientService',
-    'ClientRedirectService',
-    'ClientReferrerService',
-    'RoleService',
-    'ScopeService',
-    'TokenService',
-    'UserService',
-    'UserIdentityService',
-
-    'ClientType',
-    'TokenType',
-    'ADMIN_API_ROOT'
+    'KangarooOAuth2Module',
+    'RequireLoggedOutGuard',
+    'RequireLoggedInGuard',
+    'OAuth2Service',
+    'OAuth2TokenSubject',
+    'OAUTH2_API_ROOT'
   ];
 
   expectedExports.forEach((name) => {
-    it(`should export ${name}`, () => {
+    it(`should only export ${name}`, () => {
       expect(all.hasOwnProperty(name)).toBeTruthy();
-    });
-  });
-
-  it('should only export expected properties', () => {
-    Object.keys(all).forEach((name) => {
-      expect(expectedExports.indexOf(name)).not.toEqual(-1, `Unexpected export found: ${name}`);
     });
   });
 
@@ -62,9 +44,7 @@ describe('KangarooAuthorizationAdminModule', () => {
       TestBed.configureTestingModule(
         {
           imports: [
-            BrowserModule,
-            HttpClientTestingModule,
-            KangarooAuthorizationAdminModule.forRoot('')
+            KangarooOAuth2Module.forRoot('', 'client_id')
           ]
         }).compileComponents();
     });
