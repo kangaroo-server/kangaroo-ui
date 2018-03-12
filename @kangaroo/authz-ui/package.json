@@ -20,26 +20,26 @@
     "nsp": "nsp check ./"
   },
   "devDependencies": {
-    "@angular/cli": "~1.7.1",
+    "@angular/cli": "~1.7.3",
     "@kangaroo/devkit": "~1.0.0"
   },
   "dependencies": {
-    "@angular/animations": "~5.2.6",
-    "@angular/common": "~5.2.6",
-    "@angular/core": "~5.2.6",
-    "@angular/forms": "~5.2.6",
-    "@angular/platform-browser": "~5.2.6",
-    "@angular/platform-browser-dynamic": "~5.2.6",
-    "@angular/router": "~5.2.6",
-    "@clr/angular": "~0.11.7-patch.1",
-    "@clr/icons": "~0.11.7-patch.1",
-    "@clr/ui": "~0.11.7-patch.1",
+    "@angular/animations": "~5.2.8",
+    "@angular/common": "~5.2.8",
+    "@angular/core": "~5.2.8",
+    "@angular/forms": "~5.2.8",
+    "@angular/platform-browser": "~5.2.8",
+    "@angular/platform-browser-dynamic": "~5.2.8",
+    "@angular/router": "~5.2.8",
+    "@clr/angular": "~0.11.8",
+    "@clr/icons": "~0.11.8",
+    "@clr/ui": "~0.11.8",
     "@kangaroo/angular-authn": "~1.0.0",
     "@kangaroo/angular-logger": "~1.0.0",
     "@kangaroo/angular-platform": "~1.0.0",
     "@webcomponents/custom-elements": "~1.0.8",
     "mutationobserver-shim": "~0.3.2",
-    "rxjs": "~5.5.6",
+    "rxjs": "~5.5.7",
     "web-animations-js": "~2.3.1",
     "zone.js": "~0.8.20"
   }
