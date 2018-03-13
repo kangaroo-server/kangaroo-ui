@@ -23,15 +23,15 @@
     "nsp": "nsp check ./"
   },
   "devDependencies": {
-    "@angular/cli": "~1.7.1",
+    "@angular/cli": "~1.7.3",
     "@kangaroo/devkit": "~1.0.0"
   },
   "dependencies": {
-    "@angular/common": "~5.2.6",
-    "@angular/core": "~5.2.6",
-    "@angular/platform-browser": "~5.2.6",
-    "@angular/platform-browser-dynamic": "~5.2.6",
-    "rxjs": "~5.5.6",
+    "@angular/common": "~5.2.8",
+    "@angular/core": "~5.2.8",
+    "@angular/platform-browser": "~5.2.8",
+    "@angular/platform-browser-dynamic": "~5.2.8",
+    "rxjs": "~5.5.7",
     "zone.js": "~0.8.20"
   }
 }

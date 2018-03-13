@@ -1,0 +1,30 @@
+{
+  "name": "@kangaroo/rxjs-storage",
+  "version": "1.0.0",
+  "description": "rx/js abstractions for localStorage and sessionStorage.",
+  "license": "Apache-2.0",
+  "author": {
+    "name": "Michael Krotscheck",
+    "email": "krotscheck@gmail.com",
+    "url": "https://krotscheck.net/"
+  },
+  "typings": "lib/kangaroo-rxjs-storage.d.ts",
+  "main": "lib/bundles/kangaroo-rxjs-storage.umd.js",
+  "module": "lib/esm5/kangaroo-rxjs-storage.js",
+  "es2015": "lib/esm2015/kangaroo-rxjs-storage.js",
+  "metadata": "lib/kangaroo-rxjs-storage.metadata.json",
+  "scripts": {
+    "test": "karma start ./karma.conf.js",
+    "test.ci": "karma start ./karma.conf.js --single-run",
+    "lint": "tslint -p ./src/tsconfig.json",
+    "lint.ci": "tslint -p ./src/tsconfig.json --format checkstyle --force > ./reports/checkstyle-result.xml",
+    "build": "ng-packagr -p ng-package.json",
+    "nsp": "nsp check ./"
+  },
+  "devDependencies": {
+    "@kangaroo/devkit": "~1.0.0"
+  },
+  "dependencies": {
+    "rxjs": "~5.5.7"
+  }
+}

@@ -10,6 +10,7 @@
       <module fileurl="file://$PROJECT_DIR$/@kangaroo/devkit/devkit.iml" filepath="$PROJECT_DIR$/@kangaroo/devkit/devkit.iml" />
       <module fileurl="file://$PROJECT_DIR$/@kangaroo/jwt/jwt.iml" filepath="$PROJECT_DIR$/@kangaroo/jwt/jwt.iml" />
       <module fileurl="file://$PROJECT_DIR$/root.iml" filepath="$PROJECT_DIR$/root.iml" />
+      <module fileurl="file://$PROJECT_DIR$/@kangaroo/rxjs-storage/rxjs-storage.iml" filepath="$PROJECT_DIR$/@kangaroo/rxjs-storage/rxjs-storage.iml" />
     </modules>
   </component>
 </project>
