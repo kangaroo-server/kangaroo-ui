@@ -6,6 +6,11 @@ pipeline {
 
     agent { label 'worker' }
 
+    options {
+        buildDiscarder(logRotator(numToKeepStr:'10'))
+        ansiColor('xterm')
+    }
+
     stages {
 
         /**
