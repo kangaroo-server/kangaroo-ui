@@ -49,6 +49,12 @@
     }
   ],
   "test": {
+    "codeCoverage": {
+      "exclude": [
+        "../angular-*/**/*",
+        "../rxjs-storage/**/*"
+      ]
+    },
     "karma": {
       "config": "./karma.conf.js"
     }

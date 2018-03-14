@@ -35,11 +35,6 @@ import { HttpClientTestingModule, HttpTestingController } from '@angular/common/
  */
 describe('Resource', () => {
 
-  const validEntity: CommonModel = {
-    id: 'test_id',
-    createdDate: 10000,
-    modifiedDate: 20000
-  };
   const parentEntity: CommonModel = {
     id: 'parent_id',
     createdDate: 10000,

@@ -44,7 +44,7 @@ pipeline {
                             sh('yarn nsp')
                         },
                         "lint": {
-                            sh('yarn lint')
+                            sh('yarn lint.ci')
                         },
                         "test": {
                             sh('yarn test')

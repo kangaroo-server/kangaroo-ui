@@ -16,7 +16,7 @@
  *
  */
 
-import { NgModule } from '@angular/core';
+import { ModuleWithProviders, NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { ApplicationService } from './application.service';
@@ -29,6 +29,7 @@ import { ScopeService } from './scope.service';
 import { TokenService } from './token.service';
 import { UserService } from './user.service';
 import { UserIdentityService } from './user-identity.service';
+import { ADMIN_API_ROOT } from './admin-api-root';
 
 export { ApplicationService } from './application.service';
 export { AuthenticatorService } from './authenticator.service';
@@ -63,4 +64,19 @@ export * from './admin-api-root';
   ]
 })
 export class KangarooAuthorizationAdminModule {
+  /**
+   * A convenience constructor for applications that want to manage their api roots
+   * via the environment parameters.
+   *
+   * @param baseUrl The relative-or-absolute URL that is the base from which all OAuth2 urls are built.
+   * @returns The extended module, for import.
+   */
+  public static forRoot(baseUrl: string): ModuleWithProviders {
+    return {
+      ngModule: KangarooAuthorizationAdminModule,
+      providers: [
+        {provide: ADMIN_API_ROOT, useValue: [ baseUrl ]}
+      ]
+    };
+  }
 }
