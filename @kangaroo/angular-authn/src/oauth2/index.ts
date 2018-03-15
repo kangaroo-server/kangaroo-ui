@@ -26,11 +26,13 @@ import { RequireLoggedOutGuard } from './require-logged-out.guard';
 import { ModuleWithProviders, NgModule } from '@angular/core';
 import { OAuth2Service } from './o-auth2.service';
 import { OAUTH2_API_ROOT, OAUTH2_CLIENT_ID, OAUTH2_CLIENT_SCOPES } from './contracts';
+import { OAuth2TokenDetailsSubject } from './o-auth2-token-details.subject';
 
 export { OAuth2Token } from './model/o-auth2-token';
 export { OAuth2TokenDetails } from './model/o-auth2-token-details';
 export { OAuth2Service } from './o-auth2.service';
 export { OAuth2TokenSubject } from './o-auth2-token.subject';
+export { OAuth2TokenDetailsSubject } from './o-auth2-token-details.subject';
 export { RequireLoggedInGuard } from './require-logged-in.guard';
 export { RequireLoggedOutGuard } from './require-logged-out.guard';
 export * from './contracts';
@@ -49,6 +51,7 @@ export * from './contracts';
     RequireLoggedInGuard,
     RequireLoggedOutGuard,
     OAuth2TokenSubject,
+    OAuth2TokenDetailsSubject,
     OAuth2Service
   ]
 })
