@@ -8,6 +8,11 @@
     "email": "krotscheck@gmail.com",
     "url": "https://krotscheck.net/"
   },
+  "typings": "lib/kangaroo-angular-authn.d.ts",
+  "main": "lib/bundles/kangaroo-angular-authn.umd.js",
+  "module": "lib/esm5/kangaroo-angular-authn.js",
+  "es2015": "lib/esm2015/kangaroo-angular-authn.js",
+  "metadata": "lib/kangaroo-angular-authn.metadata.json",
   "scripts": {
     "test": "ng test --code-coverage",
     "test.ci": "ng test --code-coverage -w false",
@@ -21,10 +26,10 @@
     "@kangaroo/devkit": "~1.0.0"
   },
   "dependencies": {
-    "@angular/common": "^5.2.8",
-    "@angular/core": "^5.2.8",
-    "@angular/platform-browser": "^5.2.8",
-    "@angular/platform-browser-dynamic": "^5.2.8",
+    "@angular/common": "^5.2.9",
+    "@angular/core": "^5.2.9",
+    "@angular/platform-browser": "^5.2.9",
+    "@angular/platform-browser-dynamic": "^5.2.9",
     "@kangaroo/angular-platform": "1.0.0",
     "rxjs": "~5.5.7",
     "zone.js": "^0.8.19"
