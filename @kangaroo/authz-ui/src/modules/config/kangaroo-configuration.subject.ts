@@ -16,12 +16,12 @@
  */
 
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpBackend, HttpClient, HttpHeaders } from '@angular/common/http';
 import { AdminApiRoot } from './admin-api-root';
 import { AsyncSubject } from 'rxjs/AsyncSubject';
 import { KangarooConfiguration } from './kangaroo-configuration';
 import 'rxjs/add/operator/finally';
-import 'rxjs/add/operator/mergeMap';
+import 'rxjs/add/operator/switchMap';
 
 /**
  * This subject loads the available configuration from the admin api, and publishes the results to any subscribers.
@@ -32,16 +32,33 @@ import 'rxjs/add/operator/mergeMap';
 export class KangarooConfigurationSubject extends AsyncSubject<KangarooConfiguration> {
 
   /**
+   * Common http headers, usually provided by the interceptors.
+   */
+  private readonly commonHeaders: HttpHeaders = new HttpHeaders({
+    'X-Requested-With': 'Kangaroo-Platform'
+  });
+
+  /**
+   * Privately created http client, so we can bypass any interceptors.
+   */
+  private readonly http: HttpClient;
+
+  /**
    * Create a new instance of the subject.
    *
    * @param apiRoot Api root.
    * @param http Angular's HTTP adapter.
    */
-  constructor(private apiRoot: AdminApiRoot, private http: HttpClient) {
+  constructor(private apiRoot: AdminApiRoot, private backend: HttpBackend) {
     super();
 
+    this.http = new HttpClient(backend);
+
     this.apiRoot
-      .mergeMap((root) => this.http.get<KangarooConfiguration>(`${root}/config`))
+      .switchMap((root) => this.http.get<KangarooConfiguration>(`${root}/config`, {
+        headers: this.commonHeaders,
+        observe: 'body'
+      }))
       .subscribe(
         (config) => this.next(config),
         (err) => this.error(err),
