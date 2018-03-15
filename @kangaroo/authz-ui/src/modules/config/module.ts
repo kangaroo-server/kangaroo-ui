@@ -20,6 +20,12 @@ import { KangarooConfigurationSubject } from './kangaroo-configuration.subject';
 import { AdminApiRoot } from './admin-api-root';
 import { OAuthApiRoot } from './oauth-api-root';
 import { HttpClientModule } from '@angular/common/http';
+import {
+  adminApiRootProvider,
+  clientIdProvider,
+  clientScopesProvider,
+  oauthApiRootProvider
+} from './angular-authn-contracts';
 
 /**
  * This module handles system configuration, environment detection, and all related
@@ -31,7 +37,12 @@ import { HttpClientModule } from '@angular/common/http';
   providers: [
     KangarooConfigurationSubject,
     AdminApiRoot,
-    OAuthApiRoot
+    OAuthApiRoot,
+
+    adminApiRootProvider,
+    oauthApiRootProvider,
+    clientIdProvider,
+    clientScopesProvider
   ],
   imports: [
     HttpClientModule

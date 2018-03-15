@@ -17,7 +17,13 @@
  */
 
 import { Component } from '@angular/core';
+import { LoggedInSubject, OAuth2Service, OAuth2TokenSubject } from '@kangaroo/angular-authn';
 
+/**
+ * The application header.
+ *
+ * @author Michael Krotscheck
+ */
 @Component({
   selector: 'kng-header',
   templateUrl: './header.component.html'
@@ -25,8 +31,26 @@ import { Component } from '@angular/core';
 export class HeaderComponent {
 
   /**
+   * Is the user currently logged in?
+   */
+  public loggedIn = false;
+
+  /**
    * Create a new header component.
    */
-  constructor() {
+  constructor(public loggedInSubject: LoggedInSubject,
+              private tokenSubject: OAuth2TokenSubject,
+              private tokenService: OAuth2Service) {
+    this.loggedInSubject
+      .subscribe((li) => this.loggedIn = li);
+  }
+
+  /**
+   * Issue a token revocation request with the current token.
+   */
+  public logout() {
+    this.tokenSubject
+      .switchMap((token) => this.tokenService.revoke(token))
+      .subscribe();
   }
 }

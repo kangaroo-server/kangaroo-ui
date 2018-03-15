@@ -22,18 +22,48 @@ import { Location } from '@angular/common';
 import { AppComponent } from './app.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { By } from '@angular/platform-browser';
-import { RouterOutlet } from '@angular/router';
+import { NavigationCancel, Router, RouterOutlet } from '@angular/router';
 import { HeaderComponent } from './header.component';
 import { ConfigModule } from '../config';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { NoopComponent } from '@kangaroo/angular-platform';
+import { LoggedInSubject, OAuth2Service, OAuth2Token, OAuth2TokenSubject } from '@kangaroo/angular-authn';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 describe('AppComponent', () => {
+
+  let loggedInSubject: BehaviorSubject<boolean>;
+  let tokenSubject: BehaviorSubject<OAuth2Token>;
+  let tokenService: OAuth2Service;
+
+  const nowInSeconds = Math.floor(Date.now() / 1000);
+  const validToken: OAuth2Token = {
+    access_token: 'access_token_1',
+    refresh_token: 'refresh_token_1',
+    issue_date: nowInSeconds - 100,
+    expires_in: 3600,
+    token_type: 'Bearer'
+  };
+
   beforeEach(() => {
+    loggedInSubject = new BehaviorSubject(true);
+    tokenSubject = new BehaviorSubject(validToken);
+    tokenService = <any> {
+      revoke: () => {
+      }
+    };
+
     TestBed.configureTestingModule({
+      providers: [
+        {provide: LoggedInSubject, useValue: loggedInSubject},
+        {provide: OAuth2TokenSubject, useValue: tokenSubject},
+        {provide: OAuth2Service, useValue: tokenService}
+      ],
       imports: [
         RouterTestingModule.withRoutes([
-          {path: 'configuration-failed', component: NoopComponent}
+          {path: 'configuration-failed', component: NoopComponent},
+          {path: 'login', component: NoopComponent},
+          {path: 'dashboard', component: NoopComponent}
         ]),
         ConfigModule,
         HttpClientTestingModule
@@ -75,5 +105,29 @@ describe('AppComponent', () => {
         .error(null, {status: 404, statusText: 'not found'});
       tick();
       expect(location.path()).toBe('/configuration-failed');
+    })));
+
+  it('should redirect to /login if a /dashboard nav cancels.',
+    async(inject([ Router ], (router) => {
+      TestBed.createComponent(AppComponent);
+      const navSpy = spyOn(router, 'navigateByUrl').and.callThrough();
+      router.events.next(new NavigationCancel(1, '/dashboard', ''));
+      expect(navSpy).toHaveBeenCalledWith('/login');
+    })));
+
+  it('should redirect to /dashboard if a /login nav cancels.',
+    async(inject([ Router ], (router) => {
+      TestBed.createComponent(AppComponent);
+      const navSpy = spyOn(router, 'navigateByUrl').and.callThrough();
+      router.events.next(new NavigationCancel(1, '/login', ''));
+      expect(navSpy).toHaveBeenCalledWith('/dashboard');
+    })));
+
+  it('should automatically navigate to /login if the user logs out.',
+    async(inject([ Router, LoggedInSubject ], (router, loggedIn) => {
+      TestBed.createComponent(AppComponent);
+      const navSpy = spyOn(router, 'navigateByUrl').and.callThrough();
+      loggedIn.next(false);
+      expect(navSpy).toHaveBeenCalledWith('/login');
     })));
 });

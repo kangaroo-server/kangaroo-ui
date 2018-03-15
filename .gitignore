@@ -162,3 +162,4 @@ Temporary Items
 */*/protractor
 */*/karma
 */*/tslint
+.ng_pkg_build

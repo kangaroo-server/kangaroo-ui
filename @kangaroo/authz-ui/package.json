@@ -9,14 +9,14 @@
     "url": "https://krotscheck.net/"
   },
   "scripts": {
-    "prestart": "docker pull krotscheck/kangaroo-authz:latest && docker-compose up -d",
+    "prestart": "docker-compose up -d",
     "start": "ng serve --proxy-config proxy.conf.js --host 0.0.0.0",
     "build": "ng build --prod",
     "test": "ng test --code-coverage",
     "test.ci": "ng test --code-coverage -w false",
     "lint": "ng lint",
     "lint.ci": "ng lint --format checkstyle --force > ./reports/checkstyle-result.xml",
-    "e2e": "ng e2e",
+    "e2e": "ng e2e --proxy-config proxy.conf.js",
     "nsp": "nsp check ./"
   },
   "devDependencies": {

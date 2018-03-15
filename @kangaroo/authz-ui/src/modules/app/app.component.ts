@@ -18,7 +18,9 @@
 
 import { Component } from '@angular/core';
 import { KangarooConfigurationSubject } from '../config';
-import { Router } from '@angular/router';
+import { NavigationCancel, Router } from '@angular/router';
+import { LoggedInSubject } from '@kangaroo/angular-authn';
+import 'rxjs/add/observable/if';
 
 /**
  * Our root application component. Upon initialization, it will make sure that the application has been
@@ -37,14 +39,35 @@ export class AppComponent {
    * On initialization, watch the configuration load. If it fails, redirect
    * to configuration-failed.
    *
-   * @param {KangarooConfigurationSubject} configProvider
-   * @param {Router} router
+   * @param configProvider Configuration Provider.
+   * @param loggedInSubject Is the user logged in?
+   * @param router The router.
    */
   constructor(private configProvider: KangarooConfigurationSubject,
+              private loggedInSubject: LoggedInSubject,
               private router: Router) {
+    // If we cannot configure the application, redirect to /configuration-failed.
     this.configProvider
       .subscribe(
         null,
         () => router.navigateByUrl('/configuration-failed'));
+
+    // If one of our route guards fails, redirect the user to the root of the application.
+    this.router.events
+      .filter((e) => (e instanceof NavigationCancel))
+      .map((e: NavigationCancel) => {
+        switch (e.url) {
+          case '/dashboard':
+            return '/login';
+          default:
+            return '/dashboard';
+        }
+      })
+      .subscribe((nextRoute) => this.router.navigateByUrl(nextRoute));
+
+    // If the user suddenly logs out, redirect to logout.
+    this.loggedInSubject
+      .filter((loggedIn) => !loggedIn)
+      .subscribe(() => this.router.navigateByUrl('/login'));
   }
 }

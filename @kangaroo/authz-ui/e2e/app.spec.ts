@@ -15,21 +15,20 @@
  * limitations under the License.
  *
  */
-import { AppPage } from './app.po';
+import { ApplicationPage } from './pages';
 
 /**
  * Smoke test for project configuration.
  */
 describe('Home page', () => {
-  const page: AppPage = new AppPage();
+  const app = new ApplicationPage();
 
-  beforeEach(() => {
-    page.navigateTo();
+  beforeEach(async () => {
+    await app.navigateTo();
   });
 
-  it('should display the header message', () => {
-    page
-      .getHeaderText()
-      .then((text) => expect(text).toEqual('Kangaroo: Administration'));
+  it('should display the header message', async () => {
+    const headerText = await app.getHeaderText();
+    expect(headerText).toEqual('Kangaroo: Administration');
   });
 });
