@@ -20,7 +20,8 @@ import { Inject, Injectable, Optional } from '@angular/core';
 import { Client, ClientRedirect } from './model';
 import { AbstractSubresourceService } from '@kangaroo/angular-platform';
 import { HttpClient } from '@angular/common/http';
-import { ADMIN_API_ROOT, AdminApiRootProvider } from './admin-api-root';
+import { ADMIN_API_ROOT } from './admin-api-root';
+import { ObservableInput } from 'rxjs/Observable';
 
 /**
  * This class provides a restful API for the client redirect subresource.
@@ -37,7 +38,7 @@ export class ClientRedirectService extends AbstractSubresourceService<Client, Cl
    * @param apiRoot Provider for the admin API root url.
    */
   constructor(http: HttpClient,
-              @Optional() @Inject(ADMIN_API_ROOT) apiRoot: AdminApiRootProvider) {
+              @Optional() @Inject(ADMIN_API_ROOT) apiRoot: ObservableInput<string>) {
     super('client', 'redirect', http, apiRoot);
   }
 }

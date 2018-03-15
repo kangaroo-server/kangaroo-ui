@@ -20,7 +20,8 @@ import { Inject, Injectable, Optional } from '@angular/core';
 import { Application } from './model';
 import { AbstractResourceService } from '@kangaroo/angular-platform';
 import { HttpClient } from '@angular/common/http';
-import { ADMIN_API_ROOT, AdminApiRootProvider } from './admin-api-root';
+import { ADMIN_API_ROOT } from './admin-api-root';
+import { ObservableInput } from 'rxjs/Observable';
 
 /**
  * This class attaches the oauth2 token credentials to API calls.
@@ -37,7 +38,7 @@ export class ApplicationService extends AbstractResourceService<Application> {
    * @param apiRoot Provider for the admin API root url.
    */
   constructor(http: HttpClient,
-              @Optional() @Inject(ADMIN_API_ROOT) apiRoot: AdminApiRootProvider) {
+              @Optional() @Inject(ADMIN_API_ROOT) apiRoot: ObservableInput<string>) {
     super('application', http, apiRoot);
   }
 }

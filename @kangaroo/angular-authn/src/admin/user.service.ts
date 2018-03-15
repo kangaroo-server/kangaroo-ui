@@ -20,7 +20,8 @@ import { Inject, Injectable, Optional } from '@angular/core';
 import { User } from './model';
 import { AbstractResourceService } from '@kangaroo/angular-platform';
 import { HttpClient } from '@angular/common/http';
-import { ADMIN_API_ROOT, AdminApiRootProvider } from './admin-api-root';
+import { ADMIN_API_ROOT } from './admin-api-root';
+import { ObservableInput } from 'rxjs/Observable';
 
 /**
  * This class provides a restful API for the user resource.
@@ -37,7 +38,7 @@ export class UserService extends AbstractResourceService<User> {
    * @param apiRoot Provider for the admin API root url.
    */
   constructor(http: HttpClient,
-              @Optional() @Inject(ADMIN_API_ROOT) apiRoot: AdminApiRootProvider) {
+              @Optional() @Inject(ADMIN_API_ROOT) apiRoot: ObservableInput<string>) {
     super('user', http, apiRoot);
   }
 
