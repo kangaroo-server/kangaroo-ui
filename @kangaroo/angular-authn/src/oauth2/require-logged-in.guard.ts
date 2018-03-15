@@ -21,6 +21,7 @@ import { Observable } from 'rxjs/Observable';
 import { OAuth2TokenSubject } from './o-auth2-token.subject';
 import { Injectable } from '@angular/core';
 import 'rxjs/add/operator/filter';
+import { TokenUtil } from './util/token.util';
 
 /**
  * Ths route guard ensures that the user is correctly 'logged in'; i.e. has a valid token.
@@ -44,10 +45,6 @@ export class RequireLoggedInGuard implements CanActivate {
    * @return An observable, resolving to true if the token indicates the user is logged in.
    */
   public canActivate(): Observable<boolean> {
-    return this.tokenSubject
-      .map(t => {
-        const nowInSeconds = Math.floor(Date.now() / 1000);
-        return t != null && t.issue_date + t.expires_in > nowInSeconds;
-      });
+    return this.tokenSubject.map(t => TokenUtil.isValid(t));
   }
 }

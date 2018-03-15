@@ -159,12 +159,15 @@ export class OAuth2Service {
 
       const refreshRequest = Observable
         .combineLatest(this.tokenRoot, refreshParams)
+        .first()
         .flatMap(([ url, params ]) => this.http.post<OAuth2Token>(url, params, {
           observe: 'body',
           headers: this.commonHeaders
         }))
-        .do((newToken) => this.subject.next(newToken))
         .first()
+        .do(
+          (newToken) => this.subject.next(newToken),
+          () => this.subject.next(null))
         .share();
 
       this.refreshRequests.set(token.refresh_token, refreshRequest);
