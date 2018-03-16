@@ -34,7 +34,7 @@ describe('OAuth2Service', () => {
   const mockToken1: OAuth2Token = {
     access_token: 'access_token_1',
     token_type: 'Bearer',
-    issue_date: nowInSeconds - 1000,
+    issue_date: null,
     expires_in: 2000,
     refresh_token: 'refresh_token_1',
     scope: 'scope-1 scope-2'
@@ -42,7 +42,7 @@ describe('OAuth2Service', () => {
   const mockToken2: OAuth2Token = {
     access_token: 'access_token_2',
     token_type: 'Bearer',
-    issue_date: nowInSeconds - 1000,
+    issue_date: null,
     expires_in: 2000,
     refresh_token: 'refresh_token_2',
     scope: 'scope-1 scope-2'
@@ -76,6 +76,17 @@ describe('OAuth2Service', () => {
     // do nothing.
   }
 
+  /**
+   * Test two tokens, omitting the issue date.
+   */
+  function tokenEquals(token1: OAuth2Token, token2: OAuth2Token) {
+    expect(token1.refresh_token).toEqual(token2.refresh_token);
+    expect(token1.access_token).toEqual(token2.access_token);
+    expect(token1.token_type).toEqual(token2.token_type);
+    expect(token1.expires_in).toEqual(token2.expires_in);
+    expect(token1.scope).toEqual(token2.scope);
+  }
+
   beforeEach(() => {
     tokenSubject = new BehaviorSubject<OAuth2Token>(undefined);
     scopeSubject = new BehaviorSubject<string[]>([ 'scope-1', 'scope-2' ]);
@@ -107,11 +118,11 @@ describe('OAuth2Service', () => {
   describe('login', () => {
     it('should respect the value of the root API',
       async(inject([ HttpTestingController, OAuth2Service ], (http, service) => {
-        service.login('user', 'password').subscribe((value) => expect(value).toEqual(mockToken1));
+        service.login('user', 'password').subscribe((value) => tokenEquals(value, mockToken1));
         http.expectOne({url: '/token', method: 'POST'}).flush(mockToken1);
 
         mockApiRoot.next('/oauth2');
-        service.login('user', 'password').subscribe((value) => expect(value).toEqual(mockToken1));
+        service.login('user', 'password').subscribe((value) => tokenEquals(value, mockToken1));
         http.expectOne({url: '/oauth2/token', method: 'POST'}).flush(mockToken1);
       })));
 
@@ -119,7 +130,7 @@ describe('OAuth2Service', () => {
       async(inject([ HttpTestingController, OAuth2Service, OAUTH2_CLIENT_SCOPES ], (http, service, scopes) => {
         scopes.next(null);
         service.login('user', 'password')
-          .subscribe((value) => expect(value).toEqual(mockToken1));
+          .subscribe((value) => tokenEquals(value, mockToken1));
         const testRequest: TestRequest = http.expectOne({url: '/token', method: 'POST'});
         expect(testRequest.request.detectContentTypeHeader()).toContain('application/x-www-form-urlencoded');
 
@@ -155,10 +166,18 @@ describe('OAuth2Service', () => {
 
     it('should update the subject on success',
       async(inject([ HttpTestingController, OAuth2Service, OAuth2TokenSubject ], (http, service, subject) => {
-        service.login('user', 'password').subscribe((value) => expect(value).toEqual(mockToken1));
+        service.login('user', 'password').subscribe((value) => tokenEquals(value, mockToken1));
         http.expectOne({url: '/token', method: 'POST'}).flush(mockToken1);
 
-        expect(subject.value).toEqual(mockToken1);
+        tokenEquals(subject.value, mockToken1);
+      })));
+
+    it('should decorate the returned token with a date.',
+      async(inject([ HttpTestingController, OAuth2Service, OAuth2TokenSubject ], (http, service, subject) => {
+        service.login('user', 'password')
+          .subscribe((value) => expect(value.issue_date).toBeTruthy());
+        http.expectOne({url: '/token', method: 'POST'})
+          .flush(mockToken1, {headers: {'Date': new Date().toUTCString()}});
       })));
 
     it('should throw an error on failure',
@@ -173,11 +192,11 @@ describe('OAuth2Service', () => {
   describe('refresh', () => {
     it('should respect the value of the root API',
       async(inject([ HttpTestingController, OAuth2Service ], (http, service) => {
-        service.refresh(mockToken1).subscribe((value) => expect(value).toEqual(mockToken2));
+        service.refresh(mockToken1).subscribe((value) => tokenEquals(value, mockToken2));
         http.expectOne({url: '/token', method: 'POST'}).flush(mockToken2);
 
         mockApiRoot.next('/oauth2');
-        service.refresh(mockToken2).subscribe((value) => expect(value).toEqual(mockToken1));
+        service.refresh(mockToken2).subscribe((value) => tokenEquals(value, mockToken1));
         http.expectOne({url: '/oauth2/token', method: 'POST'}).flush(mockToken1);
       })));
 
@@ -212,17 +231,17 @@ describe('OAuth2Service', () => {
     it('should update the subject on success',
       async(inject([ HttpTestingController, OAuth2Service, OAuth2TokenSubject ], (http, service, subject) => {
         subject.next(mockToken1);
-        service.refresh(mockToken1).subscribe((value) => expect(value).toEqual(mockToken2));
+        service.refresh(mockToken1).subscribe((value) => tokenEquals(value, mockToken2));
         http.expectOne({url: '/token', method: 'POST'}).flush(mockToken2);
-        expect(subject.value).toEqual(mockToken2);
+        tokenEquals(subject.value, mockToken2);
       })));
 
     it('should block when multiple refresh requests fire at the same time',
       async(inject([ HttpTestingController, OAuth2Service ], (http, service) => {
         service.refresh(mockToken1)
-          .subscribe((value) => expect(value).toEqual(mockToken2));
+          .subscribe((value) => tokenEquals(value, mockToken2));
         service.refresh(mockToken1)
-          .subscribe((value) => expect(value).toEqual(mockToken2));
+          .subscribe((value) => tokenEquals(value, mockToken2));
         http.expectOne({url: '/token', method: 'POST'}).flush(mockToken2);
         http.verify();
       })));
@@ -234,6 +253,14 @@ describe('OAuth2Service', () => {
         http.expectOne({url: '/token', method: 'POST'})
           .error({}, {status: 401, statusText: 'Unauthorized'});
         http.verify();
+      })));
+
+    it('should decorate the returned token with a date.',
+      async(inject([ HttpTestingController, OAuth2Service, OAuth2TokenSubject ], (http, service, subject) => {
+        service.refresh(mockToken1)
+          .subscribe((value) => expect(value.issue_date).toBeTruthy());
+        http.expectOne({url: '/token', method: 'POST'})
+          .flush(mockToken1, {headers: {'Date': new Date().toUTCString()}});
       })));
   });
 
