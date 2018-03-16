@@ -23,7 +23,7 @@ import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/share';
 import 'rxjs/add/observable/if';
 import 'rxjs/add/observable/combineLatest';
-import { HttpBackend, HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { HttpBackend, HttpClient, HttpHeaders, HttpParams, HttpResponse } from '@angular/common/http';
 import { OAuth2TokenSubject } from './o-auth2-token.subject';
 import { OAUTH2_API_ROOT, OAUTH2_CLIENT_ID, OAUTH2_CLIENT_SCOPES } from './contracts';
 import { OAuth2Token } from './model/o-auth2-token';
@@ -127,10 +127,11 @@ export class OAuth2Service {
 
     return Observable
       .combineLatest(this.tokenRoot, loginParams)
-      .flatMap(([ url, params ]) => this.http.post<OAuth2Token>(url, params, {
-        observe: 'body',
+      .flatMap(([ url, params ]) => this.http.post(url, params, {
+        observe: 'response',
         headers: this.commonHeaders
       }))
+      .map((response: HttpResponse<OAuth2Token>) => this.annotateResponseDate(response))
       .do((token) => this.subject.next(token))
       .first();
   }
@@ -160,11 +161,11 @@ export class OAuth2Service {
       const refreshRequest = Observable
         .combineLatest(this.tokenRoot, refreshParams)
         .first()
-        .flatMap(([ url, params ]) => this.http.post<OAuth2Token>(url, params, {
-          observe: 'body',
+        .switchMap(([ url, params ]) => this.http.post(url, params, {
+          observe: 'response',
           headers: this.commonHeaders
         }))
-        .first()
+        .map((response: HttpResponse<OAuth2Token>) => this.annotateResponseDate(response))
         .do(
           (newToken) => this.subject.next(newToken),
           () => this.subject.next(null))
@@ -239,5 +240,23 @@ export class OAuth2Service {
       .first()
       .map((response) => response.status === 205)
       .do(() => this.subject.next(null));
+  }
+
+  /**
+   * Given an HTTP response with a valid oauth2 token, this method extracts the Date header of the response
+   * and annotates the token with it, so we have an accurate representation of when the token expires.
+   *
+   * @param response The response to parse.
+   * @returns The parsed OAuth2 Token.
+   */
+  private annotateResponseDate(response: HttpResponse<OAuth2Token>): OAuth2Token {
+    let dateInMillis = Date.now();
+    try {
+      dateInMillis = Date.parse(response.headers.get('Date'));
+    } catch (e) {
+      // do nothing, fall back to the other value.
+    }
+
+    return Object.assign({}, response.body, {issue_date: Math.floor(dateInMillis / 1000)});
   }
 }

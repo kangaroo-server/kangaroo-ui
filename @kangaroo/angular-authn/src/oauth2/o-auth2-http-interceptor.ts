@@ -72,6 +72,7 @@ export class OAuth2HttpInterceptor implements HttpInterceptor {
    * @returns The annotated request.
    */
   private addToken(req: HttpRequest<any>, token: OAuth2Token): HttpRequest<any> {
+    console.log(token);
     if (!TokenUtil.isValid(token)) {
       return req;
     }

@@ -32,7 +32,9 @@ describe('OAuth2HttpInterceptor', () => {
 
   let testSubject: BehaviorSubject<OAuth2Token>;
   const testUrl = 'https://example.com'; // tslint:disable-line
-  const nowInSeconds = Math.floor(Date.now() / 1000);
+  const now = new Date();
+  const nowInSeconds = Math.floor(now.getTime() / 1000);
+
   const validToken1: OAuth2Token = {
     access_token: 'access_token_1',
     refresh_token: 'refresh_token_1',
@@ -126,7 +128,7 @@ describe('OAuth2HttpInterceptor', () => {
       http.expectOne(testUrl).flush({}, {status: 200, statusText: 'OK'});
       http.verify();
 
-      expect(subject.value).toEqual(validToken2);
+      expect(subject.value.access_token).toEqual(validToken2.access_token);
     })));
 
   it('should block multiple requests during a refresh cycle',
@@ -137,7 +139,7 @@ describe('OAuth2HttpInterceptor', () => {
       client.get(testUrl).subscribe((result) => expect(result).toBeDefined(), fail);
       http.expectOne(testUrl).error(null, {status: 401, statusText: 'Unauthorized'});
       http.expectOne('/token').flush(validToken2);
-      expect(subject.value).toEqual(validToken2);
+      expect(subject.value.access_token).toEqual(validToken2.access_token);
 
       const testRequests = http.match(testUrl);
       expect(testRequests.length).toEqual(2);
@@ -149,7 +151,8 @@ describe('OAuth2HttpInterceptor', () => {
   it('should do nothing if a non-401 error is detected',
     async(inject([ HttpClient, HttpTestingController, OAuth2TokenSubject ], (client, http, subject) => {
       subject.next(validToken1);
-      client.get(testUrl).subscribe(fail, () => {});
+      client.get(testUrl).subscribe(fail, () => {
+      });
       http.expectOne(testUrl).error(null, {status: 400, statusText: 'Bad Request'});
       http.verify();
     })));
