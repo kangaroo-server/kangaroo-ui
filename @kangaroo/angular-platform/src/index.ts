@@ -13,14 +13,17 @@
  *
  * See the License for the specific language governing permissions and
  * limitations under the License.
- *
  */
 
-import { NgModule } from '@angular/core';
+import { APP_INITIALIZER, Injector, NgModule } from '@angular/core';
 import { CsrfHttpInterceptor } from './http/csrf.http-interceptor';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { locationInitializer } from './router_util';
+import { NoopComponent } from './noop/noop.component';
+import { CommonModule } from '@angular/common';
 
 export * from './api';
+export { NoopComponent } from './noop/noop.component';
 
 /**
  * This module contains injectees and abstract classes that are consistent
@@ -30,7 +33,17 @@ export * from './api';
  */
 @NgModule({
   providers: [
-    {provide: HTTP_INTERCEPTORS, multi: true, useClass: CsrfHttpInterceptor}
+    {provide: HTTP_INTERCEPTORS, multi: true, useClass: CsrfHttpInterceptor},
+    {provide: APP_INITIALIZER, multi: true, useFactory: locationInitializer, deps: [ Injector ]}
+  ],
+  imports: [
+    CommonModule
+  ],
+  declarations: [
+    NoopComponent
+  ],
+  exports: [
+    NoopComponent
   ]
 })
 export class KangarooPlatformModule {

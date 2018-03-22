@@ -7,7 +7,7 @@ pipeline {
     agent { label 'worker' }
 
     options {
-        buildDiscarder(logRotator(numToKeepStr:'10'))
+        buildDiscarder(logRotator(numToKeepStr: '10'))
         ansiColor('xterm')
     }
 
@@ -21,7 +21,7 @@ pipeline {
                 sh 'env'
                 sh 'node --version'
                 sh 'yarn --version'
-                sh 'chromium-browser --version'
+                sh 'google-chrome --version'
             }
         }
 
@@ -87,6 +87,10 @@ pipeline {
          * Actions always to run at the end of a pipeline.
          */
         always {
+            archiveArtifacts([
+                    artifacts        : '**/yarn-error.log',
+                    allowEmptyArchive: true
+            ])
 
             checkstyle([
                     canComputeNew      : false,

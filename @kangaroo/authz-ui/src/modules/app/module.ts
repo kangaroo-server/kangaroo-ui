@@ -26,7 +26,6 @@ import { RouterModule } from '@angular/router';
 import { HeaderComponent } from './header.component';
 import { AppComponent } from './app.component';
 import { ROUTES } from './routes';
-import { NoopComponent } from './noop.component';
 import { RouterOutletComponent } from './router-outlet.component';
 import { ConfigurationFailedGuard } from './configuration-failed/configuration-failed.guard';
 import { ConfigurationSucceededGuard } from './configuration-failed/configuration-succeeded.guard';
@@ -34,6 +33,7 @@ import { CannotConfigureComponent } from './configuration-failed/cannot-configur
 
 import { ConfigModule } from '../config';
 import { ErrorModule } from '../error';
+import { KangarooPlatformModule } from '@kangaroo/angular-platform';
 
 /**
  * This module contains all the components of the application shell, including header, configuration error cases,
@@ -43,6 +43,7 @@ import { ErrorModule } from '../error';
  */
 @NgModule({
   imports: [
+    KangarooPlatformModule,
     BrowserAnimationsModule,
     CommonModule,
     BrowserModule,
@@ -59,7 +60,6 @@ import { ErrorModule } from '../error';
   declarations: [
     HeaderComponent,
     AppComponent,
-    NoopComponent,
     RouterOutletComponent,
     CannotConfigureComponent
   ],

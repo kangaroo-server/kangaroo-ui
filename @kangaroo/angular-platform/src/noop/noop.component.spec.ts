@@ -36,4 +36,10 @@ describe('NoopComponent', () => {
     const fixture = TestBed.createComponent(NoopComponent);
     expect(fixture).toBeDefined();
   });
+
+  it('should contain a friendly note', () => {
+    const fixture = TestBed.createComponent(NoopComponent);
+    expect(fixture.debugElement.nativeElement.textContent)
+      .toContain('This page intentionally left blank.');
+  });
 });

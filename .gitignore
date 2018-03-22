@@ -159,3 +159,6 @@ Temporary Items
 */*/lib
 */*/reports/
 !*/*/reports/.gitkeep
+*/*/protractor
+*/*/karma
+*/*/tslint
