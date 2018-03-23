@@ -16,7 +16,7 @@
  *
  */
 
-exports.config = Object.assign({}, require('@kangaroo/devkit/protractor'),
+exports.config = Object.assign({}, require('@kangaroo/devkit/protractor').config,
     {
         specs: ['./e2e/**/*.spec.ts']
     }

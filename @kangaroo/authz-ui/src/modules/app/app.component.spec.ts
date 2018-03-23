@@ -26,7 +26,7 @@ import { RouterOutlet } from '@angular/router';
 import { HeaderComponent } from './header.component';
 import { ConfigModule } from '../config';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-import { NoopComponent } from './noop.component';
+import { NoopComponent } from '@kangaroo/angular-platform';
 
 describe('AppComponent', () => {
   beforeEach(() => {
