@@ -23,15 +23,24 @@
   },
   "devDependencies": {
     "@angular/cli": "~1.7.3",
-    "@kangaroo/devkit": "~1.0.0"
-  },
-  "dependencies": {
     "@angular/common": "^5.2.9",
     "@angular/core": "^5.2.9",
     "@angular/platform-browser": "^5.2.9",
     "@angular/platform-browser-dynamic": "^5.2.9",
     "@kangaroo/angular-platform": "1.0.0",
-    "rxjs": "~5.5.7",
+    "@kangaroo/devkit": "~1.0.0",
+    "@kangaroo/rxjs-storage": "1.0.0",
+    "rxjs": "~5.5.8",
+    "zone.js": "^0.8.19"
+  },
+  "peerDependencies": {
+    "@angular/common": "^5.2.9",
+    "@angular/core": "^5.2.9",
+    "@angular/platform-browser": "^5.2.9",
+    "@angular/platform-browser-dynamic": "^5.2.9",
+    "@kangaroo/angular-platform": "1.0.0",
+    "@kangaroo/rxjs-storage": "1.0.0",
+    "rxjs": "~5.5.8",
     "zone.js": "^0.8.19"
   }
 }
