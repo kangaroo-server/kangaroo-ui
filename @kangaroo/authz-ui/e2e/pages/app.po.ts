@@ -15,35 +15,46 @@
  * limitations under the License.
  */
 
-import { browser, by, element } from 'protractor';
-import { By, promise, until } from 'selenium-webdriver';
+import { browser, by, element, ElementFinder } from 'protractor';
+import { ProtractorUtil } from '../util/protractor.util';
 
 /**
- * The root application page.
+ * The application page.
  */
-export class AppPage {
+export class ApplicationPage {
 
   /**
    * Navigate to the base application.
    *
    * @returns A control-flow-supporting promise.
    */
-  public navigateTo() {
-    const driver = browser.driver;
-    const url = browser.baseUrl;
-
-    return driver.getCurrentUrl()
-      .then((current) => current.indexOf(url) > -1)
-      .then((isLoaded) => <any> (isLoaded ? promise.fullyResolved(true) : driver.get(url)))
-      .then(() => driver.wait(until.elementLocated(By.css('kng-header'))))
-      .then((e) => driver.wait(until.elementIsVisible(e)))
-      .then(() => true);
+  public async navigateTo(): Promise<void> {
+    return ProtractorUtil.navigateTo(browser.baseUrl);
   }
 
   /**
    * Get the header text.
    */
-  public getHeaderText(): promise.Promise<string> {
+  public async getHeaderText(): Promise<string> {
     return element(by.css('kng-header #title')).getText();
+  }
+
+  /**
+   * Get a reference to the logout button.
+   *
+   * @returns The logout button. May not exist.
+   */
+  public async getLogoutButton(): Promise<ElementFinder> {
+    return element(by.id('logout_button'));
+  }
+
+  /**
+   * Get a reference to the logout button.
+   *
+   * @returns The logout button. May not exist.
+   */
+  public async logout(): Promise<void> {
+    const button = await this.getLogoutButton();
+    return button.click();
   }
 }

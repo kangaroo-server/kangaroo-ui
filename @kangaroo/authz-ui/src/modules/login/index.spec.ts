@@ -14,20 +14,38 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+import * as all from './index';
+import { LoginModule } from './index';
 import { TestBed } from '@angular/core/testing';
-import { ApplicationModule } from './module';
 
 /**
- * Unit tests for the ApplicationModule
+ * Unit tests for the LoginModule
  */
-describe('ApplicationModule', () => {
+describe('LoginModule', () => {
+
+  const expectedExports = [
+    'LoginModule'
+  ];
+
+  expectedExports.forEach((name) => {
+    it(`should export ${name}`, () => {
+      expect(all.hasOwnProperty(name)).toBeTruthy();
+    });
+  });
+
+  it('should only export expected properties', () => {
+    Object.keys(all).forEach((name) => {
+      expect(expectedExports.indexOf(name)).not.toEqual(-1, `Unexpected export found: ${name}`);
+    });
+  });
 
   describe('module', () => {
 
     it('should permit importing', () => {
       TestBed.configureTestingModule(
         {
-          imports: [ ApplicationModule ]
+          imports: [ LoginModule ],
+          providers: []
         }).compileComponents();
     });
   });

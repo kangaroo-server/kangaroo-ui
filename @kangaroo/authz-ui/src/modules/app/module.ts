@@ -34,6 +34,8 @@ import { CannotConfigureComponent } from './configuration-failed/cannot-configur
 import { ConfigModule } from '../config';
 import { ErrorModule } from '../error';
 import { KangarooPlatformModule } from '@kangaroo/angular-platform';
+import { KangarooOAuth2Module } from '@kangaroo/angular-authn';
+import { LoginModule } from '../login';
 
 /**
  * This module contains all the components of the application shell, including header, configuration error cases,
@@ -51,7 +53,9 @@ import { KangarooPlatformModule } from '@kangaroo/angular-platform';
     ClrNavigationModule,
 
     ConfigModule,
-    ErrorModule
+    ErrorModule,
+    KangarooOAuth2Module,
+    LoginModule
   ],
   providers: [
     ConfigurationFailedGuard,

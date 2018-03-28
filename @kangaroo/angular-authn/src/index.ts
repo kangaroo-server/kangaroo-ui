@@ -16,5 +16,5 @@
  *
  */
 
-export * from './admin';
-export * from './oauth2';
+export * from './admin/index';
+export * from './oauth2/index';

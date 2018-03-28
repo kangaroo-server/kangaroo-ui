@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017 Michael Krotscheck
+ * Copyright (c) 2018 Michael Krotscheck
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy
@@ -14,21 +14,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { TestBed } from '@angular/core/testing';
-import { ApplicationModule } from './module';
 
-/**
- * Unit tests for the ApplicationModule
- */
-describe('ApplicationModule', () => {
-
-  describe('module', () => {
-
-    it('should permit importing', () => {
-      TestBed.configureTestingModule(
-        {
-          imports: [ ApplicationModule ]
-        }).compileComponents();
-    });
-  });
-});
+export * from './app.po';
+export * from './login.po';
