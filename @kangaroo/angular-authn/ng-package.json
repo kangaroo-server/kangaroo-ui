@@ -7,6 +7,7 @@
   "lib": {
     "entryFile": "src/index.ts",
     "umdModuleIds": {
+      "@kangaroo/rxjs-storage": "kangaroo.rxjs-storage",
       "@kangaroo/angular-platform": "kangaroo.angular-platform"
     }
   },

@@ -4,10 +4,7 @@
   "comments": "none",
   "licensePath": "../../LICENSE",
   "lib": {
-    "entryFile": "src/index.ts",
-    "umdModuleIds": {
-      "@kangaroo/angular-platform": "kangaroo.angular-platform"
-    }
+    "entryFile": "src/index.ts"
   },
   "languageLevel": [
     "dom",
