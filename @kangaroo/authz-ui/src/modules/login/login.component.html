@@ -14,68 +14,49 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   -->
-<div class="content-area">
-    <h1>Login</h1>
-    <form #loginForm="ngForm">
-        <section class="form-block">
-            <div class="form-group">
-                <label for="username_input">Username</label>
-                <label for="username_input"
-                       role="tooltip"
-                       class="tooltip tooltip-validation tooltip-md"
-                       [class.invalid]="usernameModel.invalid && (usernameModel.dirty || usernameModel.touched)">
-                    <input id="username_input"
-                           #usernameInput
-                           name="username_input"
-                           type="text"
-                           size="50"
-                           [(ngModel)]="username"
-                           (keyup.enter)="loginForm.valid && login()"
-                           #usernameModel="ngModel"
-                           [disabled]="loading"
-                           required>
-                    <span class="tooltip-content">
-                    Username is required.
-                </span>
-                </label>
-            </div>
-            <div class="form-group">
-                <label for="password_input">Password</label>
-                <label for="password_input"
-                       role="tooltip"
-                       class="tooltip tooltip-validation tooltip-md"
-                       [class.invalid]="passwordInput.invalid && (passwordInput.dirty || passwordInput.touched)">
-                    <input id="password_input"
-                           name="password_input"
-                           type="text"
-                           size="50"
-                           [(ngModel)]="password"
-                           #passwordInput="ngModel"
-                           (keyup.enter)="loginForm.valid && login()"
-                           [disabled]="loading"
-                           required>
-                    <span class="tooltip-content">
-                    Password is required.
-                </span>
-                </label>
-            </div>
-            <div class="form-group">
-                <button id="login_button"
-                        type="button"
-                        [disabled]="loginForm.invalid || loading"
-                        class="btn btn-primary"
-                        (click)="login()">
-                    Login
-                </button>
-            </div>
-            <div class="form-group" *ngIf="errored">
-                <div id="error_message" class="alert alert-danger">
-                    <div class="alert-items">
-                        <div class="alert-item text-center">Your login credentials are incorrect. Please try again.
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </form>
+<div class="login-form" fxLayout="row" fxLayoutAlign="space-around center">
+  <mat-card fxFlex="50" [fxFlex.lt-sm]="100">
+    <mat-card-content>
+      <form id="loginForm" [formGroup]="loginGroup" fxLayout="column" fxLayoutAlign="start stretch">
+        <mat-form-field>
+          <input id="username_input"
+                 name="username_input"
+                 placeholder="Login"
+                 type="text"
+                 size="50"
+                 required
+                 matInput
+                 formControlName="login"
+                 (keyup.enter)="loginGroup.valid && login()"
+          />
+          <mat-error *ngIf="loginGroup.controls['login'].invalid">
+            {{getErrorMessage(loginGroup.controls['login'])}}
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <input id="password_input"
+                 name="password_input"
+                 placeholder="Password"
+                 type="password"
+                 size="50"
+                 required
+                 matInput
+                 formControlName="password"
+                 (keyup.enter)="loginGroup.valid && login()"
+          />
+          <mat-error *ngIf="loginGroup.controls['password'].invalid">
+            {{getErrorMessage(loginGroup.controls['password'])}}
+          </mat-error>
+        </mat-form-field>
+        <button id="login_button"
+                type="button"
+                mat-raised-button
+                color="primary"
+                (click)="login()"
+                [disabled]="loginGroup.invalid || loginGroup.disabled">
+          Login
+        </button>
+      </form>
+    </mat-card-content>
+  </mat-card>
 </div>

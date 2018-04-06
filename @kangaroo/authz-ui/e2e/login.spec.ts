@@ -45,10 +45,6 @@ describe('Login page', () => {
     const passwordField: ElementFinder = await loginPage.getPasswordField();
     const submitButton: ElementFinder = await loginPage.getSubmitButton();
 
-    // Assert that the login field is focused.
-    const focused = await browser.driver.switchTo().activeElement();
-    expect(await focused.getAttribute('id')).toEqual('username_input');
-
     // Assert that the form exists.
     expect(await loginField.isPresent()).toBeTruthy();
     expect(await passwordField.isPresent()).toBeTruthy();

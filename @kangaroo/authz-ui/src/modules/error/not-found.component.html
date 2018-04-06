@@ -1,18 +1,33 @@
-<div class="content-area">
-  <div class="offset-lg-3 offset-md-3 col-lg-6 col-md-6 col-sm-12 col-xs-12">
-    <div class="card">
-      <div class="card-header">
-        404: Page not found
+<!--
+  ~ Copyright (c) 2018 Michael Krotscheck
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License"); you may not
+  ~ use this file except in compliance with the License. You may obtain a copy
+  ~ of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+  ~ WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+<div class="error-404" fxLayout="row" fxLayoutAlign="space-around center">
+  <mat-card fxFlex="50" [fxFlex.lt-sm]="100">
+    <mat-card-header>
+      <div mat-card-avatar>
+        <mat-icon size="40">error_outline</mat-icon>
       </div>
-      <div class="card-block">
-        <div class="card-text">
-          In anything at all, perfection is finally attained not when there is no longer anything to add, but
-          when there is no longer anything to take away, when a body has been stripped down to its nakedness.
-        </div>
-      </div>
-      <div class="card-footer text-right">
-        <em>Antoine de Saint Exupéry, author of "Le Petit Prince"</em>
-      </div>
-    </div>
-  </div>
+      <mat-card-title>404</mat-card-title>
+      <mat-card-subtitle>Page not found</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <blockquote>In anything at all, perfection is finally attained not when there is no longer anything to add, but
+                  when there is no longer anything to take away, when a body has been stripped down to its nakedness.
+      </blockquote>
+      <small class="attribution">Antoine de Saint Exupéry, author of "Le Petit Prince"</small>
+    </mat-card-content>
+  </mat-card>
 </div>

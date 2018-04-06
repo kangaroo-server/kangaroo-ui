@@ -21,10 +21,10 @@ import { HeaderComponent } from './header.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { By } from '@angular/platform-browser';
 import { LoggedInSubject, OAuth2Service, OAuth2Token, OAuth2TokenSubject } from '@kangaroo/angular-authn';
-import { ClrNavigationModule } from '@clr/angular';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { Observable } from 'rxjs/Observable';
+import { MatToolbarModule, MatIconModule } from '@angular/material';
 
 /**
  * Unit tests for the Header component.
@@ -64,9 +64,10 @@ describe('HeaderComponent', () => {
         HeaderComponent
       ],
       imports: [
-        ClrNavigationModule,
         RouterTestingModule,
-        HttpClientTestingModule
+        HttpClientTestingModule,
+        MatIconModule,
+        MatToolbarModule
       ]
     });
   });
@@ -78,7 +79,7 @@ describe('HeaderComponent', () => {
 
   it('should contain the application title', () => {
     const fixture = TestBed.createComponent(HeaderComponent);
-    const titleSpan = fixture.debugElement.query(By.css('.header .branding a .title'));
+    const titleSpan = fixture.debugElement.query(By.css('#title'));
     expect(titleSpan).toBeDefined();
     expect(titleSpan.nativeElement.textContent).toContain('Kangaroo: Administration');
   });

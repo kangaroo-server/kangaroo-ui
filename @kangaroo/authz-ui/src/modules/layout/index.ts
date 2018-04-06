@@ -16,46 +16,44 @@
  */
 
 import { NgModule } from '@angular/core';
-import { RouterModule } from '@angular/router';
-import { ROUTES } from './routes';
-import { LoginComponent } from './login.component';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
-import { ConfigModule } from '../config';
-import { KangarooOAuth2Module } from '@kangaroo/angular-authn';
 import {
   MatButtonModule,
   MatCardModule,
   MatFormFieldModule,
+  MatIconModule,
   MatInputModule,
+  MatSnackBarModule,
   MatToolbarModule
 } from '@angular/material';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { KangarooLayoutModule } from '../layout';
 
 /**
- * This module handles the login pages, as well as the route-guards and services necessary
- * to perform a login.
+ * This module rolls up all the material design and layout imports for our application.
  *
  * @author Michael Krotscheck
  */
 @NgModule({
-  declarations: [
-    LoginComponent
-  ],
   imports: [
-    CommonModule,
-    RouterModule,
-    ReactiveFormsModule,
-    ConfigModule,
-    KangarooOAuth2Module,
-    RouterModule.forChild(ROUTES),
+    FlexLayoutModule,
 
-    KangarooLayoutModule
+    MatCardModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
+    MatIconModule,
+    MatToolbarModule
   ],
   exports: [
-    RouterModule
+    FlexLayoutModule,
+
+    MatCardModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
+    MatIconModule,
+    MatToolbarModule,
+    MatSnackBarModule
   ]
 })
-export class LoginModule {
+export class KangarooLayoutModule {
 }
