@@ -14,53 +14,35 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { OAuth2TokenSubject } from '@kangaroo/angular-authn';
-import { OAuth2Service } from '@kangaroo/angular-authn';
+import { OAuth2Service, OAuth2TokenSubject } from '@kangaroo/angular-authn';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatSnackBar } from '@angular/material';
 
 /**
  * This component renders the login form.
  *
+ * TODO: Layout
+ * TODO: Error on response
+ *
  * @author Michael Krotscheck
  */
 @Component({
-  templateUrl: './login.component.html'
+  templateUrl: './login.component.html',
+  styleUrls: [ 'login.component.scss' ]
 })
-export class LoginComponent implements AfterViewInit {
+export class LoginComponent {
 
   /**
-   *  This variable contains the username input in the form.
+   * The login form control.
    *
-   * @type {string}
+   * @type {FormControl}
    */
-  public username = '';
-
-  /**
-   * This variable contains the password input into the form.
-   * @type {string}
-   */
-  public password = '';
-
-  /**
-   * Did the last login error?
-   *
-   * @type {boolean}
-   */
-  public errored = false;
-
-  /**
-   * Are we currently loading?
-   *
-   * @type {boolean}
-   */
-  public loading = false;
-
-  /**
-   * The username input field.
-   */
-  @ViewChild('usernameInput')
-  public usernameInput: ElementRef;
+  public loginGroup: FormGroup = new FormGroup({
+    login: new FormControl('', [ Validators.required ]),
+    password: new FormControl('', [ Validators.required ])
+  });
 
   /**
    * Create a new instance of this component.
@@ -68,31 +50,37 @@ export class LoginComponent implements AfterViewInit {
    * @param {OAuth2Service} oauth2 The login service.
    * @param {OAuth2TokenSubject} oauth2Token The OAuth2 Token subject.
    * @param {Router} router The router.
+   * @param snackBar the error response controller.
    */
   constructor(private oauth2: OAuth2Service,
               private oauth2Token: OAuth2TokenSubject,
-              private router: Router) {
+              private router: Router,
+              private snackBar: MatSnackBar) {
   }
 
   /**
-   * After view init, focus the login field.
+   * Convert a control event into an error message.
+   *
+   * @param control The form control
+   * @returns Error message, as appropriate.
    */
-  ngAfterViewInit(): void {
-    this.usernameInput.nativeElement.focus();
+  public getErrorMessage(control: FormControl) {
+    return control.hasError('required') ? 'You must enter a value' : '';
   }
 
   /**
    * Login the user.
    */
   public login() {
-    this.errored = false;
-    this.loading = true;
+    const {login, password} = this.loginGroup.value;
+
+    this.loginGroup.disable();
     this.oauth2
-      .login(this.username, this.password)
-      .finally(() => this.loading = false)
+      .login(login, password)
+      .finally(() => this.loginGroup.enable())
       .subscribe(
-        () => this.router.navigate(['']),
-        () => this.errored = true
+        () => this.router.navigate([ '' ]),
+        () => this.snackBar.open('Invalid credentials, please try again.', 'Dismiss', {duration: 2000})
       );
   }
 }

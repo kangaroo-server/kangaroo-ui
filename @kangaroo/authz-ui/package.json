@@ -20,28 +20,29 @@
     "nsp": "nsp check ./"
   },
   "devDependencies": {
-    "@angular/cli": "~1.7.3",
-    "@kangaroo/devkit": "~1.0.0"
+    "@angular/cli": "~1.7.4",
+    "@kangaroo/devkit": "~1.0.0",
+    "wsrun": "~2.1.1"
   },
   "dependencies": {
     "@angular/animations": "~5.2.9",
+    "@angular/cdk": "~5.2.4",
     "@angular/common": "~5.2.9",
     "@angular/core": "~5.2.9",
+    "@angular/flex-layout": "^5.0.0-beta.14",
     "@angular/forms": "~5.2.9",
+    "@angular/material": "~5.2.4",
     "@angular/platform-browser": "~5.2.9",
     "@angular/platform-browser-dynamic": "~5.2.9",
     "@angular/router": "~5.2.9",
-    "@clr/angular": "~0.11.10",
-    "@clr/icons": "~0.11.10",
-    "@clr/ui": "~0.11.10",
     "@kangaroo/angular-authn": "~1.0.0",
     "@kangaroo/angular-logger": "~1.0.0",
     "@kangaroo/angular-platform": "~1.0.0",
     "@kangaroo/rxjs-storage": "~1.0.0",
-    "@webcomponents/custom-elements": "~1.0.9",
+    "@webcomponents/custom-elements": "~1.1.0",
     "mutationobserver-shim": "~0.3.2",
     "rxjs": "~5.5.8",
     "web-animations-js": "~2.3.1",
-    "zone.js": "~0.8.20"
+    "zone.js": "~0.8.25"
   }
 }

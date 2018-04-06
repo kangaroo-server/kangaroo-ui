@@ -27,7 +27,7 @@
     "nsp": "nsp check ./"
   },
   "dependencies": {
-    "@angular/cli": "~1.7.3",
+    "@angular/cli": "~1.7.4",
     "@angular/compiler": "~5.2.9",
     "@angular/compiler-cli": "~5.2.9",
     "@angular/core": "~5.2.9",
@@ -48,11 +48,11 @@
     "karma-webdriver-launcher": "~1.0.5",
     "ng-packagr": "~2.4.1",
     "nsp": "~3.2.1",
-    "protractor": "~5.3.0",
+    "protractor": "~5.3.1",
     "ts-node": "~5.0.1",
     "tslint": "~5.9.1",
     "tslint-microsoft-contrib": "~5.0.2",
-    "typescript": "~2.7.2"
+    "typescript": "~2.8.1"
   },
   "devDependencies": {
     "jasmine": "~3.1.0"

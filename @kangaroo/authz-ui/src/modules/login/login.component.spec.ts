@@ -17,13 +17,16 @@
 
 import { async, ComponentFixture, inject, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import { OAuth2Service, OAuth2Token, OAuth2TokenSubject } from '@kangaroo/angular-authn';
 import { RouterTestingModule } from '@angular/router/testing';
 import { Router } from '@angular/router';
 import { LoginComponent } from './login.component';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { KangarooLayoutModule } from '../layout';
+import { MatSnackBar } from '@angular/material';
 
 /**
  * Unit tests for the Login form component.
@@ -62,8 +65,11 @@ describe('LoginComponent', () => {
         LoginComponent
       ],
       imports: [
-        FormsModule,
-        RouterTestingModule
+        ReactiveFormsModule,
+        RouterTestingModule,
+        NoopAnimationsModule,
+
+        KangarooLayoutModule
       ]
     });
 
@@ -95,8 +101,8 @@ describe('LoginComponent', () => {
         const loginButton = fixture.debugElement.query(By.css('#login_button'));
         expect(loginButton.nativeElement.attributes[ 'disabled' ]).toBeDefined();
 
-        fixture.componentInstance.username = 'login';
-        fixture.componentInstance.password = 'password';
+        fixture.componentInstance.loginGroup.setValue({login: 'login', password: 'password'});
+
         fixture.detectChanges();
         return fixture.whenStable();
       })
@@ -111,22 +117,11 @@ describe('LoginComponent', () => {
       });
   }));
 
-  it('should automatically focus on the login input', () => {
-
-    fixture.whenStable()
-      .then(() => fixture.detectChanges())
-      .then(() => {
-        const usernameInput = fixture.debugElement.query(By.css('#username_input:focus'));
-        expect(usernameInput.nativeElement).toBeDefined();
-      });
-  });
-
   it('should invoke the login method when clicked', () => {
     const controller: LoginComponent = fixture.componentInstance;
     const loginSpy: jasmine.Spy = spyOn(controller, 'login').and.stub();
 
-    controller.username = 'login';
-    controller.password = 'password';
+    fixture.componentInstance.loginGroup.setValue({login: 'login', password: 'password'});
 
     const loginButton = fixture.debugElement.query(By.css('#login_button'));
 
@@ -142,7 +137,7 @@ describe('LoginComponent', () => {
 
   it('should disable the form when the loading flag is set', async(() => {
     const controller: LoginComponent = fixture.componentInstance;
-    controller.loading = true;
+    controller.loginGroup.disable();
 
     fixture.detectChanges();
 
@@ -157,28 +152,25 @@ describe('LoginComponent', () => {
       });
   }));
 
-  it('should display an error when the error flag is set', async(() => {
+  it('should properly parse error messages from form controls', async(() => {
     const controller: LoginComponent = fixture.componentInstance;
-    controller.errored = true;
 
-    fixture.detectChanges();
+    const unrecognizedMessage = controller.getErrorMessage(<any> {hasError: () => false});
+    const recognizedMessage = controller.getErrorMessage(<any> {hasError: () => true});
 
-    fixture.whenStable()
-      .then(() => {
-        const errorMessage = fixture.debugElement.query(By.css('.alert.alert-danger'));
-        expect(errorMessage.nativeElement).toBeDefined();
-      });
+    expect(unrecognizedMessage).toBe('');
+    expect(recognizedMessage).toBe('You must enter a value');
   }));
 
-  it('should not display an error when the error flag is not set', async(() => {
+  it('should not display an error when there are none', async(() => {
     const controller: LoginComponent = fixture.componentInstance;
-    controller.errored = false;
+    controller.loginGroup.setErrors([]);
 
     fixture.detectChanges();
 
     fixture.whenStable()
       .then(() => {
-        const errorMessage = fixture.debugElement.query(By.css('.alert.alert-danger'));
+        const errorMessage = fixture.debugElement.query(By.css('mat-error'));
         expect(errorMessage).toBeNull();
       });
   }));
@@ -187,14 +179,15 @@ describe('LoginComponent', () => {
     const controller: LoginComponent = fixture.componentInstance;
     const loginSpy: jasmine.Spy = spyOn(controller, 'login').and.stub();
 
-    controller.username = 'login';
-    controller.password = 'password';
+    fixture.componentInstance.loginGroup.setValue({login: 'login', password: 'password'});
     const usernameInput = fixture.debugElement.query(By.css('#username_input'));
 
     fixture.detectChanges();
 
     fixture.whenStable()
       .then(() => usernameInput.triggerEventHandler('keyup.enter', {}))
+      .then(() => fixture.detectChanges())
+      .then(() => fixture.whenStable())
       .then(() => {
         expect(loginSpy).toHaveBeenCalled();
       });
@@ -204,8 +197,7 @@ describe('LoginComponent', () => {
     const controller: LoginComponent = fixture.componentInstance;
     const loginSpy: jasmine.Spy = spyOn(controller, 'login').and.stub();
 
-    controller.username = '';
-    controller.password = 'password';
+    fixture.componentInstance.loginGroup.setValue({login: '', password: 'password'});
     const usernameInput = fixture.debugElement.query(By.css('#username_input'));
 
     fixture.detectChanges();
@@ -221,8 +213,7 @@ describe('LoginComponent', () => {
     const controller: LoginComponent = fixture.componentInstance;
     const loginSpy: jasmine.Spy = spyOn(controller, 'login').and.stub();
 
-    controller.username = 'login';
-    controller.password = 'password';
+    fixture.componentInstance.loginGroup.setValue({login: 'login', password: 'password'});
     const passwordInput = fixture.debugElement.query(By.css('#password_input'));
 
     fixture.detectChanges();
@@ -238,8 +229,7 @@ describe('LoginComponent', () => {
     const controller: LoginComponent = fixture.componentInstance;
     const loginSpy: jasmine.Spy = spyOn(controller, 'login').and.stub();
 
-    controller.username = '';
-    controller.password = 'password';
+    fixture.componentInstance.loginGroup.setValue({login: '', password: 'password'});
     const passwordInput = fixture.debugElement.query(By.css('#password_input'));
 
     fixture.detectChanges();
@@ -252,33 +242,31 @@ describe('LoginComponent', () => {
   }));
 
   it('should show an error on a form submission failure', async(inject(
-    [ OAuth2Service ], (service) => {
+    [ OAuth2Service, MatSnackBar ], (service, snackbar) => {
+      const snackSpy = spyOn(snackbar, 'open').and.stub();
       const controller: LoginComponent = fixture.componentInstance;
       spyOn(service, 'login').and.returnValue(Observable.throw('failed'));
-      controller.username = 'login';
-      controller.password = 'password';
+      fixture.componentInstance.loginGroup.setValue({login: 'login', password: 'password'});
       fixture.debugElement.query(By.css('#login_button')).nativeElement.click();
 
       // This resolves immediately.
-      expect(controller.errored).toBeTruthy();
-      expect(controller.loading).toBeFalsy();
+      expect(controller.loginGroup.errors).toBeFalsy();
+      expect(controller.loginGroup.disabled).toBeFalsy();
 
-      const errorMessage = fixture.debugElement.query(By.css('#error_message'));
-      expect(errorMessage).toBeDefined();
+      expect(snackSpy).toHaveBeenCalled();
     })));
 
   it('should navigate to the dashboard on a successful login', async(inject(
     [ OAuth2Service, Router ], (service, router) => {
       const controller: LoginComponent = fixture.componentInstance;
       spyOn(service, 'login').and.returnValue(Observable.from([ true ]));
-      const routerSpy = spyOn(router, 'navigate').and.callThrough();
-      controller.username = 'login';
-      controller.password = 'password';
+      const routerSpy = spyOn(router, 'navigate').and.stub();
+      fixture.componentInstance.loginGroup.setValue({login: 'login', password: 'password'});
       fixture.debugElement.query(By.css('#login_button')).nativeElement.click();
 
       // This resolves immediately.
-      expect(controller.errored).toBeFalsy();
-      expect(controller.loading).toBeFalsy();
+      expect(controller.loginGroup.errors).toBeFalsy();
+      expect(controller.loginGroup.disabled).toBeFalsy();
 
       const errorMessage = fixture.debugElement.query(By.css('#error_message'));
       expect(errorMessage).toBeNull();

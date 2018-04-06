@@ -16,11 +16,10 @@
  *
  */
 
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { ClrNavigationModule } from '@clr/angular';
 import { RouterModule } from '@angular/router';
 
 import { HeaderComponent } from './header.component';
@@ -36,6 +35,7 @@ import { ErrorModule } from '../error';
 import { KangarooPlatformModule } from '@kangaroo/angular-platform';
 import { KangarooOAuth2Module } from '@kangaroo/angular-authn';
 import { LoginModule } from '../login';
+import { KangarooLayoutModule } from '../layout';
 
 /**
  * This module contains all the components of the application shell, including header, configuration error cases,
@@ -45,16 +45,17 @@ import { LoginModule } from '../login';
  */
 @NgModule({
   imports: [
-    KangarooPlatformModule,
     BrowserAnimationsModule,
     CommonModule,
     BrowserModule,
     RouterModule.forRoot(ROUTES),
-    ClrNavigationModule,
 
+    KangarooPlatformModule,
+
+    KangarooLayoutModule,
+    KangarooOAuth2Module,
     ConfigModule,
     ErrorModule,
-    KangarooOAuth2Module,
     LoginModule
   ],
   providers: [
@@ -69,6 +70,9 @@ import { LoginModule } from '../login';
   ],
   bootstrap: [
     AppComponent
+  ],
+  schemas: [
+    CUSTOM_ELEMENTS_SCHEMA
   ]
 })
 export class ApplicationModule {

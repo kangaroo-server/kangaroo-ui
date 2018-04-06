@@ -28,7 +28,7 @@
     "rxjs": "~5.5.8"
   },
   "devDependencies": {
-    "@angular/cli": "~1.7.1",
+    "@angular/cli": "~1.7.4",
     "@angular/core": "~5.2.9",
     "@kangaroo/angular-logger": "~1.0.0",
     "@kangaroo/devkit": "~1.0.0",

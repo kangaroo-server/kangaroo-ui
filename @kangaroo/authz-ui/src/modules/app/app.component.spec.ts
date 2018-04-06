@@ -29,6 +29,8 @@ import { HttpClientTestingModule, HttpTestingController } from '@angular/common/
 import { NoopComponent } from '@kangaroo/angular-platform';
 import { LoggedInSubject, OAuth2Service, OAuth2Token, OAuth2TokenSubject } from '@kangaroo/angular-authn';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { KangarooLayoutModule } from '../layout';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('AppComponent', () => {
 
@@ -66,7 +68,9 @@ describe('AppComponent', () => {
           {path: 'dashboard', component: NoopComponent}
         ]),
         ConfigModule,
-        HttpClientTestingModule
+        HttpClientTestingModule,
+        KangarooLayoutModule,
+        NoopAnimationsModule
       ],
       declarations: [
         NoopComponent,

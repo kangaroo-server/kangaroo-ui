@@ -15,21 +15,15 @@
   ~ limitations under the License.
   ~
   -->
-
-<header class="header header-5">
-  <div class="branding">
-    <a routerLink="/" class="nav-link">
-      <span id="title" class="title">Kangaroo: Administration</span>
-    </a>
-  </div>
-  <div class="header-nav">
-  </div>
-  <div class="header-actions">
-    <a id="logout_button"
-       class="nav-link nav-text"
-       *ngIf="loggedIn"
-       (click)="logout()">
-      Log Out
-    </a>
-  </div>
-</header>
+<mat-toolbar color="primary" fxLayout="row" fxLayoutAlign="space-between center">
+  <a routerLink="/" mat-button>
+    <span id="title">Kangaroo: Administration</span>
+  </a>
+  <a id="logout_button"
+     routerLink="/"
+     mat-icon-button
+     *ngIf="loggedIn"
+     (click)="logout()">
+    <mat-icon>power_settings_new</mat-icon>
+  </a>
+</mat-toolbar>

@@ -26,6 +26,7 @@ import { LoggedInSubject, OAuth2Service, OAuth2TokenSubject } from '@kangaroo/an
  */
 @Component({
   selector: 'kng-header',
+  styleUrls: ['header.component.scss'],
   templateUrl: './header.component.html'
 })
 export class HeaderComponent {
