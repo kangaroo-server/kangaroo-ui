@@ -63,9 +63,11 @@ pipeline {
          */
         stage('E2E') {
             steps {
-                script {
-                    docker.image('krotscheck/kangaroo-authz:latest').withRun("-p 8080:8080") {
-                        sh('yarn workspace @kangaroo/authz-ui e2e')
+                lock(resource: "${NODE_NAME}_port_8080") {
+                    script {
+                        docker.image('krotscheck/kangaroo-authz:latest').withRun("-p 8080:8080") {
+                            sh('yarn workspace @kangaroo/authz-ui e2e')
+                        }
                     }
                 }
             }
