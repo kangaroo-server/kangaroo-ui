@@ -8794,7 +8794,7 @@ ws@~3.3.1:
     safe-buffer "~5.1.0"
     ultron "~1.1.0"
 
-wsrun@2.1.1, wsrun@~2.1.1:
+wsrun@2.1.1:
   version "2.1.1"
   resolved "https://registry.yarnpkg.com/wsrun/-/wsrun-2.1.1.tgz#36efb867402990e25560c815e18b6440b6a9e1b3"
   dependencies:
