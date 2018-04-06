@@ -4,7 +4,7 @@
 
 pipeline {
 
-    agent { label 'worker' }
+    agent { label 'nodejs' }
 
     options {
         buildDiscarder(logRotator(numToKeepStr: '10'))
