@@ -16,11 +16,12 @@
  *
  */
 
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { KangarooConfigurationSubject } from '../config';
 import { NavigationCancel, Router } from '@angular/router';
-import { LoggedInSubject } from '@kangaroo/angular-authn';
+import { LoggedInSubject, OAuth2Service, OAuth2TokenSubject } from '@kangaroo/angular-authn';
 import 'rxjs/add/observable/if';
+import { MobileMediaQuery } from '../layout';
 
 /**
  * Our root application component. Upon initialization, it will make sure that the application has been
@@ -31,9 +32,25 @@ import 'rxjs/add/observable/if';
  */
 @Component({
   selector: 'kng-app',
-  templateUrl: './app.component.html'
+  templateUrl: './app.component.html',
+  styleUrls: [ 'app.component.scss' ]
 })
 export class AppComponent {
+
+  /**
+   * Is the user currently logged in?
+   */
+  public loggedIn = false;
+
+  /**
+   * Internal toggle, controlling whether the side menu's open.
+   */
+  public menuOpened = false;
+
+  /**
+   * Persistent event listener reference for screen size changes.
+   */
+  private _mobileQueryListener: () => void;
 
   /**
    * On initialization, watch the configuration load. If it fails, redirect
@@ -42,10 +59,21 @@ export class AppComponent {
    * @param configProvider Configuration Provider.
    * @param loggedInSubject Is the user logged in?
    * @param router The router.
+   * @param changeDetectorRef The application change detector.
+   * @param mobileQuery Mobile Media Query, providing an event dispatcher for listening for when the screen changes.
    */
   constructor(private configProvider: KangarooConfigurationSubject,
               private loggedInSubject: LoggedInSubject,
-              private router: Router) {
+              private tokenSubject: OAuth2TokenSubject,
+              private tokenService: OAuth2Service,
+              private router: Router,
+              changeDetectorRef: ChangeDetectorRef,
+              public mobileQuery: MobileMediaQuery) {
+
+    // Setup the change watcher for the media query.
+    this._mobileQueryListener = () => changeDetectorRef.detectChanges();
+    this.mobileQuery.addListener(this._mobileQueryListener);
+
     // If we cannot configure the application, redirect to /configuration-failed.
     this.configProvider
       .subscribe(
@@ -67,7 +95,18 @@ export class AppComponent {
 
     // If the user suddenly logs out, redirect to logout.
     this.loggedInSubject
+      .do((loggedIn) => this.loggedIn = loggedIn)
       .filter((loggedIn) => !loggedIn)
+      .do(() => this.menuOpened = false)
       .subscribe(() => this.router.navigateByUrl('/login'));
+  }
+
+  /**
+   * Issue a token revocation request with the current token.
+   */
+  public logout() {
+    this.tokenSubject
+      .switchMap((token) => this.tokenService.revoke(token))
+      .subscribe();
   }
 }

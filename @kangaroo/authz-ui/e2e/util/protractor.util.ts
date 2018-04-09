@@ -45,7 +45,7 @@ export class ProtractorUtil {
     const currentUrl = await driver.getCurrentUrl();
     if (currentUrl.indexOf(url) === -1) {
       await browser.get(url);
-      const e = await driver.wait(until.elementLocated(By.css('kng-header')));
+      const e = await driver.wait(until.elementLocated(By.css('mat-toolbar')));
       await driver.wait(until.elementIsVisible(e));
     }
   }

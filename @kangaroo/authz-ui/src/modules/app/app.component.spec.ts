@@ -23,20 +23,22 @@ import { AppComponent } from './app.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { By } from '@angular/platform-browser';
 import { NavigationCancel, Router, RouterOutlet } from '@angular/router';
-import { HeaderComponent } from './header.component';
 import { ConfigModule } from '../config';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { NoopComponent } from '@kangaroo/angular-platform';
 import { LoggedInSubject, OAuth2Service, OAuth2Token, OAuth2TokenSubject } from '@kangaroo/angular-authn';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { KangarooLayoutModule } from '../layout';
+import { KangarooLayoutModule, MobileMediaQuery } from '../layout';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { Observable } from 'rxjs/Observable';
+import { LayoutModule } from '@angular/cdk/layout';
 
 describe('AppComponent', () => {
 
   let loggedInSubject: BehaviorSubject<boolean>;
   let tokenSubject: BehaviorSubject<OAuth2Token>;
   let tokenService: OAuth2Service;
+  let mockMediaQuery;
 
   const nowInSeconds = Math.floor(Date.now() / 1000);
   const validToken: OAuth2Token = {
@@ -52,6 +54,14 @@ describe('AppComponent', () => {
     tokenSubject = new BehaviorSubject(validToken);
     tokenService = <any> {
       revoke: () => {
+      }
+    };
+    mockMediaQuery = {
+      listeners: [],
+      addListener: (listener) => {
+        mockMediaQuery.listeners.push(listener);
+      },
+      removeListener: () => {
       }
     };
 
@@ -70,14 +80,17 @@ describe('AppComponent', () => {
         ConfigModule,
         HttpClientTestingModule,
         KangarooLayoutModule,
-        NoopAnimationsModule
+        NoopAnimationsModule,
+        LayoutModule
       ],
       declarations: [
         NoopComponent,
-        AppComponent,
-        HeaderComponent
+        AppComponent
       ]
-    });
+    })
+      .overrideProvider(MobileMediaQuery, {
+        useValue: mockMediaQuery
+      });
   });
 
   it('should create the app', async(() => {
@@ -88,7 +101,7 @@ describe('AppComponent', () => {
 
   it(`should contain a header`, async(() => {
     const fixture = TestBed.createComponent(AppComponent);
-    const header = fixture.debugElement.query(By.directive(HeaderComponent));
+    const header = fixture.debugElement.query(By.css('mat-toolbar'));
     expect(header).toBeDefined();
   }));
 
@@ -134,4 +147,46 @@ describe('AppComponent', () => {
       loggedIn.next(false);
       expect(navSpy).toHaveBeenCalledWith('/login');
     })));
+
+  it('should contain the application title', () => {
+    const fixture = TestBed.createComponent(AppComponent);
+    const titleSpan = fixture.debugElement.query(By.css('#title'));
+    expect(titleSpan).toBeDefined();
+    expect(titleSpan.nativeElement.textContent).toContain('Kangaroo: Administration');
+  });
+
+  it('should display a logout button when logged in, but not when logged out', async(inject(
+    [ LoggedInSubject ], (loggedIn) => {
+      const fixture = TestBed.createComponent(AppComponent);
+      loggedIn.next(false);
+      fixture.detectChanges();
+      fixture.whenStable()
+        .then(() => expect(fixture.componentInstance.loggedIn).toBeFalsy())
+        .then(() => fixture.debugElement.query(By.css('#logout_button')))
+        .then((element) => expect(element).toBeFalsy())
+        .then(() => loggedIn.next(true))
+        .then(() => fixture.detectChanges())
+        .then(() => fixture.whenStable())
+        .then(() => expect(fixture.componentInstance.loggedIn).toBeTruthy())
+        .then(() => fixture.debugElement.query(By.css('#logout_button')))
+        .then((element) => expect(element).toBeTruthy());
+    })));
+
+  it('should revoke the token on logout', async(inject(
+    [ OAuth2Service ], (service) => {
+      const spy = spyOn(service, 'revoke').and.returnValue(Observable.of([ true ]));
+      const fixture = TestBed.createComponent(AppComponent);
+      fixture.detectChanges();
+      fixture.whenStable()
+        .then(() => fixture.debugElement.query(By.css('#logout_button')).nativeElement.click())
+        .then(() => expect(spy).toHaveBeenCalledWith(validToken));
+    })));
+
+  it('should trigger change detection if the media model changes',
+    inject([ MobileMediaQuery ], (mediaQuery) => {
+      const fixture = TestBed.createComponent(AppComponent);
+
+      expect(mediaQuery.listeners.length).toEqual(1);
+      mediaQuery.listeners[ 0 ]();
+    }));
 });

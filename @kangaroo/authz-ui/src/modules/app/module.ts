@@ -22,7 +22,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
 
-import { HeaderComponent } from './header.component';
 import { AppComponent } from './app.component';
 import { ROUTES } from './routes';
 import { RouterOutletComponent } from './router-outlet.component';
@@ -63,7 +62,6 @@ import { KangarooLayoutModule } from '../layout';
     ConfigurationSucceededGuard
   ],
   declarations: [
-    HeaderComponent,
     AppComponent,
     RouterOutletComponent,
     CannotConfigureComponent

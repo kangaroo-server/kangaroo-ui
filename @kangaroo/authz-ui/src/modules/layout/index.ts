@@ -22,10 +22,14 @@ import {
   MatFormFieldModule,
   MatIconModule,
   MatInputModule,
+  MatSidenavModule,
   MatSnackBarModule,
   MatToolbarModule
 } from '@angular/material';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { MobileMediaQuery, mobileMediaQueryProvider } from './media_matcher';
+
+export { MobileMediaQuery } from './media_matcher';
 
 /**
  * This module rolls up all the material design and layout imports for our application.
@@ -52,7 +56,11 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     MatButtonModule,
     MatIconModule,
     MatToolbarModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatSidenavModule
+  ],
+  providers: [
+    mobileMediaQueryProvider
   ]
 })
 export class KangarooLayoutModule {
