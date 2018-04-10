@@ -16,7 +16,39 @@
   ~
   -->
 
-<div fxLayout="column" fxLayoutAlign="start stretch">
-  <kng-header></kng-header>
-  <router-outlet></router-outlet>
+<div id="application" class="root-application">
+  <mat-toolbar color="primary" fxLayout="row" fxLayoutAlign="space-between center">
+    <button mat-icon-button
+            [style.display]="loggedIn && mobileQuery.matches ? 'inherit': 'none'"
+            (click)="menuOpened = !menuOpened">
+      <mat-icon>menu</mat-icon>
+    </button>
+    <a routerLink="/" mat-button>
+      <span id="title">Kangaroo: Administration</span>
+    </a>
+    <a id="logout_button"
+       routerLink="/"
+       mat-icon-button
+       *ngIf="loggedIn"
+       (click)="logout()">
+      <mat-icon>power_settings_new</mat-icon>
+    </a>
+  </mat-toolbar>
+
+  <mat-sidenav-container id="content-container"
+                         [style.marginTop.px]="mobileQuery.matches ? 56 : 64"
+                         (backdropClick)="menuOpened = !menuOpened">
+    <mat-sidenav #snav
+                 [mode]="mobileQuery.matches ? 'over' : 'side'"
+                 [fixedInViewport]="mobileQuery.matches"
+                 [opened]="(menuOpened || !mobileQuery.matches) && loggedIn"
+                 fixedTopGap="56"
+                 fxFlex="33">
+      <router-outlet name="left"></router-outlet>
+    </mat-sidenav>
+
+    <mat-sidenav-content>
+      <router-outlet></router-outlet>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
 </div>

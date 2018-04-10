@@ -36,7 +36,7 @@ export class ApplicationPage {
    * Get the header text.
    */
   public async getHeaderText(): Promise<string> {
-    return element(by.css('kng-header #title')).getText();
+    return element(by.css('mat-toolbar #title')).getText();
   }
 
   /**
