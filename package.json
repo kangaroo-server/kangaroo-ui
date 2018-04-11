@@ -28,7 +28,7 @@
     "pack": "wsrun pack"
   },
   "workspaces": [
-    "@kangaroo/*"
+    "packages/*"
   ],
   "config": {
     "commitizen": {
