@@ -1,6 +1,7 @@
 /**
  * Java build pipeline for the kangaroo-admin-ui project.
  */
+@Library('kangaroo-jenkins') _
 
 pipeline {
 
@@ -10,7 +11,7 @@ pipeline {
         buildDiscarder(logRotator(numToKeepStr: '10'))
         ansiColor('xterm')
     }
-
+    
     stages {
 
         /**
