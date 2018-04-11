@@ -40,8 +40,8 @@
     "@kangaroo/rxjs-storage": "~1.0.0",
     "@webcomponents/custom-elements": "~1.1.0",
     "mutationobserver-shim": "~0.3.2",
-    "rxjs": "~5.5.8",
+    "rxjs": "~5.5.10",
     "web-animations-js": "~2.3.1",
-    "zone.js": "~0.8.25"
+    "zone.js": "~0.8.26"
   }
 }

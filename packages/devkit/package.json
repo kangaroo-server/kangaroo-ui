@@ -46,7 +46,7 @@
     "karma-spec-reporter": "~0.0.32",
     "karma-typescript": "~3.0.12",
     "karma-webdriver-launcher": "~1.0.5",
-    "ng-packagr": "~2.4.1",
+    "ng-packagr": "~2.4.2",
     "nsp": "~3.2.1",
     "protractor": "~5.3.1",
     "ts-node": "~5.0.1",
