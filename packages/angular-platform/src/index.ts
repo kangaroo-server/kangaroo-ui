@@ -21,9 +21,11 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { locationInitializer } from './router_util';
 import { NoopComponent } from './noop/noop.component';
 import { CommonModule } from '@angular/common';
+import { kangarooEntityIdMatcher } from './router/kangaroo_id_matcher';
 
 export * from './api';
 export { NoopComponent } from './noop/noop.component';
+export { kangarooEntityIdMatcher } from './router/kangaroo_id_matcher';
 
 /**
  * This module contains injectees and abstract classes that are consistent
