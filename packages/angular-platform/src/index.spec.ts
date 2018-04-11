@@ -28,7 +28,8 @@ describe('KangarooPlatformModule', () => {
     'AbstractSubresourceService',
     'SortOrder',
     'KangarooPlatformModule',
-    'NoopComponent'
+    'NoopComponent',
+    'kangarooEntityIdMatcher'
   ];
 
   expectedExports.forEach((name) => {
