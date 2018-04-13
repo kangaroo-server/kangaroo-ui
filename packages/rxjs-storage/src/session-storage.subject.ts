@@ -80,8 +80,8 @@ export class SessionStorageSubject<T> extends Subject<T> {
    * @param subscriber The subscriber.
    * @returns An active subscription.
    */
-  protected _subscribe(subscriber: Subscriber<T>): Subscription {
-    const subscription = super._subscribe(subscriber);
+  public _subscribe(subscriber: Subscriber<T>): Subscription {
+    const subscription = super._subscribe(subscriber); // tslint:disable-line
     if (subscription && !(<ISubscription>subscription).closed) {
       subscriber.next(this.decodedValue());
     }
