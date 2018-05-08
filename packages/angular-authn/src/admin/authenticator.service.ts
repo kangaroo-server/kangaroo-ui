@@ -16,12 +16,12 @@
  *
  */
 
-import { Inject, Injectable, Optional } from '@angular/core';
-import { Authenticator } from './model';
-import { AbstractResourceService } from '@kangaroo/angular-platform';
 import { HttpClient } from '@angular/common/http';
+import { Inject, Injectable, Optional } from '@angular/core';
+import { AbstractResourceService } from '@kangaroo/angular-platform';
+import { ObservableInput } from 'rxjs';
 import { ADMIN_API_ROOT } from './admin-api-root';
-import { ObservableInput } from 'rxjs/Observable';
+import { Authenticator } from './model';
 
 /**
  * This class provides a restful API for the authenticator resource.
@@ -37,7 +37,7 @@ export class AuthenticatorService extends AbstractResourceService<Authenticator>
    * @param http The HTTP client
    * @param apiRoot Provider for the admin API root url.
    */
-  constructor(http: HttpClient,
+  constructor(@Inject(HttpClient) http: HttpClient,
               @Optional() @Inject(ADMIN_API_ROOT) apiRoot: ObservableInput<string>) {
     super('authenticator', http, apiRoot);
   }

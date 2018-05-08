@@ -16,7 +16,7 @@
  */
 
 import { InjectionToken } from '@angular/core';
-import { ObservableInput } from 'rxjs/Observable';
+import { ObservableInput } from 'rxjs';
 
 /**
  * Use this injection token to provide an external API root.
@@ -35,4 +35,3 @@ export const OAUTH2_CLIENT_ID: InjectionToken<ObservableInput<string>> =
  */
 export const OAUTH2_CLIENT_SCOPES: InjectionToken<ObservableInput<string[]>> =
   new InjectionToken<ObservableInput<string[]>>('OAUTH2_SCOPES');
-

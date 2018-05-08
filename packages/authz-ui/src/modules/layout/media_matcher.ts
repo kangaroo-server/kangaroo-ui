@@ -15,9 +15,8 @@
  * limitations under the License.
  */
 
-
-import { FactoryProvider } from '@angular/core';
 import { MediaMatcher } from '@angular/cdk/layout';
+import { FactoryProvider } from '@angular/core';
 
 /**
  * The media type query we use for ease of injection.
@@ -40,5 +39,5 @@ export function providerFactory(media) {
 export const mobileMediaQueryProvider: FactoryProvider = {
   provide: MobileMediaQuery,
   useFactory: providerFactory,
-  deps: [ MediaMatcher ]
+  deps: [ MediaMatcher ],
 };

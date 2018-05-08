@@ -14,8 +14,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { ConfigModule } from './index';
 import { TestBed } from '@angular/core/testing';
+import { ConfigModule } from './index';
 
 /**
  * Unit tests for the ConfigModule
@@ -28,9 +28,9 @@ describe('ConfigModule', () => {
       TestBed.configureTestingModule(
         {
           imports: [
-            ConfigModule
+            ConfigModule,
           ],
-          providers: []
+          providers: [],
         }).compileComponents();
     });
   });

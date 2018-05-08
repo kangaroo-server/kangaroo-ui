@@ -23,7 +23,7 @@ import { Router } from '@angular/router';
  */
 declare global {
   interface Window {
-    routerNavigateByUrl: Function;
+    routerNavigateByUrl: (route: string) => void;
   }
 }
 

@@ -23,7 +23,7 @@ import { Component } from '@angular/core';
  * @author Michael Krotscheck
  */
 @Component({
-  templateUrl: './noop.component.html'
+  templateUrl: './noop.component.html',
 })
 export class NoopComponent {
 }

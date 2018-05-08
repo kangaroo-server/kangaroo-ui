@@ -15,9 +15,9 @@
  * limitations under the License.
  */
 
+import { ModuleWithProviders } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { NotFoundComponent } from './not-found.component';
-import { ModuleWithProviders } from '@angular/core';
 
 /**
  * All routes used by the login component.
@@ -27,6 +27,6 @@ import { ModuleWithProviders } from '@angular/core';
 export const ROUTES: ModuleWithProviders = RouterModule.forChild([
   {
     path: '404',
-    component: NotFoundComponent
-  }
+    component: NotFoundComponent,
+  },
 ]);

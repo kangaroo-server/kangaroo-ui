@@ -61,6 +61,6 @@ export enum ClientType {
    *
    * @see <a href="https://tools.ietf.org/html/rfc6749#section-4.4">https://tools.ietf.org/html/rfc6749#section-4.4</a>
    */
-  ClientCredentials = 'ClientCredentials'
+  ClientCredentials = 'ClientCredentials',
 
 }

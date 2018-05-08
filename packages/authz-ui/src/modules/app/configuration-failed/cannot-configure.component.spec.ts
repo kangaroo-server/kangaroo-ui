@@ -27,8 +27,8 @@ describe('CannotConfigureComponent', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [
-        CannotConfigureComponent
-      ]
+        CannotConfigureComponent,
+      ],
     });
   });
 

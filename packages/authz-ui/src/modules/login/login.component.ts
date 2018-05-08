@@ -15,10 +15,11 @@
  * limitations under the License.
  */
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
-import { OAuth2Service, OAuth2TokenSubject } from '@kangaroo/angular-authn';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material';
+import { Router } from '@angular/router';
+import { OAuth2Service, OAuth2TokenSubject } from '@kangaroo/angular-authn';
+import { finalize } from 'rxjs/internal/operators';
 
 /**
  * This component renders the login form.
@@ -30,7 +31,7 @@ import { MatSnackBar } from '@angular/material';
  */
 @Component({
   templateUrl: './login.component.html',
-  styleUrls: [ 'login.component.scss' ]
+  styleUrls: [ 'login.component.scss' ],
 })
 export class LoginComponent {
 
@@ -41,7 +42,7 @@ export class LoginComponent {
    */
   public loginGroup: FormGroup = new FormGroup({
     login: new FormControl('', [ Validators.required ]),
-    password: new FormControl('', [ Validators.required ])
+    password: new FormControl('', [ Validators.required ]),
   });
 
   /**
@@ -77,10 +78,10 @@ export class LoginComponent {
     this.loginGroup.disable();
     this.oauth2
       .login(login, password)
-      .finally(() => this.loginGroup.enable())
+      .pipe(finalize(() => this.loginGroup.enable()))
       .subscribe(
         () => this.router.navigate([ '' ]),
-        () => this.snackBar.open('Invalid credentials, please try again.', 'Dismiss', {duration: 2000})
+        () => this.snackBar.open('Invalid credentials, please try again.', 'Dismiss', {duration: 2000}),
       );
   }
 }

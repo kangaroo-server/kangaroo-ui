@@ -19,15 +19,15 @@
  * Barrel rollup.
  */
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import { RequireLoggedInGuard } from './require-logged-in.guard';
-import { OAuth2TokenSubject } from './o-auth2-token.subject';
-import { OAuth2HttpInterceptor } from './o-auth2-http-interceptor';
-import { RequireLoggedOutGuard } from './require-logged-out.guard';
 import { ModuleWithProviders, NgModule } from '@angular/core';
-import { OAuth2Service } from './o-auth2.service';
 import { OAUTH2_API_ROOT, OAUTH2_CLIENT_ID, OAUTH2_CLIENT_SCOPES } from './contracts';
-import { OAuth2TokenDetailsSubject } from './o-auth2-token-details.subject';
 import { LoggedInSubject } from './logged-in.subject';
+import { OAuth2HttpInterceptor } from './o-auth2-http-interceptor';
+import { OAuth2TokenDetailsSubject } from './o-auth2-token-details.subject';
+import { OAuth2TokenSubject } from './o-auth2-token.subject';
+import { OAuth2Service } from './o-auth2.service';
+import { RequireLoggedInGuard } from './require-logged-in.guard';
+import { RequireLoggedOutGuard } from './require-logged-out.guard';
 
 export { TokenUtil } from './util/token.util';
 export { OAuth2Token } from './model/o-auth2-token';
@@ -56,8 +56,8 @@ export * from './contracts';
     OAuth2TokenSubject,
     OAuth2TokenDetailsSubject,
     OAuth2Service,
-    LoggedInSubject
-  ]
+    LoggedInSubject,
+  ],
 })
 export class KangarooOAuth2Module {
 
@@ -76,8 +76,8 @@ export class KangarooOAuth2Module {
       providers: [
         {provide: OAUTH2_API_ROOT, useValue: [ baseUrl ]},
         {provide: OAUTH2_CLIENT_ID, useValue: [ clientId ]},
-        {provide: OAUTH2_CLIENT_SCOPES, useValue: [ scopes || [] ]}
-      ]
+        {provide: OAUTH2_CLIENT_SCOPES, useValue: [ scopes || [] ]},
+      ],
     };
   }
 }

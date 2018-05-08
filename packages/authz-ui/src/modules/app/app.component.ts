@@ -17,10 +17,10 @@
  */
 
 import { ChangeDetectorRef, Component } from '@angular/core';
-import { KangarooConfigurationSubject } from '../config';
 import { NavigationCancel, Router } from '@angular/router';
 import { LoggedInSubject, OAuth2Service, OAuth2TokenSubject } from '@kangaroo/angular-authn';
-import 'rxjs/add/observable/if';
+import { filter, map, switchMap, tap } from 'rxjs/operators';
+import { KangarooConfigurationSubject } from '../config';
 import { MobileMediaQuery } from '../layout';
 
 /**
@@ -33,7 +33,7 @@ import { MobileMediaQuery } from '../layout';
 @Component({
   selector: 'kng-app',
   templateUrl: './app.component.html',
-  styleUrls: [ 'app.component.scss' ]
+  styleUrls: [ 'app.component.scss' ],
 })
 export class AppComponent {
 
@@ -82,22 +82,26 @@ export class AppComponent {
 
     // If one of our route guards fails, redirect the user to the root of the application.
     this.router.events
-      .filter((e) => (e instanceof NavigationCancel))
-      .map((e: NavigationCancel) => {
-        switch (e.url) {
-          case '/dashboard':
-            return '/login';
-          default:
-            return '/dashboard';
-        }
-      })
+      .pipe(
+        filter((e) => (e instanceof NavigationCancel)),
+        map((e: NavigationCancel) => {
+          switch (e.url) {
+            case '/dashboard':
+              return '/login';
+            default:
+              return '/dashboard';
+          }
+        }),
+      )
       .subscribe((nextRoute) => this.router.navigateByUrl(nextRoute));
 
     // If the user suddenly logs out, redirect to logout.
     this.loggedInSubject
-      .do((loggedIn) => this.loggedIn = loggedIn)
-      .filter((loggedIn) => !loggedIn)
-      .do(() => this.menuOpened = false)
+      .pipe(
+        tap((loggedIn) => this.loggedIn = loggedIn),
+        filter((loggedIn) => !loggedIn),
+        tap(() => this.menuOpened = false),
+      )
       .subscribe(() => this.router.navigateByUrl('/login'));
   }
 
@@ -106,7 +110,9 @@ export class AppComponent {
    */
   public logout() {
     this.tokenSubject
-      .switchMap((token) => this.tokenService.revoke(token))
+      .pipe(
+        switchMap((token) => this.tokenService.revoke(token)),
+      )
       .subscribe();
   }
 }

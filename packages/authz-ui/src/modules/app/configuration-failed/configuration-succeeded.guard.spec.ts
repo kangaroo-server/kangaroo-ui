@@ -17,10 +17,8 @@
  */
 
 import { async } from '@angular/core/testing';
-import { Observable } from 'rxjs/Observable';
+import { from, throwError } from 'rxjs';
 import { KangarooConfigurationSubject } from '../../config';
-import 'rxjs/add/observable/throw';
-import 'rxjs/add/observable/from';
 import { ConfigurationSucceededGuard } from './configuration-succeeded.guard';
 
 /**
@@ -30,22 +28,20 @@ describe('ConfigurationSucceededGuard', () => {
   it('should fail if the configuration fails', async(() => {
 
     const testObservable: KangarooConfigurationSubject =
-      <any> Observable.throw(new Error('Test error'));
+      throwError(new Error('Test error')) as any;
 
     const guard = new ConfigurationSucceededGuard(testObservable);
-    Observable
-      .from(guard.canActivate(null, null))
+    from(guard.canActivate(null, null))
       .subscribe((value) => expect(value).toBeFalsy());
   }));
 
   it('should pass if the configuration succeeds', async(() => {
 
     const testObservable: KangarooConfigurationSubject =
-      <any> Observable.from([ {} ]);
+      from([ {} ]) as any;
 
     const guard = new ConfigurationSucceededGuard(testObservable);
-    Observable
-      .from(guard.canActivate(null, null))
+    from(guard.canActivate(null, null))
       .subscribe((value) => expect(value).toBeTruthy());
   }));
 });

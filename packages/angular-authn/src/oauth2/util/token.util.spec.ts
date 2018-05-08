@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-import { TokenUtil } from './token.util';
 import { OAuth2Token } from '..';
+import { TokenUtil } from './token.util';
 
 /**
  * Unit tests for the OAuth2 Service.
@@ -30,7 +30,7 @@ describe('TokenUtil', () => {
     issue_date: nowInSeconds - 1000,
     expires_in: 2000,
     refresh_token: 'refresh_token_1',
-    scope: 'scope-1 scope-2'
+    scope: 'scope-1 scope-2',
   };
 
   it('should return false with null', () => {

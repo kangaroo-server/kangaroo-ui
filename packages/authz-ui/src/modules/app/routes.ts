@@ -17,11 +17,11 @@
  */
 
 import { Routes } from '@angular/router';
+import { RequireLoggedInGuard } from '@kangaroo/angular-authn';
+import { NoopComponent } from '@kangaroo/angular-platform';
+import { CannotConfigureComponent } from './configuration-failed/cannot-configure.component';
 import { ConfigurationFailedGuard } from './configuration-failed/configuration-failed.guard';
 import { ConfigurationSucceededGuard } from './configuration-failed/configuration-succeeded.guard';
-import { CannotConfigureComponent } from './configuration-failed/cannot-configure.component';
-import { NoopComponent } from '@kangaroo/angular-platform';
-import { RequireLoggedInGuard } from '@kangaroo/angular-authn';
 
 /**
  * Root application routes. Actual functional routes are provided by different modules.
@@ -32,24 +32,24 @@ export const ROUTES: Routes = [
   {
     path: '',
     redirectTo: '/dashboard',
-    pathMatch: 'full'
+    pathMatch: 'full',
   },
   {
     path: 'dashboard',
     component: NoopComponent,
     canActivate: [
       RequireLoggedInGuard,
-      ConfigurationSucceededGuard
-    ]
+      ConfigurationSucceededGuard,
+    ],
   },
   {
     path: 'configuration-failed',
     component: CannotConfigureComponent,
-    canActivate: [ ConfigurationFailedGuard ]
+    canActivate: [ ConfigurationFailedGuard ],
   },
   {
     path: '**',
     redirectTo: '404',
-    canActivate: [ ConfigurationSucceededGuard ]
-  }
+    canActivate: [ ConfigurationSucceededGuard ],
+  },
 ];

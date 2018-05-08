@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-import { LOGGING_BACKEND, LoggingBackend } from './logging-backend';
 import { ClassProvider, Injectable } from '@angular/core';
+import { LOGGING_BACKEND, LoggingBackend } from './logging-backend';
 
 /**
  * A simple facade on top of console.log.
@@ -84,5 +84,5 @@ export class ConsoleLogger implements LoggingBackend {
 export const consoleBackendProvider: ClassProvider = {
     provide: LOGGING_BACKEND,
     multi: true,
-    useClass: ConsoleLogger
+    useClass: ConsoleLogger,
 };

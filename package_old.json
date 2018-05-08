@@ -1,0 +1,47 @@
+{
+  "name": "@kangaroo/devkit",
+  "version": "1.0.0",
+  "description": "Consistent development tools for the kangaroo ecosystem.",
+  "license": "Apache-2.0",
+  "private": true,
+  "author": {
+    "name": "Michael Krotscheck",
+    "email": "krotscheck@gmail.com",
+    "url": "https://krotscheck.net/"
+  },
+  "scripts": {
+    "lint.karma": "tslint -p ./src/karma/tsconfig.json",
+    "lint.karma.ci": "tslint -p ./src/karma/tsconfig.json --format checkstyle --force > ./reports/karma/checkstyle-result.xml",
+    "lint.protractor": "tslint -p ./src/protractor/tsconfig.json",
+    "lint.protractor.ci": "tslint -p ./src/protractor/tsconfig.json --format checkstyle --force > ./reports/protractor/checkstyle-result.xml",
+    "lint": "yarn lint.karma && yarn lint.protractor",
+    "lint.ci": "yarn lint.karma.ci && yarn lint.protractor.ci",
+    "test": "jasmine",
+    "test.ci": "jasmine",
+    "build.karma": "tsc -p ./src/karma/tsconfig.json",
+    "build.protractor": "tsc -p ./src/protractor/tsconfig.json",
+    "build": "yarn build.karma && yarn build.protractor",
+    "nsp": "nsp check ./"
+  },
+  "dependencies": {
+    "@angular/cli": "^6.0.0",
+    "@angular/compiler": "^6.0.0",
+    "@angular/compiler-cli": "^6.0.0",
+    "@commitlint/cli": "~6.2.0",
+    "@commitlint/config-conventional": "~6.1.2",
+    "codelyzer": "^4.3.0",
+    "commitizen": "~2.9.6",
+    "cz-conventional-changelog": "~2.1.0",
+    "jasmine": "^3.1.0",
+    "jasmine-spec-reporter": "^4.2.1",
+    "rxjs-tslint": "^0.1.3",
+    "tslint": "^5.10.0",
+    "tslint-microsoft-contrib": "^5.0.3",
+    "typescript": "~2.7.0",
+    "wsrun": "3.0.0"
+
+  },
+  "devDependencies": {
+    "jasmine": "~3.1.0"
+  }
+}

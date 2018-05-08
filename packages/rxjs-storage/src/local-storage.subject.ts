@@ -15,11 +15,8 @@
  * limitations under the License.
  */
 
-import { Subject } from 'rxjs/Subject';
-import { ObjectUnsubscribedError } from 'rxjs/Rx'; // tslint:disable-line
-import { Subscriber } from 'rxjs/Subscriber';
-import { ISubscription, Subscription } from 'rxjs/Subscription';
-import { Observable } from 'rxjs/Observable';
+import { fromEvent, ObjectUnsubscribedError, Subject, Subscriber, Subscription, SubscriptionLike } from 'rxjs';
+import { filter, map } from 'rxjs/operators';
 
 /**
  * This subject behaves much like a BehaviorSubject, however the value is
@@ -50,10 +47,11 @@ export class LocalStorageSubject<T> extends Subject<T> {
     // Listen to localstorage events, for changes in other browser windows.
     // This event is then passed to super.next() to bypass our internal storage,
     // as the value will already have been stored by another browser.
-    this.eventSubscription = Observable
-      .fromEvent(window, 'storage')
-      .filter((e: StorageEvent) => e.key === this._key)
-      .map(() => this.decodedValue())
+    this.eventSubscription = fromEvent(window, 'storage')
+      .pipe(
+        filter((e: StorageEvent) => e.key === this._key),
+        map(() => this.decodedValue()),
+      )
       .subscribe((value) => super.next(value));
   }
 
@@ -121,7 +119,7 @@ export class LocalStorageSubject<T> extends Subject<T> {
    */
   public _subscribe(subscriber: Subscriber<T>): Subscription {
     const subscription = super._subscribe(subscriber); // tslint:disable-line
-    if (subscription && !(<ISubscription>subscription).closed) {
+    if (subscription && !(subscription as SubscriptionLike).closed) {
       subscriber.next(this.decodedValue());
     }
     return subscription;

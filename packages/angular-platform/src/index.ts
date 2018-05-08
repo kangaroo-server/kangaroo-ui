@@ -15,13 +15,13 @@
  * limitations under the License.
  */
 
+import { CommonModule } from '@angular/common';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { APP_INITIALIZER, Injector, NgModule } from '@angular/core';
 import { CsrfHttpInterceptor } from './http/csrf.http-interceptor';
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import { locationInitializer } from './router_util';
 import { NoopComponent } from './noop/noop.component';
-import { CommonModule } from '@angular/common';
 import { kangarooEntityIdMatcher } from './router/kangaroo_id_matcher';
+import { locationInitializer } from './router_util';
 
 export * from './api';
 export { NoopComponent } from './noop/noop.component';
@@ -36,17 +36,17 @@ export { kangarooEntityIdMatcher } from './router/kangaroo_id_matcher';
 @NgModule({
   providers: [
     {provide: HTTP_INTERCEPTORS, multi: true, useClass: CsrfHttpInterceptor},
-    {provide: APP_INITIALIZER, multi: true, useFactory: locationInitializer, deps: [ Injector ]}
+    {provide: APP_INITIALIZER, multi: true, useFactory: locationInitializer, deps: [ Injector ]},
   ],
   imports: [
-    CommonModule
+    CommonModule,
   ],
   declarations: [
-    NoopComponent
+    NoopComponent,
   ],
   exports: [
-    NoopComponent
-  ]
+    NoopComponent,
+  ],
 })
 export class KangarooPlatformModule {
 }

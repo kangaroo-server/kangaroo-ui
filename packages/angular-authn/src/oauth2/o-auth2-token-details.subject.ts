@@ -15,12 +15,12 @@
  * limitations under the License.
  */
 
-import { ReplaySubject } from 'rxjs/ReplaySubject';
-import { OAuth2TokenSubject } from './o-auth2-token.subject';
-import { Subscription } from 'rxjs/Subscription';
-import { OAuth2Service } from './o-auth2.service';
+import { Inject, Injectable } from '@angular/core';
+import { ReplaySubject, Subscription } from 'rxjs';
+import { mergeMap } from 'rxjs/operators';
 import { OAuth2TokenDetails } from './model/o-auth2-token-details';
-import { Injectable } from '@angular/core';
+import { OAuth2TokenSubject } from './o-auth2-token.subject';
+import { OAuth2Service } from './o-auth2.service';
 
 /**
  * This subject contains the introspected content of the OAuth2 Token.
@@ -38,12 +38,14 @@ export class OAuth2TokenDetailsSubject extends ReplaySubject<OAuth2TokenDetails>
   /**
    * Create a new token subject.
    */
-  constructor(public token: OAuth2TokenSubject,
-              public service: OAuth2Service) {
+  constructor(@Inject(OAuth2TokenSubject) public token: OAuth2TokenSubject,
+              @Inject(OAuth2Service) public service: OAuth2Service) {
     super(1);
 
     this.subscription = token
-      .mergeMap((t) => service.introspect(t))
+      .pipe(
+        mergeMap((t) => service.introspect(t)),
+      )
       .subscribe(
         (details) => this.next(details),
         () => this.next({active: false}));

@@ -16,13 +16,10 @@
  *
  */
 
-import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Observable, ObservableInput } from 'rxjs/Observable';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/mergeMap';
-import 'rxjs/add/observable/from';
-import 'rxjs/add/observable/of';
+import { Injectable } from '@angular/core';
+import { from, Observable, ObservableInput } from 'rxjs';
+import { map, mergeMap } from 'rxjs/operators';
 import { CommonModel } from './common.model';
 import { ListResponse } from './list-response.model';
 
@@ -31,7 +28,6 @@ import { ListResponse } from './list-response.model';
  *
  * @author Michael Krotscheck
  */
-@Injectable()
 export abstract class AbstractResourceService<T extends CommonModel> {
 
   /**
@@ -49,7 +45,7 @@ export abstract class AbstractResourceService<T extends CommonModel> {
   protected constructor(private resourcesStub: string,
                         private http: HttpClient,
                         apiRootProvider: ObservableInput<string>) {
-    this.apiRoot = Observable.from(apiRootProvider || [ '' ]);
+    this.apiRoot = from(apiRootProvider || [ '' ]);
   }
 
   /**
@@ -78,8 +74,10 @@ export abstract class AbstractResourceService<T extends CommonModel> {
       .set('limit', limit && limit.toString() || undefined);
 
     return this.apiRoot
-      .map((root) => this.buildEntityRoot(root, <T>{id: 'search'}))
-      .mergeMap((url) => this.http.get<ListResponse<T>>(url, {params}));
+      .pipe(
+        map((root) => this.buildEntityRoot(root, {id: 'search'} as T)),
+        mergeMap((url) => this.http.get<ListResponse<T>>(url, {params})),
+      );
   }
 
   /**
@@ -110,8 +108,10 @@ export abstract class AbstractResourceService<T extends CommonModel> {
       .set('limit', limit && limit.toString() || undefined);
 
     return this.apiRoot
-      .map((root) => this.buildEntityRoot(root, <T>{id: ''}))
-      .mergeMap((url) => this.http.get<ListResponse<T>>(url, {params}));
+      .pipe(
+        map((root) => this.buildEntityRoot(root, {id: ''} as T)),
+        mergeMap((url) => this.http.get<ListResponse<T>>(url, {params})),
+      );
   }
 
   /**
@@ -122,8 +122,10 @@ export abstract class AbstractResourceService<T extends CommonModel> {
    */
   public create(entity: T): Observable<T> {
     return this.apiRoot
-      .map((root) => this.buildEntityRoot(root, <T>{id: ''}))
-      .mergeMap((url) => this.http.post<T>(url, entity));
+      .pipe(
+        map((root) => this.buildEntityRoot(root, {id: ''} as T)),
+        mergeMap((url) => this.http.post<T>(url, entity)),
+      );
   }
 
   /**
@@ -134,8 +136,10 @@ export abstract class AbstractResourceService<T extends CommonModel> {
    */
   public read(id: string): Observable<T> {
     return this.apiRoot
-      .map((root) => this.buildEntityRoot(root, <T>{id: id}))
-      .mergeMap((url) => this.http.get<T>(url));
+      .pipe(
+        map((root) => this.buildEntityRoot(root, {id} as T)),
+        mergeMap((url) => this.http.get<T>(url)),
+      );
   }
 
   /**
@@ -146,8 +150,10 @@ export abstract class AbstractResourceService<T extends CommonModel> {
    */
   public update(entity: T): Observable<T> {
     return this.apiRoot
-      .map((root) => this.buildEntityRoot(root, entity))
-      .mergeMap((url) => this.http.put<T>(url, entity));
+      .pipe(
+        map((root) => this.buildEntityRoot(root, entity)),
+        mergeMap((url) => this.http.put<T>(url, entity)),
+      );
   }
 
   /**
@@ -158,8 +164,10 @@ export abstract class AbstractResourceService<T extends CommonModel> {
    */
   public destroy(entity: T): Observable<void> {
     return this.apiRoot
-      .map((root) => this.buildEntityRoot(root, entity))
-      .mergeMap((url) => this.http.delete<void>(url));
+      .pipe(
+        map((root) => this.buildEntityRoot(root, entity)),
+        mergeMap((url) => this.http.delete<void>(url)),
+      );
   }
 
   /**

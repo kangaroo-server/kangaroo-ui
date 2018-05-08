@@ -17,8 +17,8 @@
  */
 
 import { Inject, Injectable } from '@angular/core';
-import { AbstractStore } from './abstract.store';
 import { Logger } from '@kangaroo/angular-logger';
+import { AbstractStore } from './abstract.store';
 import { WINDOW } from './window';
 
 /**

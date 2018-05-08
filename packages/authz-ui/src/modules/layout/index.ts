@@ -16,6 +16,7 @@
  */
 
 import { NgModule } from '@angular/core';
+import { FlexLayoutModule } from '@angular/flex-layout';
 import {
   MatButtonModule,
   MatCardModule,
@@ -24,9 +25,8 @@ import {
   MatInputModule,
   MatSidenavModule,
   MatSnackBarModule,
-  MatToolbarModule
+  MatToolbarModule,
 } from '@angular/material';
-import { FlexLayoutModule } from '@angular/flex-layout';
 import { MobileMediaQuery, mobileMediaQueryProvider } from './media_matcher';
 
 export { MobileMediaQuery } from './media_matcher';
@@ -45,7 +45,7 @@ export { MobileMediaQuery } from './media_matcher';
     MatInputModule,
     MatButtonModule,
     MatIconModule,
-    MatToolbarModule
+    MatToolbarModule,
   ],
   exports: [
     FlexLayoutModule,
@@ -57,11 +57,11 @@ export { MobileMediaQuery } from './media_matcher';
     MatIconModule,
     MatToolbarModule,
     MatSnackBarModule,
-    MatSidenavModule
+    MatSidenavModule,
   ],
   providers: [
-    mobileMediaQueryProvider
-  ]
+    mobileMediaQueryProvider,
+  ],
 })
 export class KangarooLayoutModule {
 }

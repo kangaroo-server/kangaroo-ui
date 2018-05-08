@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-import { Injectable } from '@angular/core';
-import { LoggingBackend } from './logging-backend';
+import { Inject, Injectable, Optional } from '@angular/core';
+import { LOGGING_BACKEND, LoggingBackend } from './logging-backend';
 
 /**
  * A logging facade, which will rebroadcast all messages received to all
@@ -28,13 +28,17 @@ import { LoggingBackend } from './logging-backend';
 export class Logger {
 
   /**
+   * Type-safe storage for our backends.
+   */
+  private readonly backends: LoggingBackend[];
+
+  /**
    * Create a logger with a specific namespace
    *
-   * @param namespace The classname, or namespace.
-   * @param backends All available logging backends.
+   * @param optionalBackends All available logging backends.
    */
-  constructor(public readonly namespace: string,
-              private backends: LoggingBackend[]) {
+  constructor(@Inject(LOGGING_BACKEND) @Optional() optionalBackends: LoggingBackend[]) {
+    this.backends = optionalBackends || [];
   }
 
   /**
@@ -43,7 +47,7 @@ export class Logger {
    * @param msgs The messages to log.
    */
   public log(...msgs: any[]): void {
-    this.backends.forEach(be => be.log(this.namespace, ...msgs));
+    this.backends.forEach((be) => be.log(...msgs));
   }
 
   /**
@@ -52,7 +56,7 @@ export class Logger {
    * @param msgs A list of messages to send.
    */
   public debug(...msgs: any[]) {
-    this.backends.forEach(be => be.debug(this.namespace, ...msgs));
+    this.backends.forEach((be) => be.debug(...msgs));
   }
 
   /**
@@ -61,7 +65,7 @@ export class Logger {
    * @param msgs A list of messages to send.
    */
   public info(...msgs: any[]) {
-    this.backends.forEach(be => be.info(this.namespace, ...msgs));
+    this.backends.forEach((be) => be.info(...msgs));
   }
 
   /**
@@ -70,7 +74,7 @@ export class Logger {
    * @param msgs A list of messages to send.
    */
   public warn(...msgs: any[]) {
-    this.backends.forEach(be => be.warn(this.namespace, ...msgs));
+    this.backends.forEach((be) => be.warn(...msgs));
   }
 
   /**
@@ -79,6 +83,6 @@ export class Logger {
    * @param msgs A list of messages to send.
    */
   public error(...msgs: any[]) {
-    this.backends.forEach(be => be.error(this.namespace, ...msgs));
+    this.backends.forEach((be) => be.error(...msgs));
   }
 }

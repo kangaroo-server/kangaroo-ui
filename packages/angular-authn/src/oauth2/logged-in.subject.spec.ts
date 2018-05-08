@@ -15,11 +15,11 @@
  * limitations under the License.
  */
 
-import { OAuth2TokenSubject } from './o-auth2-token.subject';
 import { async, inject, TestBed } from '@angular/core/testing';
-import { OAuth2Token } from './model/o-auth2-token';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { BehaviorSubject } from 'rxjs';
 import { LoggedInSubject } from './logged-in.subject';
+import { OAuth2Token } from './model/o-auth2-token';
+import { OAuth2TokenSubject } from './o-auth2-token.subject';
 
 /**
  * Unit tests for the LoggedInSubject.
@@ -32,14 +32,14 @@ describe('LoggedInSubject', () => {
     refresh_token: 'refresh_token_1',
     issue_date: nowInSeconds - 100,
     expires_in: 3600,
-    token_type: 'Bearer'
+    token_type: 'Bearer',
   };
   const expiredToken: OAuth2Token = {
     access_token: 'access_token_2',
     refresh_token: 'refresh_token_2',
     issue_date: nowInSeconds - 100,
     expires_in: 50,
-    token_type: 'Bearer'
+    token_type: 'Bearer',
   };
   let tokenSubject: BehaviorSubject<OAuth2Token>;
 
@@ -48,8 +48,8 @@ describe('LoggedInSubject', () => {
     TestBed.configureTestingModule({
       providers: [
         {provide: OAuth2TokenSubject, useValue: tokenSubject},
-        LoggedInSubject
-      ]
+        LoggedInSubject,
+      ],
     });
   });
 

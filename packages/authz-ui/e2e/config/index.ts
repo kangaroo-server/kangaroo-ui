@@ -22,6 +22,6 @@ import { E2EConfiguration } from './e2e-configuration';
 export const config: E2EConfiguration = {
   defaultCredentials: {
     login: 'admin',
-    password: 'admin'
-  }
+    password: 'admin',
+  },
 };

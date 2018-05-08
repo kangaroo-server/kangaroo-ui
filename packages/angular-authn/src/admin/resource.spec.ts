@@ -16,19 +16,19 @@
  *
  */
 
+import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { async, inject, TestBed } from '@angular/core/testing';
+import { CommonModel } from '@kangaroo/angular-platform';
 import { ApplicationService } from './application.service';
 import { AuthenticatorService } from './authenticator.service';
+import { ClientRedirectService } from './client-redirect.service';
+import { ClientReferrerService } from './client-referrer.service';
 import { ClientService } from './client.service';
 import { RoleService } from './role.service';
 import { ScopeService } from './scope.service';
 import { TokenService } from './token.service';
-import { UserService } from './user.service';
 import { UserIdentityService } from './user-identity.service';
-import { ClientRedirectService } from './client-redirect.service';
-import { ClientReferrerService } from './client-referrer.service';
-import { CommonModel } from '@kangaroo/angular-platform';
-import { async, inject, TestBed } from '@angular/core/testing';
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { UserService } from './user.service';
 
 /**
  * Unit tests for all API resources..
@@ -38,7 +38,7 @@ describe('Resource', () => {
   const parentEntity: CommonModel = {
     id: 'parent_id',
     createdDate: 10000,
-    modifiedDate: 20000
+    modifiedDate: 20000,
   };
 
   beforeEach(() => {
@@ -53,11 +53,11 @@ describe('Resource', () => {
         ScopeService,
         TokenService,
         UserService,
-        UserIdentityService
+        UserIdentityService,
       ],
       imports: [
-        HttpClientTestingModule
-      ]
+        HttpClientTestingModule,
+      ],
     });
   });
 

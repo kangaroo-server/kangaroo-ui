@@ -15,15 +15,15 @@
  * limitations under the License.
  */
 
-import { async, inject, TestBed } from '@angular/core/testing';
+import { HttpParams } from '@angular/common/http';
 import { HttpClientTestingModule, HttpTestingController, TestRequest } from '@angular/common/http/testing';
-import { OAuth2Service } from './o-auth2.service';
+import { async, inject, TestBed } from '@angular/core/testing';
+import { BehaviorSubject } from 'rxjs';
 import { OAUTH2_API_ROOT, OAUTH2_CLIENT_ID, OAUTH2_CLIENT_SCOPES } from './contracts';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { OAuth2TokenSubject } from './o-auth2-token.subject';
 import { OAuth2Token } from './model/o-auth2-token';
 import { OAuth2TokenDetails } from './model/o-auth2-token-details';
-import { HttpParams } from '@angular/common/http';
+import { OAuth2TokenSubject } from './o-auth2-token.subject';
+import { OAuth2Service } from './o-auth2.service';
 
 /**
  * Unit tests for the OAuth2 Service.
@@ -37,7 +37,7 @@ describe('OAuth2Service', () => {
     issue_date: null,
     expires_in: 2000,
     refresh_token: 'refresh_token_1',
-    scope: 'scope-1 scope-2'
+    scope: 'scope-1 scope-2',
   };
   const mockToken2: OAuth2Token = {
     access_token: 'access_token_2',
@@ -45,7 +45,7 @@ describe('OAuth2Service', () => {
     issue_date: null,
     expires_in: 2000,
     refresh_token: 'refresh_token_2',
-    scope: 'scope-1 scope-2'
+    scope: 'scope-1 scope-2',
   };
   const detailsSuccess: OAuth2TokenDetails = {
     active: true,
@@ -59,10 +59,10 @@ describe('OAuth2Service', () => {
     sub: 'subject',
     aud: 'audience',
     iss: 'issuer',
-    jti: 'token_id'
+    jti: 'token_id',
   };
   const detailsFailed: OAuth2TokenDetails = {
-    active: false
+    active: false,
   };
 
   let tokenSubject: BehaviorSubject<OAuth2Token>;
@@ -98,11 +98,11 @@ describe('OAuth2Service', () => {
         {provide: OAUTH2_API_ROOT, useValue: mockApiRoot},
         {provide: OAUTH2_CLIENT_ID, useValue: [ 'client_id' ]},
         {provide: OAUTH2_CLIENT_SCOPES, useValue: scopeSubject},
-        {provide: OAuth2TokenSubject, useValue: tokenSubject}
+        {provide: OAuth2TokenSubject, useValue: tokenSubject},
       ],
       imports: [
-        HttpClientTestingModule
-      ]
+        HttpClientTestingModule,
+      ],
     });
   });
 
@@ -177,7 +177,7 @@ describe('OAuth2Service', () => {
         service.login('user', 'password')
           .subscribe((value) => expect(value.issue_date).toBeTruthy());
         http.expectOne({url: '/token', method: 'POST'})
-          .flush(mockToken1, {headers: {'Date': new Date().toUTCString()}});
+          .flush(mockToken1, {headers: {Date: new Date().toUTCString()}});
       })));
 
     it('should throw an error on failure',
@@ -260,7 +260,7 @@ describe('OAuth2Service', () => {
         service.refresh(mockToken1)
           .subscribe((value) => expect(value.issue_date).toBeTruthy());
         http.expectOne({url: '/token', method: 'POST'})
-          .flush(mockToken1, {headers: {'Date': new Date().toUTCString()}});
+          .flush(mockToken1, {headers: {Date: new Date().toUTCString()}});
       })));
   });
 

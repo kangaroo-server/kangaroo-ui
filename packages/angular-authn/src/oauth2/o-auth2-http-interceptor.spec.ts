@@ -15,14 +15,14 @@
  * limitations under the License.
  */
 
-import { OAuth2HttpInterceptor } from './o-auth2-http-interceptor';
-import { OAuth2Token } from './model/o-auth2-token';
-import { OAuth2TokenSubject } from './o-auth2-token.subject';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { async, inject, TestBed } from '@angular/core/testing';
 import { HTTP_INTERCEPTORS, HttpClient } from '@angular/common/http';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { async, inject, TestBed } from '@angular/core/testing';
+import { BehaviorSubject } from 'rxjs';
 import { OAUTH2_API_ROOT, OAUTH2_CLIENT_ID, OAUTH2_CLIENT_SCOPES } from './contracts';
+import { OAuth2Token } from './model/o-auth2-token';
+import { OAuth2HttpInterceptor } from './o-auth2-http-interceptor';
+import { OAuth2TokenSubject } from './o-auth2-token.subject';
 import { OAuth2Service } from './o-auth2.service';
 
 /**
@@ -40,14 +40,14 @@ describe('OAuth2HttpInterceptor', () => {
     refresh_token: 'refresh_token_1',
     issue_date: nowInSeconds - 100,
     expires_in: 3600,
-    token_type: 'Bearer'
+    token_type: 'Bearer',
   };
   const validToken2: OAuth2Token = {
     access_token: 'access_token_2',
     refresh_token: 'refresh_token_2',
     issue_date: nowInSeconds,
     expires_in: 3600,
-    token_type: 'Bearer'
+    token_type: 'Bearer',
   };
 
   beforeEach(() => {
@@ -59,11 +59,11 @@ describe('OAuth2HttpInterceptor', () => {
         {provide: OAUTH2_CLIENT_ID, useValue: [ 'client_id' ]},
         {provide: OAUTH2_CLIENT_SCOPES, useValue: [ [] ]},
         {provide: OAuth2TokenSubject, useValue: testSubject},
-        OAuth2Service
+        OAuth2Service,
       ],
       imports: [
-        HttpClientTestingModule
-      ]
+        HttpClientTestingModule,
+      ],
     });
   });
 
@@ -81,7 +81,7 @@ describe('OAuth2HttpInterceptor', () => {
         access_token: 'expired_token',
         issue_date: nowInSeconds - 1000,
         expires_in: 500,
-        token_type: 'Bearer'
+        token_type: 'Bearer',
       });
       client.get(testUrl).subscribe();
 
@@ -91,7 +91,7 @@ describe('OAuth2HttpInterceptor', () => {
 
   it('should not provide a header if the token is blank',
     async(inject([ HttpClient, HttpTestingController ], (client, http) => {
-      testSubject.next(<any>{});
+      testSubject.next({} as any);
       client.get(testUrl).subscribe();
 
       const mockResponse = http.expectOne(testUrl);

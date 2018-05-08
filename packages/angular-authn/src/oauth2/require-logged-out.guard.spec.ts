@@ -15,11 +15,11 @@
  * limitations under the License.
  */
 
-import { RequireLoggedOutGuard } from './require-logged-out.guard';
 import { async, inject, TestBed } from '@angular/core/testing';
+import { Subject } from 'rxjs';
 import { OAuth2Token } from './model/o-auth2-token';
 import { OAuth2TokenSubject } from './o-auth2-token.subject';
-import { Subject } from 'rxjs/Subject';
+import { RequireLoggedOutGuard } from './require-logged-out.guard';
 
 /**
  * Unit tests for the valid logout route guard.
@@ -34,8 +34,8 @@ describe('RequireLoggedOutGuard', () => {
     TestBed.configureTestingModule({
       providers: [
         RequireLoggedOutGuard,
-        {provide: OAuth2TokenSubject, useValue: testSubject}
-      ]
+        {provide: OAuth2TokenSubject, useValue: testSubject},
+      ],
     });
   });
 
@@ -48,7 +48,7 @@ describe('RequireLoggedOutGuard', () => {
       guard.canActivate().subscribe((value) => expect(value).toBeFalsy());
       token.next({
         issue_date: nowInSeconds - 1000,
-        expires_in: 2000
+        expires_in: 2000,
       });
     })));
 
@@ -57,7 +57,7 @@ describe('RequireLoggedOutGuard', () => {
       guard.canActivate().subscribe((value) => expect(value).toBeTruthy());
       token.next({
         issue_date: nowInSeconds - 1000,
-        expires_in: 500
+        expires_in: 500,
       });
     })));
 

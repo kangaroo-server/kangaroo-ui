@@ -15,14 +15,14 @@
  * limitations under the License.
  *
  */
+import { Component } from '@angular/core';
+import { async, inject, TestBed } from '@angular/core/testing';
 import * as all from './index';
 import { BrowserStorageModule } from './index';
-import { async, inject, TestBed } from '@angular/core/testing';
-import { Component } from '@angular/core';
-import { WINDOW } from './window';
 import { LocalStore } from './local.store';
 import { MemoryStore } from './memory.store';
 import { SessionStore } from './session.store';
+import { WINDOW } from './window';
 
 /**
  * A test component that can be overridden on a test-by-test basis.
@@ -41,7 +41,7 @@ describe('BrowserModule', () => {
 
     'LocalStore',
     'SessionStore',
-    'MemoryStore'
+    'MemoryStore',
   ];
 
   expectedExports.forEach((name) => {
@@ -57,23 +57,23 @@ describe('BrowserModule', () => {
   });
 
   describe('when imported', () => {
-    const expectedTypes: { name: string }[] = <any> [
+    const expectedTypes: Array<{ name: string }> = [
       WINDOW,
       LocalStore,
       MemoryStore,
-      SessionStore
-    ];
+      SessionStore,
+    ] as any;
     const expectedComponents = [];
     const expectedPipes = [];
 
     beforeEach(() => {
       TestBed.configureTestingModule({
         imports: [
-          BrowserStorageModule
+          BrowserStorageModule,
         ],
         declarations: [
-          StubComponent
-        ]
+          StubComponent,
+        ],
       });
     });
 
@@ -96,8 +96,8 @@ describe('BrowserModule', () => {
       it(`should permit usage of the '${pipename}' pipe`, () => {
         TestBed.overrideComponent(StubComponent, {
           set: {
-            template: `<p>{{'this is a test' | ${pipename}}}</p>`
-          }
+            template: `<p>{{'this is a test' | ${pipename}}}</p>`,
+          },
         });
 
         const component = TestBed.createComponent(StubComponent);

@@ -14,9 +14,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+import { TestBed } from '@angular/core/testing';
 import * as all from './index';
 import { KangarooOAuth2Module } from './index';
-import { TestBed } from '@angular/core/testing';
 
 /**
  * Unit tests for the KangarooOAuth2Module
@@ -29,7 +29,7 @@ describe('KangarooOAuth2Module', () => {
     'RequireLoggedInGuard',
     'OAuth2Service',
     'OAuth2TokenSubject',
-    'OAUTH2_API_ROOT'
+    'OAUTH2_API_ROOT',
   ];
 
   expectedExports.forEach((name) => {
@@ -44,8 +44,8 @@ describe('KangarooOAuth2Module', () => {
       TestBed.configureTestingModule(
         {
           imports: [
-            KangarooOAuth2Module.forRoot('', 'client_id')
-          ]
+            KangarooOAuth2Module.forRoot('', 'client_id'),
+          ],
         }).compileComponents();
     });
   });

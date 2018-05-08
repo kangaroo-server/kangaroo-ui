@@ -15,9 +15,9 @@
  * limitations under the License.
  *
  */
+import { TestBed } from '@angular/core/testing';
 import * as all from './index';
 import { ConfigModule } from './index';
-import { TestBed } from '@angular/core/testing';
 
 /**
  * Unit tests for the ConfigModule
@@ -28,7 +28,7 @@ describe('ConfigModule', () => {
     'ConfigModule',
     'KangarooConfigurationSubject',
     'AdminApiRoot',
-    'OAuthApiRoot'
+    'OAuthApiRoot',
   ];
 
   expectedExports.forEach((name) => {
@@ -43,9 +43,9 @@ describe('ConfigModule', () => {
       TestBed.configureTestingModule(
         {
           imports: [
-            ConfigModule
+            ConfigModule,
           ],
-          providers: []
+          providers: [],
         }).compileComponents();
     });
   });

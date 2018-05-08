@@ -15,16 +15,16 @@
  * limitations under the License.
  */
 
-import { OAuth2TokenSubject } from './o-auth2-token.subject';
+import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { async, inject, TestBed } from '@angular/core/testing';
+import { BehaviorSubject } from 'rxjs';
+import { OAUTH2_API_ROOT, OAUTH2_CLIENT_ID, OAUTH2_CLIENT_SCOPES } from './contracts';
 import { OAuth2Token } from './model/o-auth2-token';
 import { OAuth2TokenDetails } from './model/o-auth2-token-details';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { OAuth2TokenDetailsSubject } from './o-auth2-token-details.subject';
-import { OAuth2Service } from './o-auth2.service';
 import { OAuth2HttpInterceptor } from './o-auth2-http-interceptor';
-import { OAUTH2_API_ROOT, OAUTH2_CLIENT_ID, OAUTH2_CLIENT_SCOPES } from './contracts';
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { OAuth2TokenDetailsSubject } from './o-auth2-token-details.subject';
+import { OAuth2TokenSubject } from './o-auth2-token.subject';
+import { OAuth2Service } from './o-auth2.service';
 
 /**
  * Unit tests for the OAuth2 Token Details Subject.
@@ -38,7 +38,7 @@ describe('OAuth2TokenDetailsSubject', () => {
     issue_date: nowInSeconds - 1000,
     expires_in: 2000,
     refresh_token: 'refresh_token_1',
-    scope: 'scope-1 scope-2'
+    scope: 'scope-1 scope-2',
   };
   const detailsSuccess: OAuth2TokenDetails = {
     active: true,
@@ -52,10 +52,10 @@ describe('OAuth2TokenDetailsSubject', () => {
     sub: 'subject',
     aud: 'audience',
     iss: 'issuer',
-    jti: 'token_id'
+    jti: 'token_id',
   };
   const detailsFailed: OAuth2TokenDetails = {
-    active: false
+    active: false,
   };
   let tokenSubject: BehaviorSubject<OAuth2Token>;
 
@@ -68,11 +68,11 @@ describe('OAuth2TokenDetailsSubject', () => {
         {provide: OAUTH2_CLIENT_SCOPES, useValue: [ [] ]},
         {provide: OAuth2TokenSubject, useValue: tokenSubject},
         OAuth2TokenDetailsSubject,
-        OAuth2Service
+        OAuth2Service,
       ],
       imports: [
-        HttpClientTestingModule
-      ]
+        HttpClientTestingModule,
+      ],
     });
   });
 

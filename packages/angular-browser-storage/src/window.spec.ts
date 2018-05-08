@@ -26,8 +26,8 @@ describe('WINDOW', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [
-        windowProvider
-      ]
+        windowProvider,
+      ],
     });
   });
 

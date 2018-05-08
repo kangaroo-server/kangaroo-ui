@@ -15,9 +15,9 @@
  * limitations under the License.
  */
 
-import { Injectable } from '@angular/core';
 import { PlatformLocation } from '@angular/common';
-import { AsyncSubject } from 'rxjs/AsyncSubject';
+import { Injectable } from '@angular/core';
+import { AsyncSubject } from 'rxjs';
 
 /**
  * Root path to the oauth2 api, used for authentication. It is derived

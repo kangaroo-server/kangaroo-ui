@@ -16,11 +16,10 @@
  *
  */
 
-import { async, inject, TestBed } from '@angular/core/testing';
 import { HTTP_INTERCEPTORS, HttpClient } from '@angular/common/http';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { async, inject, TestBed } from '@angular/core/testing';
 import { CsrfHttpInterceptor } from './csrf.http-interceptor';
-
 
 /**
  * Unit tests for the CsrfHttpInterceptor.
@@ -30,11 +29,11 @@ describe('CsrfHttpInterceptor', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [
-        {provide: HTTP_INTERCEPTORS, multi: true, useClass: CsrfHttpInterceptor}
+        {provide: HTTP_INTERCEPTORS, multi: true, useClass: CsrfHttpInterceptor},
       ],
       imports: [
-        HttpClientTestingModule
-      ]
+        HttpClientTestingModule,
+      ],
     });
   });
 

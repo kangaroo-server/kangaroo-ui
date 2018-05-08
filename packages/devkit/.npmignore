@@ -1,9 +1,0 @@
-reports
-node_modules
-src
-*.tgz
-karma.conf.js
-tsconfig.json
-tslint.json
-lib/package.json
-yarn-error.log

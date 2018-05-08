@@ -16,17 +16,16 @@
  */
 
 import { async, ComponentFixture, inject, TestBed } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
 import { ReactiveFormsModule } from '@angular/forms';
-import { OAuth2Service, OAuth2Token, OAuth2TokenSubject } from '@kangaroo/angular-authn';
-import { RouterTestingModule } from '@angular/router/testing';
-import { Router } from '@angular/router';
-import { LoginComponent } from './login.component';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { Observable } from 'rxjs/Observable';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { KangarooLayoutModule } from '../layout';
 import { MatSnackBar } from '@angular/material';
+import { By } from '@angular/platform-browser';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { Router } from '@angular/router';
+import { RouterTestingModule } from '@angular/router/testing';
+import { OAuth2Service, OAuth2Token, OAuth2TokenSubject } from '@kangaroo/angular-authn';
+import { BehaviorSubject, from, throwError } from 'rxjs';
+import { KangarooLayoutModule } from '../layout';
+import { LoginComponent } from './login.component';
 
 /**
  * Unit tests for the Login form component.
@@ -44,33 +43,33 @@ describe('LoginComponent', () => {
     refresh_token: 'refresh_token_1',
     issue_date: nowInSeconds - 100,
     expires_in: 3600,
-    token_type: 'Bearer'
+    token_type: 'Bearer',
   };
 
   beforeEach(() => {
 
     loggedInSubject = new BehaviorSubject(true);
     tokenSubject = new BehaviorSubject(validToken);
-    tokenService = <any> {
+    tokenService = {
       login: () => {
-      }
-    };
+      },
+    } as any;
 
     TestBed.configureTestingModule({
       providers: [
         {provide: OAuth2TokenSubject, useValue: tokenSubject},
-        {provide: OAuth2Service, useValue: tokenService}
+        {provide: OAuth2Service, useValue: tokenService},
       ],
       declarations: [
-        LoginComponent
+        LoginComponent,
       ],
       imports: [
         ReactiveFormsModule,
         RouterTestingModule,
         NoopAnimationsModule,
 
-        KangarooLayoutModule
-      ]
+        KangarooLayoutModule,
+      ],
     });
 
     fixture = TestBed.createComponent(LoginComponent);
@@ -155,8 +154,8 @@ describe('LoginComponent', () => {
   it('should properly parse error messages from form controls', async(() => {
     const controller: LoginComponent = fixture.componentInstance;
 
-    const unrecognizedMessage = controller.getErrorMessage(<any> {hasError: () => false});
-    const recognizedMessage = controller.getErrorMessage(<any> {hasError: () => true});
+    const unrecognizedMessage = controller.getErrorMessage({hasError: () => false} as any);
+    const recognizedMessage = controller.getErrorMessage({hasError: () => true} as any);
 
     expect(unrecognizedMessage).toBe('');
     expect(recognizedMessage).toBe('You must enter a value');
@@ -245,7 +244,7 @@ describe('LoginComponent', () => {
     [ OAuth2Service, MatSnackBar ], (service, snackbar) => {
       const snackSpy = spyOn(snackbar, 'open').and.stub();
       const controller: LoginComponent = fixture.componentInstance;
-      spyOn(service, 'login').and.returnValue(Observable.throw('failed'));
+      spyOn(service, 'login').and.returnValue(throwError('failed'));
       fixture.componentInstance.loginGroup.setValue({login: 'login', password: 'password'});
       fixture.debugElement.query(By.css('#login_button')).nativeElement.click();
 
@@ -259,7 +258,7 @@ describe('LoginComponent', () => {
   it('should navigate to the dashboard on a successful login', async(inject(
     [ OAuth2Service, Router ], (service, router) => {
       const controller: LoginComponent = fixture.componentInstance;
-      spyOn(service, 'login').and.returnValue(Observable.from([ true ]));
+      spyOn(service, 'login').and.returnValue(from([ true ]));
       const routerSpy = spyOn(router, 'navigate').and.stub();
       fixture.componentInstance.loginGroup.setValue({login: 'login', password: 'password'});
       fixture.debugElement.query(By.css('#login_button')).nativeElement.click();

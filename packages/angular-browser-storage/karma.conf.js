@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-const commonConfig = require('@kangaroo/devkit/karma');
+const commonConfig = require('../../karma.conf');
 
 module.exports = function (config) {
 
@@ -23,7 +23,7 @@ module.exports = function (config) {
 
     config.set({
         basePath: '',
-        frameworks: ['jasmine', '@angular/cli'],
+        frameworks: ['jasmine', '@angular-devkit/build-angular'],
         plugins: [
             require('karma-jasmine'),
 
@@ -35,7 +35,7 @@ module.exports = function (config) {
             require('karma-coverage-istanbul-reporter'),
             require('karma-spec-reporter'),
 
-            require('@angular/cli/plugins/karma')
+            require('@angular-devkit/build-angular/plugins/karma')
         ]
     });
 };

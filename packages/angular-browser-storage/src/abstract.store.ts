@@ -126,7 +126,7 @@ export abstract class AbstractStore {
    * @param func The function to invoke.
    * @param defaultValue A default value to return in case of failure.
    */
-  protected supportGuard(func: Function, defaultValue?: any): any {
+  protected supportGuard(func: () => void, defaultValue?: any): any {
     if (this.isSupported) {
       return func();
     } else {

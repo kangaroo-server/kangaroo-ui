@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-import { RouterUtil } from '@kangaroo/devkit/protractor';
 import { By, element, ElementFinder } from 'protractor';
+import { navigateByUrl } from '../util';
 
 /**
  * The login page.
@@ -27,7 +27,7 @@ export class LoginPage {
    * Navigate to the login page.
    */
   public async navigateTo(): Promise<any> {
-    return RouterUtil.navigateByUrl('/login');
+    return navigateByUrl('/login');
   }
 
   /**

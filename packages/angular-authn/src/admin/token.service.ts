@@ -16,12 +16,12 @@
  *
  */
 
-import { Inject, Injectable, Optional } from '@angular/core';
-import { Token } from './model';
-import { AbstractResourceService } from '@kangaroo/angular-platform';
 import { HttpClient } from '@angular/common/http';
+import { Inject, Injectable, Optional } from '@angular/core';
+import { AbstractResourceService } from '@kangaroo/angular-platform';
+import { ObservableInput } from 'rxjs';
 import { ADMIN_API_ROOT } from './admin-api-root';
-import { ObservableInput } from 'rxjs/Observable';
+import { Token } from './model';
 
 /**
  * This class provides a restful API for the token resource.
@@ -37,7 +37,7 @@ export class TokenService extends AbstractResourceService<Token> {
    * @param http The HTTP client
    * @param apiRoot Provider for the admin API root url.
    */
-  constructor(http: HttpClient,
+  constructor(@Inject(HttpClient) http: HttpClient,
               @Optional() @Inject(ADMIN_API_ROOT) apiRoot: ObservableInput<string>) {
     super('token', http, apiRoot);
   }

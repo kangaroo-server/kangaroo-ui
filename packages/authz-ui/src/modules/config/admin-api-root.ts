@@ -15,9 +15,9 @@
  * limitations under the License.
  */
 
-import { Injectable } from '@angular/core';
 import { PlatformLocation } from '@angular/common';
-import { AsyncSubject } from 'rxjs/AsyncSubject';
+import { Injectable } from '@angular/core';
+import { AsyncSubject } from 'rxjs';
 
 /**
  * Root path to the kangaroo admin api. It is derived from the application's own base path, and is assumed to be running

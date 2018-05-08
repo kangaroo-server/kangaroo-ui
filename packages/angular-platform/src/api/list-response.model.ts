@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-import { CommonModel } from './common.model';
 import { SortOrder } from '../';
+import { CommonModel } from './common.model';
 
 /**
  * This interface describes a list response from a browse or search query.

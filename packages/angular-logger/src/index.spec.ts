@@ -16,11 +16,11 @@
  */
 import { inject, TestBed } from '@angular/core/testing';
 
+import { ConsoleLogger } from '@kangaroo/angular-logger/src/console-logger';
 import * as all from './index';
 import { LoggerModule } from './index';
 import { Logger } from './logger';
 import { LOGGING_BACKEND, LoggingBackend } from './logging-backend';
-import { ConsoleLogger } from '@kangaroo/angular-logger/src/console-logger';
 
 /**
  * Unit tests for the LoggerModule
@@ -30,7 +30,7 @@ describe('LoggerModule', () => {
   const expectedExports = [
     'LoggerModule',
     'Logger',
-    'LOGGING_BACKEND'
+    'LOGGING_BACKEND',
   ];
 
   expectedExports.forEach((name) => {
@@ -57,18 +57,18 @@ describe('LoggerModule', () => {
       warn: () => {
       },
       info: () => {
-      }
+      },
     };
 
     describe('as root', () => {
       beforeEach(() => {
         TestBed.configureTestingModule({
           imports: [
-            LoggerModule.forRoot()
+            LoggerModule.forRoot(),
           ],
           providers: [
-            {provide: LOGGING_BACKEND, useValue: defaultBackend, multi: true}
-          ]
+            {provide: LOGGING_BACKEND, useValue: defaultBackend, multi: true},
+          ],
         }).compileComponents();
       });
 
@@ -83,17 +83,6 @@ describe('LoggerModule', () => {
         inject([ Logger ], (logger) => {
           expect(logger).toBeDefined();
         }));
-
-      it('should provide a logger with a ROOT namespace',
-        inject([ Logger, LOGGING_BACKEND ], (logger, endpoints) => {
-          const consoleLogger: ConsoleLogger = endpoints.filter((l) => (l instanceof ConsoleLogger))[ 0 ];
-          const logSpy: jasmine.Spy = spyOn(consoleLogger, 'log');
-          expect(logger.namespace).toBe('ROOT');
-
-          logger.log('Something');
-
-          expect(logSpy).toHaveBeenCalledWith('ROOT', 'Something');
-        }));
     });
   });
 
@@ -102,8 +91,8 @@ describe('LoggerModule', () => {
     beforeEach(() => {
       TestBed.configureTestingModule({
         imports: [
-          LoggerModule.forModule('MyModule')
-        ]
+          LoggerModule,
+        ],
       }).compileComponents();
     });
 
@@ -113,10 +102,9 @@ describe('LoggerModule', () => {
         expect(endpoints.length).toBe(0);
       });
 
-    it('should provide a logger with a namespace',
+    it('should provide a logger',
       inject([ Logger ], (logger) => {
         expect(logger).toBeDefined();
-        expect(logger.namespace).toBe('MyModule');
         logger.log('result');
       }));
   });

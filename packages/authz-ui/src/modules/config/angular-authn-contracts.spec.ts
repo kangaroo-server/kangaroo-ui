@@ -16,22 +16,19 @@
  */
 
 import { async, inject, TestBed } from '@angular/core/testing';
-import { KangarooConfigurationSubject } from './kangaroo-configuration.subject';
-import { AdminApiRoot } from './admin-api-root';
 import { BrowserModule } from '@angular/platform-browser';
-import { KangarooConfiguration } from './kangaroo-configuration';
-import { ReplaySubject } from 'rxjs/ReplaySubject';
-import { OAuthApiRoot } from './oauth-api-root';
+import { ADMIN_API_ROOT, OAUTH2_API_ROOT, OAUTH2_CLIENT_ID, OAUTH2_CLIENT_SCOPES } from '@kangaroo/angular-authn';
+import { ObservableInput, ReplaySubject, zip } from 'rxjs';
+import { AdminApiRoot } from './admin-api-root';
 import {
   adminApiRootProvider,
   clientIdProvider,
   clientScopesProvider,
-  oauthApiRootProvider
+  oauthApiRootProvider,
 } from './angular-authn-contracts';
-import { ADMIN_API_ROOT, OAUTH2_API_ROOT, OAUTH2_CLIENT_ID, OAUTH2_CLIENT_SCOPES } from '@kangaroo/angular-authn';
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/observable/zip';
-
+import { KangarooConfiguration } from './kangaroo-configuration';
+import { KangarooConfigurationSubject } from './kangaroo-configuration.subject';
+import { OAuthApiRoot } from './oauth-api-root';
 
 /**
  * Unit tests for external contracts.
@@ -41,7 +38,7 @@ describe('Contracts for @kangaroo/angular-authn', () => {
   const mockConfigSubject = new ReplaySubject<KangarooConfiguration>();
   const mockConfig: KangarooConfiguration = {
     client: 'client_id',
-    scopes: [ 'scope-1', 'scope-2' ]
+    scopes: [ 'scope-1', 'scope-2' ],
   };
 
   beforeEach(() => {
@@ -49,7 +46,7 @@ describe('Contracts for @kangaroo/angular-authn', () => {
 
     TestBed.configureTestingModule({
       imports: [
-        BrowserModule
+        BrowserModule,
       ],
       providers: [
         adminApiRootProvider,
@@ -59,36 +56,35 @@ describe('Contracts for @kangaroo/angular-authn', () => {
 
         {provide: KangarooConfigurationSubject, useValue: mockConfigSubject},
         AdminApiRoot,
-        OAuthApiRoot
-      ]
+        OAuthApiRoot,
+      ],
     });
   });
 
   it('should provide ADMIN_API_ROOT', async(inject(
-    [ ADMIN_API_ROOT, AdminApiRoot ], (contract, root) => {
-      Observable
-        .zip(contract, root)
+    [ ADMIN_API_ROOT, AdminApiRoot ], (contract: ObservableInput<string>, root: AdminApiRoot) => {
+
+      zip(contract, root)
         .subscribe(([ c, r ]) => expect(c).toEqual(r));
     })));
 
   it('should provide OAUTH2_API_ROOT', async(inject(
-    [ OAUTH2_API_ROOT, OAuthApiRoot ], (contract, root) => {
-      Observable
-        .zip(contract, root)
+    [ OAUTH2_API_ROOT, OAuthApiRoot ], (contract: ObservableInput<string>, root: OAuthApiRoot) => {
+      zip(contract, root)
         .subscribe(([ c, r ]) => expect(c).toEqual(r));
     })));
 
   it('should provide OAUTH2_CLIENT_ID', async(inject(
-    [ OAUTH2_CLIENT_ID, KangarooConfigurationSubject ], (contract, configSubject) => {
-      Observable
-        .zip(contract, configSubject)
+    [ OAUTH2_CLIENT_ID, KangarooConfigurationSubject ],
+    (contract: ObservableInput<string>, configSubject: KangarooConfigurationSubject) => {
+      zip(contract, configSubject)
         .subscribe(([ c, config ]) => expect(c).toEqual(config.client));
     })));
 
   it('should provide OAUTH2_CLIENT_SCOPES', async(inject(
-    [ OAUTH2_CLIENT_SCOPES, KangarooConfigurationSubject ], (contract, configSubject) => {
-      Observable
-        .zip(contract, configSubject)
+    [ OAUTH2_CLIENT_SCOPES, KangarooConfigurationSubject ],
+    (contract: ObservableInput<string>, configSubject: KangarooConfigurationSubject) => {
+      zip(contract, configSubject)
         .subscribe(([ c, config ]) => expect(c).toEqual(config.scopes));
     })));
 });

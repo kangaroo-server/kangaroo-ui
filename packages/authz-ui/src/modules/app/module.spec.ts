@@ -27,7 +27,7 @@ describe('ApplicationModule', () => {
     it('should permit importing', () => {
       TestBed.configureTestingModule(
         {
-          imports: [ ApplicationModule ]
+          imports: [ ApplicationModule ],
         }).compileComponents();
     });
   });

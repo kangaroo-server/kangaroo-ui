@@ -15,17 +15,17 @@
 * limitations under the License.
 */
 
-import { NgModule } from '@angular/core';
-import { KangarooConfigurationSubject } from './kangaroo-configuration.subject';
-import { AdminApiRoot } from './admin-api-root';
-import { OAuthApiRoot } from './oauth-api-root';
 import { HttpClientModule } from '@angular/common/http';
+import { NgModule } from '@angular/core';
+import { AdminApiRoot } from './admin-api-root';
 import {
   adminApiRootProvider,
   clientIdProvider,
   clientScopesProvider,
-  oauthApiRootProvider
+  oauthApiRootProvider,
 } from './angular-authn-contracts';
+import { KangarooConfigurationSubject } from './kangaroo-configuration.subject';
+import { OAuthApiRoot } from './oauth-api-root';
 
 /**
  * This module handles system configuration, environment detection, and all related
@@ -42,11 +42,11 @@ import {
     adminApiRootProvider,
     oauthApiRootProvider,
     clientIdProvider,
-    clientScopesProvider
+    clientScopesProvider,
   ],
   imports: [
-    HttpClientModule
-  ]
+    HttpClientModule,
+  ],
 })
 export class ConfigModule {
 }

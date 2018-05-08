@@ -17,8 +17,8 @@
  */
 
 import { TestBed } from '@angular/core/testing';
-import { RouterOutletComponent } from './router-outlet.component';
 import { RouterTestingModule } from '@angular/router/testing';
+import { RouterOutletComponent } from './router-outlet.component';
 
 /**
  * Unit tests for the router outlet component.
@@ -28,7 +28,7 @@ describe('RouterOutletComponent', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [ RouterTestingModule.withRoutes([]) ],
-      declarations: [ RouterOutletComponent ]
+      declarations: [ RouterOutletComponent ],
     }).compileComponents();
   });
 
