@@ -15,10 +15,7 @@
  * limitations under the License.
  */
 
-import { Subject } from 'rxjs/Subject';
-import { ObjectUnsubscribedError } from 'rxjs/Rx'; // tslint:disable-line
-import { Subscriber } from 'rxjs/Subscriber';
-import { ISubscription, Subscription } from 'rxjs/Subscription';
+import { ObjectUnsubscribedError, Subject, Subscriber, Subscription, SubscriptionLike } from 'rxjs';
 
 /**
  * This subject behaves much like a BehaviorSubject, however the value is
@@ -82,7 +79,7 @@ export class SessionStorageSubject<T> extends Subject<T> {
    */
   public _subscribe(subscriber: Subscriber<T>): Subscription {
     const subscription = super._subscribe(subscriber); // tslint:disable-line
-    if (subscription && !(<ISubscription>subscription).closed) {
+    if (subscription && !(subscription as SubscriptionLike).closed) {
       subscriber.next(this.decodedValue());
     }
     return subscription;

@@ -27,9 +27,9 @@ describe('NoopComponent', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [
-        NoopComponent
-      ]
-    }).compileComponents();
+        NoopComponent,
+      ],
+    });
   });
 
   it('should construct', () => {

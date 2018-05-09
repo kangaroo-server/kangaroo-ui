@@ -16,12 +16,12 @@
  *
  */
 import { inject, TestBed } from '@angular/core/testing';
+import { AbstractStore } from '@kangaroo/angular-browser-storage/src/abstract.store';
+import { Logger, LoggerModule } from '@kangaroo/angular-logger';
+import { BrowserStorageModule } from './index';
+import { LocalStore } from './local.store';
 import { MemoryStore } from './memory.store';
 import { SessionStore } from './session.store';
-import { LocalStore } from './local.store';
-import { Logger } from '@kangaroo/angular-logger';
-import { BrowserStorageModule } from './index';
-import { AbstractStore } from '@kangaroo/angular-browser-storage/src/abstract.store';
 
 /**
  * Unit tests for the MemoryStore.
@@ -29,15 +29,16 @@ import { AbstractStore } from '@kangaroo/angular-browser-storage/src/abstract.st
 describe('Storage Tests', () => {
 
   const storageOptions = [ LocalStore, SessionStore, MemoryStore ];
-  const mockLogger: Logger = new Logger('none', []);
+  const mockLogger: Logger = new Logger([]);
 
   storageOptions.forEach((type) => {
 
     beforeEach(() => {
       TestBed.configureTestingModule({
         imports: [
-          BrowserStorageModule
-        ]
+          BrowserStorageModule,
+          LoggerModule,
+        ],
       });
     });
 
@@ -47,11 +48,6 @@ describe('Storage Tests', () => {
     });
 
     describe(type.name, () => {
-
-      it('should provide a namespace logger', inject([ Logger ], (logger) => {
-        expect(logger).toBeDefined();
-        expect(logger.namespace).toEqual('BrowserStorageModule');
-      }));
 
       describe('isSupported', () => {
 
@@ -69,15 +65,15 @@ describe('Storage Tests', () => {
           });
 
           it('should be false if not available', () => {
-            const store = new type(<any> {}, mockLogger);
+            const store = new type({} as any, mockLogger);
             expect(store.isSupported).toBeFalsy();
           });
 
           it('should be false if available, but erroring', () => {
-            const store = new type(<any> {
+            const store = new type({
               localStorage: {},
-              sessionStorage: {}
-            }, mockLogger);
+              sessionStorage: {},
+            } as any, mockLogger);
             expect(store.isSupported).toBeFalsy();
           });
         }
@@ -138,12 +134,12 @@ describe('Storage Tests', () => {
         it('should correctly return typed data if set', inject([ type ], (testStore) => {
           testStore.set('string', 'string');
           testStore.set('number', 100);
-          testStore.set('object', {'foo': 'bar'});
+          testStore.set('object', {foo: 'bar'});
           testStore.set('boolean', true);
 
           expect(testStore.get('string')).toBe('string');
           expect(testStore.get('number')).toBe(100);
-          expect(testStore.get('object')).toEqual({'foo': 'bar'});
+          expect(testStore.get('object')).toEqual({foo: 'bar'});
           expect(testStore.get('boolean')).toBe(true);
         }));
       });
@@ -189,7 +185,7 @@ describe('Storage Tests', () => {
         it('clear values if set', inject([ type ], (testStore) => {
           testStore.set('string', 'string');
           testStore.set('number', 100);
-          testStore.set('object', {'foo': 'bar'});
+          testStore.set('object', {foo: 'bar'});
           testStore.set('boolean', true);
 
           expect(testStore.keys).toContain('string');
@@ -231,7 +227,7 @@ describe('Storage Tests', () => {
     let unsupportedStore: TestStore;
 
     beforeEach(() => {
-      testLogger = new Logger('namespace', []);
+      testLogger = new Logger([]);
       unsupportedStore = new TestStore(false, testLogger);
     });
 

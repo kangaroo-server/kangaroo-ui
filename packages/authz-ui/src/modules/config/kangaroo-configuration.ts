@@ -16,8 +16,6 @@
  *
  */
 
-import 'rxjs/add/operator/toPromise';
-
 /**
  * This interface describes basic application configuration values, required for any build of
  * the application.

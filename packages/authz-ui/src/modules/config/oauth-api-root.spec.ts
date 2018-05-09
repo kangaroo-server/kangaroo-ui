@@ -17,8 +17,8 @@
  */
 
 import { async, inject, TestBed } from '@angular/core/testing';
-import { OAuthApiRoot } from './oauth-api-root';
 import { BrowserModule } from '@angular/platform-browser';
+import { OAuthApiRoot } from './oauth-api-root';
 
 /**
  * Unit tests for the API Root of the OAuth2 service.
@@ -28,7 +28,7 @@ describe('OAuthApiRoot', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [ OAuthApiRoot ],
-      imports: [ BrowserModule ]
+      imports: [ BrowserModule ],
     });
   });
 

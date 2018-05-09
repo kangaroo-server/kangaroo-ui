@@ -16,8 +16,31 @@
  *
  */
 
-exports.config = Object.assign({}, require('@kangaroo/devkit/protractor').config,
-    {
-        specs: ['./e2e/**/*.spec.ts']
-    }
-);
+const SpecReporter = require('jasmine-spec-reporter').SpecReporter;
+const register = require('ts-node').register;
+
+register();
+
+exports.config = {
+    specs: ['./e2e/**/*.spec.ts'],
+
+    allScriptsTimeout: 11000,
+    capabilities: {
+        browserName: 'chrome',
+        chromeOptions: {
+            args: ['--headless', '--disable-gpu', '--window-size=1024,768'],
+        },
+    },
+    directConnect: true,
+    baseUrl: 'http://localhost:4200/', // tslint:disable-line
+    framework: 'jasmine',
+    jasmineNodeOpts: {
+        showColors: true,
+        defaultTimeoutInterval: 30000,
+        print: () => {
+        },
+    },
+    onPrepare: () => {
+        jasmine.getEnv().addReporter(new SpecReporter({spec: {displayStacktrace: true}}));
+    },
+};

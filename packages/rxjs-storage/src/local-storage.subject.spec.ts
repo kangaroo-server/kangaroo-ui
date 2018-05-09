@@ -23,7 +23,7 @@ describe('LocalStorageSubject', () => {
     stringValue: 'string',
     intValue: 100,
     doubleValue: 1.234,
-    booleanValue: true
+    booleanValue: true,
   };
   let l: LocalStorageSubject<any>;
 
@@ -112,7 +112,7 @@ describe('LocalStorageSubject', () => {
     const e = new StorageEvent('storage', {
       url: window.location.href,
       key: 'test_key',
-      newValue: 'new value'
+      newValue: 'new value',
     });
 
     let recipient = null;
@@ -128,7 +128,7 @@ describe('LocalStorageSubject', () => {
     const e = new StorageEvent('storage', {
       url: window.location.href,
       key: 'other_key',
-      newValue: 'new value'
+      newValue: 'new value',
     });
 
     let recipient = null;
@@ -142,11 +142,9 @@ describe('LocalStorageSubject', () => {
 
   it('should throw an error if an error has been reported.', () => {
     l.error('This is an error');
-    try {
-      l.subscribe(() => fail());
-      fail();
-    } catch (e) {
-      // pass
-    }
+    l.subscribe(
+      () => fail(),
+      () => {
+      });
   });
 });

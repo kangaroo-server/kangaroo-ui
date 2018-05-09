@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-import { kangarooEntityIdMatcher } from './kangaroo_id_matcher';
 import { UrlSegment } from '@angular/router';
+import { kangarooEntityIdMatcher } from './kangaroo_id_matcher';
 
 /**
  * Unit test for the route matcher factory.

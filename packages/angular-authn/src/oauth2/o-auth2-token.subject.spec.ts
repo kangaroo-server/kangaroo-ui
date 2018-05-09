@@ -15,9 +15,9 @@
  * limitations under the License.
  */
 
-import { OAuth2TokenSubject } from './o-auth2-token.subject';
 import { inject, TestBed } from '@angular/core/testing';
 import { OAuth2Token } from './model/o-auth2-token';
+import { OAuth2TokenSubject } from './o-auth2-token.subject';
 
 /**
  * Unit tests for the OAuth2 Token Subject.
@@ -28,12 +28,12 @@ describe('OAuth2TokenSubject', () => {
     access_token: 'access_token',
     issue_date: 0,
     expires_in: 3600,
-    token_type: 'Bearer'
+    token_type: 'Bearer',
   };
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [ OAuth2TokenSubject ]
+      providers: [ OAuth2TokenSubject ],
     });
   });
 

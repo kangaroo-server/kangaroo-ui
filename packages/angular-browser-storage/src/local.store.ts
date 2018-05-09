@@ -16,9 +16,9 @@
  */
 
 import { Inject, Injectable } from '@angular/core';
+import { Logger } from '@kangaroo/angular-logger';
 import { AbstractStore } from './abstract.store';
 import { WINDOW } from './window';
-import { Logger } from '@kangaroo/angular-logger';
 
 /**
  * A type-safe layer on top of the browser's LocalStorage. If LocalStorage is

@@ -32,7 +32,7 @@ pipeline {
         stage('Bootstrap') {
             steps {
                 // This does a global install of all dependencies.
-                sh('yarn install')
+                sh('yarn install --pure-lockfile')
                 sh('yarn build')
             }
         }
@@ -43,9 +43,6 @@ pipeline {
         stage('Test') {
             steps {
                 parallel(
-                        "pack": {
-                            sh('yarn run pack')
-                        },
                         "nsp": {
                             sh('yarn nsp')
                         },
@@ -103,7 +100,7 @@ pipeline {
                     failedTotalLow     : '0',
                     failedTotalNormal  : '0',
                     healthy            : '100',
-                    pattern            : '**/reports/**/checkstyle-result.xml',
+                    pattern            : '**/reports/**/checkstyle-result*.xml',
                     unHealthy          : '99',
                     unstableTotalAll   : '0',
                     unstableTotalHigh  : '0',

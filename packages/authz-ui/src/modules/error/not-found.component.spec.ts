@@ -26,8 +26,8 @@ describe('NotFoundComponent', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [
-        NotFoundComponent
-      ]
+        NotFoundComponent,
+      ],
     }).compileComponents();
   });
 

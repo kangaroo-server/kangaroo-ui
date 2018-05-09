@@ -15,42 +15,41 @@
  * limitations under the License.
  */
 
+import { JOSEHeader, JsonWebToken } from './json-web-token';
 import { JWT } from './jwt';
 import { pangrams } from './text-util.spec';
-import { JOSEHeader, JsonWebToken } from './json-web-token';
 
 describe('JWT', () => {
 
-    const header: JOSEHeader = {
-        'typ': 'JWT',
-        'alg': 'HMAC256'
-    };
-    const signature = 'signature';
+  const header: JOSEHeader = {
+    typ: 'JWT',
+    alg: 'HMAC256',
+  };
+  const signature = 'signature';
 
-    it('should throw an error with an invalid token', () => {
-        try {
-            JWT.parse('');
-            fail();
-        } catch (e) {
-            expect(e.message).toEqual('Invalid JWT Format');
-        }
+  it('should throw an error with an invalid token', () => {
+    try {
+      JWT.parse('');
+      fail();
+    } catch (e) {
+      expect(e.message).toEqual('Invalid JWT Format');
+    }
+  });
 
+  Object.keys(pangrams).forEach((key) => {
+    it(`Decode JWT with '${key}' content in key`, () => {
+
+      const original: JsonWebToken = {
+        header,
+        signature,
+        claims: {
+          language: pangrams[ key ],
+        },
+      };
+
+      const encoded: string = JWT.stringify(original);
+      const decoded: JsonWebToken = JWT.parse(encoded);
+      expect(decoded).toEqual(original);
     });
-
-    Object.keys(pangrams).forEach((key) => {
-        it(`Decode JWT with '${key}' content in key`, () => {
-
-            const original: JsonWebToken = {
-                header,
-                signature,
-                claims: {
-                    language: pangrams[key]
-                }
-            };
-
-            const encoded: string = JWT.stringify(original);
-            const decoded: JsonWebToken = JWT.parse(encoded);
-            expect(decoded).toEqual(original);
-        });
-    });
+  });
 });

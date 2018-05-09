@@ -15,13 +15,12 @@
  * limitations under the License.
  */
 
-import { Injectable } from '@angular/core';
 import { HttpBackend, HttpClient, HttpHeaders } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { AsyncSubject } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 import { AdminApiRoot } from './admin-api-root';
-import { AsyncSubject } from 'rxjs/AsyncSubject';
 import { KangarooConfiguration } from './kangaroo-configuration';
-import 'rxjs/add/operator/finally';
-import 'rxjs/add/operator/switchMap';
 
 /**
  * This subject loads the available configuration from the admin api, and publishes the results to any subscribers.
@@ -35,7 +34,7 @@ export class KangarooConfigurationSubject extends AsyncSubject<KangarooConfigura
    * Common http headers, usually provided by the interceptors.
    */
   private readonly commonHeaders: HttpHeaders = new HttpHeaders({
-    'X-Requested-With': 'Kangaroo-Platform'
+    'X-Requested-With': 'Kangaroo-Platform',
   });
 
   /**
@@ -55,14 +54,16 @@ export class KangarooConfigurationSubject extends AsyncSubject<KangarooConfigura
     this.http = new HttpClient(backend);
 
     this.apiRoot
-      .switchMap((root) => this.http.get<KangarooConfiguration>(`${root}/config`, {
-        headers: this.commonHeaders,
-        observe: 'body'
-      }))
+      .pipe(
+        switchMap((root) => this.http.get<KangarooConfiguration>(`${root}/config`, {
+          headers: this.commonHeaders,
+          observe: 'body',
+        })),
+      )
       .subscribe(
         (config) => this.next(config),
         (err) => this.error(err),
-        () => this.complete()
+        () => this.complete(),
       );
   }
 }

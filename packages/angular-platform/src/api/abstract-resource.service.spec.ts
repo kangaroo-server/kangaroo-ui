@@ -16,14 +16,14 @@
  *
  */
 
-import { Inject, InjectionToken, Optional } from '@angular/core';
-import { async, TestBed } from '@angular/core/testing';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { Inject, InjectionToken, Optional } from '@angular/core';
+import { async, TestBed } from '@angular/core/testing';
+import { ObservableInput } from 'rxjs';
+import { AbstractResourceService } from './abstract-resource.service';
 import { CommonModel } from './common.model';
 import { SortOrder } from './sort-order.enum';
-import { AbstractResourceService } from './abstract-resource.service';
-import { ObservableInput } from 'rxjs/Observable';
 
 /**
  * Test API root.
@@ -47,7 +47,8 @@ describe('AbstractResourceService', () => {
    * Test class, exposing request.
    */
   class TestEntityService extends AbstractResourceService<TestEntity> {
-    constructor(http: HttpClient, @Optional() @Inject(API_ROOT) apiRoot: ObservableInput<string>) {
+    constructor(@Inject(HttpClient) http: HttpClient,
+                @Optional() @Inject(API_ROOT) apiRoot: ObservableInput<string>) {
       super('test', http, apiRoot);
     }
   }
@@ -58,7 +59,7 @@ describe('AbstractResourceService', () => {
     id: 'test_id',
     createdDate: 10000,
     modifiedDate: 20000,
-    name: 'test_name'
+    name: 'test_name',
   };
 
   describe('with an API root', () => {
@@ -68,13 +69,13 @@ describe('AbstractResourceService', () => {
           TestEntityService,
           {
             provide: API_ROOT,
-            useValue: Promise.resolve('http://example.com/v1')
-          }
+            useValue: Promise.resolve('http://example.com/v1'),
+          },
         ],
         imports: [
           HttpClientModule,
-          HttpClientTestingModule
-        ]
+          HttpClientTestingModule,
+        ],
       });
 
       service = TestBed.get(TestEntityService);
@@ -102,7 +103,7 @@ describe('AbstractResourceService', () => {
     beforeEach(() => {
       TestBed.configureTestingModule({
         providers: [ TestEntityService ],
-        imports: [ HttpClientModule, HttpClientTestingModule ]
+        imports: [ HttpClientModule, HttpClientTestingModule ],
       });
 
       service = TestBed.get(TestEntityService);
@@ -118,8 +119,8 @@ describe('AbstractResourceService', () => {
       it('should map filters to the query', async(() => {
         service
           .browse({
-            'foo': 'bar',
-            'lol': 'cat'
+            foo: 'bar',
+            lol: 'cat',
           })
           .subscribe();
 
@@ -187,8 +188,8 @@ describe('AbstractResourceService', () => {
       it('should map filters to the query', async(() => {
         service
           .search('query', {
-            'foo': 'bar',
-            'lol': 'cat'
+            foo: 'bar',
+            lol: 'cat',
           })
           .subscribe();
 

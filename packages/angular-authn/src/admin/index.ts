@@ -16,20 +16,20 @@
  *
  */
 
-import { ModuleWithProviders, NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
+import { ModuleWithProviders, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { ADMIN_API_ROOT } from './admin-api-root';
 import { ApplicationService } from './application.service';
 import { AuthenticatorService } from './authenticator.service';
-import { ClientReferrerService } from './client-referrer.service';
 import { ClientRedirectService } from './client-redirect.service';
+import { ClientReferrerService } from './client-referrer.service';
 import { ClientService } from './client.service';
 import { RoleService } from './role.service';
 import { ScopeService } from './scope.service';
 import { TokenService } from './token.service';
-import { UserService } from './user.service';
 import { UserIdentityService } from './user-identity.service';
-import { ADMIN_API_ROOT } from './admin-api-root';
+import { UserService } from './user.service';
 
 export { ApplicationService } from './application.service';
 export { AuthenticatorService } from './authenticator.service';
@@ -48,7 +48,7 @@ export * from './admin-api-root';
 @NgModule({
   imports: [
     BrowserModule,
-    HttpClientModule
+    HttpClientModule,
   ],
   providers: [
     ApplicationService,
@@ -60,8 +60,8 @@ export * from './admin-api-root';
     ScopeService,
     TokenService,
     UserService,
-    UserIdentityService
-  ]
+    UserIdentityService,
+  ],
 })
 export class KangarooAuthorizationAdminModule {
   /**
@@ -75,8 +75,8 @@ export class KangarooAuthorizationAdminModule {
     return {
       ngModule: KangarooAuthorizationAdminModule,
       providers: [
-        {provide: ADMIN_API_ROOT, useValue: [ baseUrl ]}
-      ]
+        {provide: ADMIN_API_ROOT, useValue: [ baseUrl ]},
+      ],
     };
   }
 }

@@ -16,8 +16,8 @@
  *
  */
 
-import { ObservableInput } from 'rxjs/Observable';
 import { InjectionToken } from '@angular/core';
+import { ObservableInput } from 'rxjs';
 
 /**
  * Use this injection token to provide an external API root.

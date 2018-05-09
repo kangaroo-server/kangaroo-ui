@@ -35,11 +35,11 @@ export function kangarooEntityIdMatcher(paramName: string): UrlMatcher {
 
     if (param.match(reg)) {
       const posParams = {};
-      posParams[ paramName ] = url[0];
+      posParams[ paramName ] = url[ 0 ];
 
       return ({
         consumed: [ url[ 0 ] ],
-        posParams
+        posParams,
       });
     }
 

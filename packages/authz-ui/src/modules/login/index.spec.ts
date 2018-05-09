@@ -14,9 +14,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+import { TestBed } from '@angular/core/testing';
 import * as all from './index';
 import { LoginModule } from './index';
-import { TestBed } from '@angular/core/testing';
 
 /**
  * Unit tests for the LoginModule
@@ -24,7 +24,7 @@ import { TestBed } from '@angular/core/testing';
 describe('LoginModule', () => {
 
   const expectedExports = [
-    'LoginModule'
+    'LoginModule',
   ];
 
   expectedExports.forEach((name) => {
@@ -45,7 +45,7 @@ describe('LoginModule', () => {
       TestBed.configureTestingModule(
         {
           imports: [ LoginModule ],
-          providers: []
+          providers: [],
         }).compileComponents();
     });
   });

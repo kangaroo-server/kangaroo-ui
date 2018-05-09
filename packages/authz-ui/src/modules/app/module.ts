@@ -16,25 +16,25 @@
  *
  */
 
-import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
-import { ROUTES } from './routes';
-import { RouterOutletComponent } from './router-outlet.component';
+import { CannotConfigureComponent } from './configuration-failed/cannot-configure.component';
 import { ConfigurationFailedGuard } from './configuration-failed/configuration-failed.guard';
 import { ConfigurationSucceededGuard } from './configuration-failed/configuration-succeeded.guard';
-import { CannotConfigureComponent } from './configuration-failed/cannot-configure.component';
+import { RouterOutletComponent } from './router-outlet.component';
+import { ROUTES } from './routes';
 
+import { KangarooOAuth2Module } from '@kangaroo/angular-authn';
+import { KangarooPlatformModule } from '@kangaroo/angular-platform';
 import { ConfigModule } from '../config';
 import { ErrorModule } from '../error';
-import { KangarooPlatformModule } from '@kangaroo/angular-platform';
-import { KangarooOAuth2Module } from '@kangaroo/angular-authn';
-import { LoginModule } from '../login';
 import { KangarooLayoutModule } from '../layout';
+import { LoginModule } from '../login';
 
 /**
  * This module contains all the components of the application shell, including header, configuration error cases,
@@ -55,23 +55,23 @@ import { KangarooLayoutModule } from '../layout';
     KangarooOAuth2Module,
     ConfigModule,
     ErrorModule,
-    LoginModule
+    LoginModule,
   ],
   providers: [
     ConfigurationFailedGuard,
-    ConfigurationSucceededGuard
+    ConfigurationSucceededGuard,
   ],
   declarations: [
     AppComponent,
     RouterOutletComponent,
-    CannotConfigureComponent
+    CannotConfigureComponent,
   ],
   bootstrap: [
-    AppComponent
+    AppComponent,
   ],
   schemas: [
-    CUSTOM_ELEMENTS_SCHEMA
-  ]
+    CUSTOM_ELEMENTS_SCHEMA,
+  ],
 })
 export class ApplicationModule {
 }

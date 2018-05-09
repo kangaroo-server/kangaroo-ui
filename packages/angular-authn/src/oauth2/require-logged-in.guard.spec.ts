@@ -15,11 +15,11 @@
  * limitations under the License.
  */
 
-import { RequireLoggedInGuard } from './require-logged-in.guard';
 import { async, inject, TestBed } from '@angular/core/testing';
-import { OAuth2TokenSubject } from './o-auth2-token.subject';
+import { Subject } from 'rxjs';
 import { OAuth2Token } from './model/o-auth2-token';
-import { Subject } from 'rxjs/Subject';
+import { OAuth2TokenSubject } from './o-auth2-token.subject';
+import { RequireLoggedInGuard } from './require-logged-in.guard';
 
 /**
  * Unit tests for the valid login route guard.
@@ -34,8 +34,8 @@ describe('RequireLoggedInGuard', () => {
     TestBed.configureTestingModule({
       providers: [
         RequireLoggedInGuard,
-        {provide: OAuth2TokenSubject, useValue: testSubject}
-      ]
+        {provide: OAuth2TokenSubject, useValue: testSubject},
+      ],
     });
   });
 
@@ -49,7 +49,7 @@ describe('RequireLoggedInGuard', () => {
         .subscribe((value) => expect(value).toBeTruthy());
       token.next({
         issue_date: nowInSeconds - 1000,
-        expires_in: 2000
+        expires_in: 2000,
       });
     })));
 
@@ -58,7 +58,7 @@ describe('RequireLoggedInGuard', () => {
       guard.canActivate().subscribe((value) => expect(value).toBeFalsy());
       token.next({
         issue_date: nowInSeconds - 1000,
-        expires_in: 500
+        expires_in: 500,
       });
     })));
 

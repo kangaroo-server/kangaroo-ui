@@ -17,22 +17,22 @@
 
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { ROUTES } from './routes';
-import { NotFoundComponent } from './not-found.component';
 import { KangarooLayoutModule } from '../layout';
+import { NotFoundComponent } from './not-found.component';
+import { ROUTES } from './routes';
 
 @NgModule({
   declarations: [
-    NotFoundComponent
+    NotFoundComponent,
   ],
   imports: [
     KangarooLayoutModule,
     RouterModule,
-    ROUTES
+    ROUTES,
   ],
   exports: [
-    RouterModule
-  ]
+    RouterModule,
+  ],
 })
 export class ErrorModule {
 }

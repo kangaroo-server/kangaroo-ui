@@ -16,22 +16,20 @@
  *
  */
 
-import { async, fakeAsync, inject, TestBed, tick } from '@angular/core/testing';
-import { Location } from '@angular/common';
-
-import { AppComponent } from './app.component';
-import { RouterTestingModule } from '@angular/router/testing';
-import { By } from '@angular/platform-browser';
-import { NavigationCancel, Router, RouterOutlet } from '@angular/router';
-import { ConfigModule } from '../config';
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-import { NoopComponent } from '@kangaroo/angular-platform';
-import { LoggedInSubject, OAuth2Service, OAuth2Token, OAuth2TokenSubject } from '@kangaroo/angular-authn';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { KangarooLayoutModule, MobileMediaQuery } from '../layout';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { Observable } from 'rxjs/Observable';
 import { LayoutModule } from '@angular/cdk/layout';
+import { Location } from '@angular/common';
+import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { async, inject, TestBed } from '@angular/core/testing';
+import { By } from '@angular/platform-browser';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { NavigationCancel, Router, RouterOutlet } from '@angular/router';
+import { RouterTestingModule } from '@angular/router/testing';
+import { LoggedInSubject, OAuth2Service, OAuth2Token, OAuth2TokenSubject } from '@kangaroo/angular-authn';
+import { NoopComponent } from '@kangaroo/angular-platform';
+import { BehaviorSubject, of } from 'rxjs';
+import { ConfigModule } from '../config';
+import { KangarooLayoutModule, MobileMediaQuery } from '../layout';
+import { AppComponent } from './app.component';
 
 describe('AppComponent', () => {
 
@@ -46,50 +44,50 @@ describe('AppComponent', () => {
     refresh_token: 'refresh_token_1',
     issue_date: nowInSeconds - 100,
     expires_in: 3600,
-    token_type: 'Bearer'
+    token_type: 'Bearer',
   };
 
   beforeEach(() => {
     loggedInSubject = new BehaviorSubject(true);
     tokenSubject = new BehaviorSubject(validToken);
-    tokenService = <any> {
+    tokenService = {
       revoke: () => {
-      }
-    };
+      },
+    } as any;
     mockMediaQuery = {
       listeners: [],
       addListener: (listener) => {
         mockMediaQuery.listeners.push(listener);
       },
       removeListener: () => {
-      }
+      },
     };
 
     TestBed.configureTestingModule({
       providers: [
         {provide: LoggedInSubject, useValue: loggedInSubject},
         {provide: OAuth2TokenSubject, useValue: tokenSubject},
-        {provide: OAuth2Service, useValue: tokenService}
+        {provide: OAuth2Service, useValue: tokenService},
       ],
       imports: [
         RouterTestingModule.withRoutes([
           {path: 'configuration-failed', component: NoopComponent},
           {path: 'login', component: NoopComponent},
-          {path: 'dashboard', component: NoopComponent}
+          {path: 'dashboard', component: NoopComponent},
         ]),
         ConfigModule,
         HttpClientTestingModule,
         KangarooLayoutModule,
         NoopAnimationsModule,
-        LayoutModule
+        LayoutModule,
       ],
       declarations: [
         NoopComponent,
-        AppComponent
-      ]
+        AppComponent,
+      ],
     })
       .overrideProvider(MobileMediaQuery, {
-        useValue: mockMediaQuery
+        useValue: mockMediaQuery,
       });
   });
 
@@ -112,7 +110,7 @@ describe('AppComponent', () => {
   }));
 
   it('should redirect if the configuration fails',
-    fakeAsync(inject([ HttpTestingController, Location ], (http, location) => {
+    async(inject([ HttpTestingController, Location ], (http, location) => {
       const fixture = TestBed.createComponent(AppComponent);
 
       http
@@ -120,8 +118,12 @@ describe('AppComponent', () => {
           return req.url.indexOf('/v1/config') > -1;
         })
         .error(null, {status: 404, statusText: 'not found'});
-      tick();
-      expect(location.path()).toBe('/configuration-failed');
+
+      fixture.detectChanges();
+      fixture.whenStable()
+        .then(() => {
+          expect(location.path()).toBe('/configuration-failed');
+        });
     })));
 
   it('should redirect to /login if a /dashboard nav cancels.',
@@ -174,7 +176,7 @@ describe('AppComponent', () => {
 
   it('should revoke the token on logout', async(inject(
     [ OAuth2Service ], (service) => {
-      const spy = spyOn(service, 'revoke').and.returnValue(Observable.of([ true ]));
+      const spy = spyOn(service, 'revoke').and.returnValue(of([ true ]));
       const fixture = TestBed.createComponent(AppComponent);
       fixture.detectChanges();
       fixture.whenStable()

@@ -15,12 +15,12 @@
  * limitations under the License.
  */
 
-import { async, inject, TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-import { KangarooConfigurationSubject } from './kangaroo-configuration.subject';
-import { AdminApiRoot } from './admin-api-root';
+import { async, inject, TestBed } from '@angular/core/testing';
 import { BrowserModule } from '@angular/platform-browser';
+import { AdminApiRoot } from './admin-api-root';
 import { KangarooConfiguration } from './kangaroo-configuration';
+import { KangarooConfigurationSubject } from './kangaroo-configuration.subject';
 
 /**
  * Unit tests for the configuration loader.
@@ -31,19 +31,19 @@ describe('KangarooConfigurationSubject', () => {
 
   const testConfig: KangarooConfiguration = {
     client: 'client-id',
-    scopes: [ 'scope-1', 'scope-2' ]
+    scopes: [ 'scope-1', 'scope-2' ],
   };
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [
         HttpClientTestingModule,
-        BrowserModule
+        BrowserModule,
       ],
       providers: [
         AdminApiRoot,
-        KangarooConfigurationSubject
-      ]
+        KangarooConfigurationSubject,
+      ],
     });
   });
 
@@ -68,7 +68,7 @@ describe('KangarooConfigurationSubject', () => {
       configSubject
         .subscribe(
           () => fail(),
-          (err) => expect(err.status).toEqual(400)
+          (err) => expect(err.status).toEqual(400),
         );
       http.expectOne(rootUrl).flush(testConfig, {status: 400, statusText: 'Bad Request'});
     })));

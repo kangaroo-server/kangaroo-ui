@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { ModuleWithProviders, NgModule, Optional } from '@angular/core';
+import { ModuleWithProviders, NgModule } from '@angular/core';
 import { consoleBackendProvider } from './console-logger';
 import { Logger } from './logger';
 import { LOGGING_BACKEND, LoggingBackend } from './logging-backend';
@@ -28,39 +28,16 @@ export { LOGGING_BACKEND, LoggingBackend } from './logging-backend';
  *
  * @author Michael Krotscheck
  */
-@NgModule({})
+@NgModule({providers: [ Logger ]})
 export class LoggerModule {
 
   /**
    * Inject the default root logger for an application.
    */
   public static forRoot(): ModuleWithProviders {
-    const rootProvider = LoggerModule.forModule('ROOT');
-    rootProvider.providers.push(consoleBackendProvider);
-    return rootProvider;
-  }
-
-  /**
-   * Inject a new logger for a specific module.
-   *
-   * @param name A namespaces for this module.
-   */
-  public static forModule(name: string): ModuleWithProviders {
-
-    function loggerFactory(backends: LoggingBackend[]) {
-      if (!backends) {
-        backends = [];
-      }
-      return new Logger(name, backends);
-    }
-
     return {
       ngModule: LoggerModule,
-      providers: [ {
-        provide: Logger,
-        useFactory: loggerFactory,
-        deps: [ [ new Optional(), LOGGING_BACKEND ] ]
-      } ]
+      providers: [ consoleBackendProvider ],
     };
   }
 }

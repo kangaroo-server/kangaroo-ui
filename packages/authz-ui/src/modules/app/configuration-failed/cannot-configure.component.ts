@@ -24,7 +24,7 @@ import { Component } from '@angular/core';
  * @author Michael Krotscheck
  */
 @Component({
-  templateUrl: './cannot-configure.component.html'
+  templateUrl: './cannot-configure.component.html',
 })
 export class CannotConfigureComponent {
 

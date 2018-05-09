@@ -25,7 +25,7 @@ describe('ConsoleLogger', () => {
   const logger = new ConsoleLogger();
 
   it('should permit log()', () => {
-    const logSpy = spyOn(<any> console, 'log');
+    const logSpy = spyOn(console as any, 'log');
 
     logger.log('test', 'one', 'two');
     expect(logSpy).toHaveBeenCalledWith('test', 'one', 'two');
@@ -33,7 +33,7 @@ describe('ConsoleLogger', () => {
   });
 
   it('should permit debug()', () => {
-    const debugSpy = spyOn(<any> console, 'debug');
+    const debugSpy = spyOn(console as any, 'debug');
 
     logger.debug('test', 'one', 'two');
     expect(debugSpy).toHaveBeenCalledWith('test', 'one', 'two');
@@ -41,21 +41,21 @@ describe('ConsoleLogger', () => {
   });
 
   it('should permit info()', () => {
-    const infoSpy = spyOn(<any> console, 'info');
+    const infoSpy = spyOn(console as any, 'info');
 
     logger.info('test', 'one', 'two');
     expect(infoSpy).toHaveBeenCalledWith('test', 'one', 'two');
   });
 
   it('should permit warn()', () => {
-    const warnSpy = spyOn(<any> console, 'warn');
+    const warnSpy = spyOn(console as any, 'warn');
 
     logger.warn('test', 'one', 'two');
     expect(warnSpy).toHaveBeenCalledWith('test', 'one', 'two');
   });
 
   it('should permit error()', () => {
-    const errorSpy = spyOn(<any> console, 'error');
+    const errorSpy = spyOn(console as any, 'error');
 
     logger.error('test', 'one', 'two');
     expect(errorSpy).toHaveBeenCalledWith('test', 'one', 'two');

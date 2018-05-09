@@ -17,11 +17,9 @@
  */
 
 import { async } from '@angular/core/testing';
-import { ConfigurationFailedGuard } from './configuration-failed.guard';
-import { Observable } from 'rxjs/Observable';
+import { from, throwError } from 'rxjs';
 import { KangarooConfigurationSubject } from '../../config';
-import 'rxjs/add/observable/throw';
-import 'rxjs/add/observable/from';
+import { ConfigurationFailedGuard } from './configuration-failed.guard';
 
 /**
  * Unit tests for the 'configuration failed' route guard.
@@ -30,22 +28,20 @@ describe('ConfigurationFailedGuard', () => {
   it('should pass if the configuration fails', async(() => {
 
     const testObservable: KangarooConfigurationSubject =
-      <any> Observable.throw(new Error('Test error'));
+      throwError(new Error('Test error')) as any;
 
     const guard = new ConfigurationFailedGuard(testObservable);
-    Observable
-      .from(guard.canActivate(null, null))
+    from(guard.canActivate(null, null))
       .subscribe((value) => expect(value).toBeTruthy());
   }));
 
   it('should fail if the configuration succeeds', async(() => {
 
     const testObservable: KangarooConfigurationSubject =
-      <any> Observable.from([ {} ]);
+      from([ {} ]) as any;
 
     const guard = new ConfigurationFailedGuard(testObservable);
-    Observable
-      .from(guard.canActivate(null, null))
+    from(guard.canActivate(null, null))
       .subscribe((value) => expect(value).toBeFalsy());
   }));
 });

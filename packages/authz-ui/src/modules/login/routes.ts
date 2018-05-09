@@ -15,11 +15,10 @@
  * limitations under the License.
  */
 
-import { RequireLoggedOutGuard } from '@kangaroo/angular-authn';
-import { LoginComponent } from './login.component';
-import { ConfigurationSucceededGuard } from '../app/configuration-failed/configuration-succeeded.guard';
 import { Routes } from '@angular/router';
-
+import { RequireLoggedOutGuard } from '@kangaroo/angular-authn';
+import { ConfigurationSucceededGuard } from '../app/configuration-failed/configuration-succeeded.guard';
+import { LoginComponent } from './login.component';
 
 /**
  * All routes used by the login module.
@@ -32,7 +31,7 @@ export const ROUTES: Routes = [
     component: LoginComponent,
     canActivate: [
       RequireLoggedOutGuard,
-      ConfigurationSucceededGuard
-    ]
-  }
+      ConfigurationSucceededGuard,
+    ],
+  },
 ];

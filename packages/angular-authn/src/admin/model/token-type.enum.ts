@@ -35,6 +35,6 @@ export enum TokenType {
   /**
    * A refresh token.
    */
-  Refresh = 'Refresh'
+  Refresh = 'Refresh',
 
 }

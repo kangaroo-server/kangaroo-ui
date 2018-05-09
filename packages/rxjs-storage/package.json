@@ -1,4 +1,5 @@
 {
+  "$schema": "../../node_modules/ng-packagr/package.schema.json",
   "name": "@kangaroo/rxjs-storage",
   "version": "1.0.0",
   "description": "rx/js abstractions for localStorage and sessionStorage.",
@@ -14,18 +15,17 @@
   "es2015": "lib/esm2015/kangaroo-rxjs-storage.js",
   "metadata": "lib/kangaroo-rxjs-storage.metadata.json",
   "scripts": {
-    "test": "karma start ./karma.conf.js",
-    "test.ci": "karma start ./karma.conf.js --single-run",
-    "lint": "tslint -p ./src/tsconfig.json",
-    "lint.ci": "tslint -p ./src/tsconfig.json --format checkstyle --force > ./reports/checkstyle-result.xml",
-    "build": "ng-packagr -p ng-package.json",
+    "test": "ng test",
+    "test.ci": "ng test --watch false",
+    "lint": "ng lint",
+    "lint.ci": "ng lint --format checkstyle --force > ./reports/checkstyle-result.xml",
+    "build": "ng build",
     "nsp": "nsp check ./"
   },
-  "devDependencies": {
-    "@kangaroo/devkit": "~1.0.0",
-    "rxjs": "~5.5.10"
-  },
   "peerDependencies": {
-    "rxjs": "~5.5.10"
+    "rxjs": "~6.1.0"
+  },
+  "devDependencies": {
+    "rxjs": "~6.1.0"
   }
 }

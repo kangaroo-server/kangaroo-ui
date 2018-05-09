@@ -16,9 +16,8 @@
  *
  */
 
-
 import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 
 /**
  * Kangaroo-based API servers require that a CSRF header is included in all requests. This
@@ -36,8 +35,8 @@ export class CsrfHttpInterceptor implements HttpInterceptor {
   public intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     request = request.clone({
       setHeaders: {
-        'X-Requested-With': 'Kangaroo-Platform'
-      }
+        'X-Requested-With': 'Kangaroo-Platform',
+      },
     });
     return next.handle(request);
   }

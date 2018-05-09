@@ -23,7 +23,7 @@ describe('SessionStorageSubject', () => {
     stringValue: 'string',
     intValue: 100,
     doubleValue: 1.234,
-    booleanValue: true
+    booleanValue: true,
   };
   let s: SessionStorageSubject<any>;
 
@@ -105,11 +105,10 @@ describe('SessionStorageSubject', () => {
 
   it('should throw an error if an error has been reported.', () => {
     s.error('This is an error');
-    try {
-      s.subscribe(() => fail());
-      fail();
-    } catch (e) {
-      // pass
-    }
+    s.subscribe(
+      () => fail(),
+      () => {
+      },
+    );
   });
 });

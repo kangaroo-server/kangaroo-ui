@@ -22,22 +22,22 @@ import * as all from './index';
  */
 describe('exports', () => {
 
-    // These can only export actual classes, as interfaces are lost in the
-    // transpiler.
-    const expectedExports = [
-        'JWT',
-        'TextUtil'
-    ];
+  // These can only export actual classes, as interfaces are lost in the
+  // transpiler.
+  const expectedExports = [
+    'JWT',
+    'TextUtil',
+  ];
 
-    expectedExports.forEach((name) => {
-        it(`should export ${name}`, () => {
-            expect(all.hasOwnProperty(name)).toBeTruthy();
-        });
+  expectedExports.forEach((name) => {
+    it(`should export ${name}`, () => {
+      expect(all.hasOwnProperty(name)).toBeTruthy();
     });
+  });
 
-    it('should only export expected properties', () => {
-        Object.keys(all).forEach((name) => {
-            expect(expectedExports.indexOf(name)).not.toEqual(-1, `Unexpected export found: ${name}`);
-        });
+  it('should only export expected properties', () => {
+    Object.keys(all).forEach((name) => {
+      expect(expectedExports.indexOf(name)).not.toEqual(-1, `Unexpected export found: ${name}`);
     });
+  });
 });

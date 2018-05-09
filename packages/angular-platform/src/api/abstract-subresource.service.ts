@@ -16,14 +16,10 @@
  *
  */
 
-import { Injectable } from '@angular/core';
-import { Observable, ObservableInput } from 'rxjs/Observable';
-import { CommonModel } from './common.model';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/mergeMap';
-import 'rxjs/add/observable/from';
-import 'rxjs/add/observable/of';
+import { from, Observable, ObservableInput } from 'rxjs';
+import { map, mergeMap } from 'rxjs/operators';
+import { CommonModel } from './common.model';
 import { ListResponse } from './list-response.model';
 
 /**
@@ -31,7 +27,6 @@ import { ListResponse } from './list-response.model';
  *
  * @author Michael Krotscheck
  */
-@Injectable()
 export abstract class AbstractSubresourceService<P extends CommonModel, E extends CommonModel> {
 
   /**
@@ -51,7 +46,7 @@ export abstract class AbstractSubresourceService<P extends CommonModel, E extend
                         private resourcesStub: string,
                         private http: HttpClient,
                         apiRootProvider: ObservableInput<string>) {
-    this.apiRoot = Observable.from(apiRootProvider || [ '' ]);
+    this.apiRoot = from(apiRootProvider || [ '' ]);
   }
 
   /**
@@ -82,8 +77,10 @@ export abstract class AbstractSubresourceService<P extends CommonModel, E extend
       .set('limit', limit && limit.toString() || undefined);
 
     return this.apiRoot
-      .map((root) => this.buildEntityRoot(root, parent, <E>{id: 'search'}))
-      .mergeMap((url) => this.http.get<ListResponse<E>>(url, {params}));
+      .pipe(
+        map((root) => this.buildEntityRoot(root, parent, {id: 'search'} as E)),
+        mergeMap((url) => this.http.get<ListResponse<E>>(url, {params})),
+      );
   }
 
   /**
@@ -116,8 +113,10 @@ export abstract class AbstractSubresourceService<P extends CommonModel, E extend
       .set('limit', limit && limit.toString() || undefined);
 
     return this.apiRoot
-      .map((root) => this.buildEntityRoot(root, parent, <E>{id: ''}))
-      .mergeMap((url) => this.http.get<ListResponse<E>>(url, {params}));
+      .pipe(
+        map((root) => this.buildEntityRoot(root, parent, {id: ''} as E)),
+        mergeMap((url) => this.http.get<ListResponse<E>>(url, {params})),
+      );
   }
 
   /**
@@ -129,8 +128,10 @@ export abstract class AbstractSubresourceService<P extends CommonModel, E extend
    */
   public create(parent: P, entity: E): Observable<E> {
     return this.apiRoot
-      .map((root) => this.buildEntityRoot(root, parent, <E>{id: ''}))
-      .mergeMap((url) => this.http.post<E>(url, entity));
+      .pipe(
+        map((root) => this.buildEntityRoot(root, parent, {id: ''} as E)),
+        mergeMap((url) => this.http.post<E>(url, entity)),
+      );
   }
 
   /**
@@ -142,8 +143,10 @@ export abstract class AbstractSubresourceService<P extends CommonModel, E extend
    */
   public read(parent: P, id: string): Observable<E> {
     return this.apiRoot
-      .map((root) => this.buildEntityRoot(root, parent, <E>{id: id}))
-      .mergeMap((url) => this.http.get<E>(url));
+      .pipe(
+        map((root) => this.buildEntityRoot(root, parent, {id} as E)),
+        mergeMap((url) => this.http.get<E>(url)),
+      );
   }
 
   /**
@@ -155,8 +158,10 @@ export abstract class AbstractSubresourceService<P extends CommonModel, E extend
    */
   public update(parent: P, entity: E): Observable<E> {
     return this.apiRoot
-      .map((root) => this.buildEntityRoot(root, parent, entity))
-      .mergeMap((url) => this.http.put<E>(url, entity));
+      .pipe(
+        map((root) => this.buildEntityRoot(root, parent, entity)),
+        mergeMap((url) => this.http.put<E>(url, entity)),
+      );
   }
 
   /**
@@ -168,8 +173,10 @@ export abstract class AbstractSubresourceService<P extends CommonModel, E extend
    */
   public destroy(parent: P, entity: E): Observable<void> {
     return this.apiRoot
-      .map((root) => this.buildEntityRoot(root, parent, entity))
-      .mergeMap((url) => this.http.delete<void>(url));
+      .pipe(
+        map((root) => this.buildEntityRoot(root, parent, entity)),
+        mergeMap((url) => this.http.delete<void>(url)),
+      );
   }
 
   /**

@@ -16,11 +16,11 @@
  *
  */
 
+import { Inject, Injectable } from '@angular/core';
 import { CanActivate } from '@angular/router';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { OAuth2TokenSubject } from './o-auth2-token.subject';
-import { Injectable } from '@angular/core';
-import 'rxjs/add/operator/filter';
 import { TokenUtil } from './util/token.util';
 
 /**
@@ -36,7 +36,7 @@ export class RequireLoggedInGuard implements CanActivate {
    *
    * @param tokenSubject The token subject, will only contain data if valid.
    */
-  constructor(private tokenSubject: OAuth2TokenSubject) {
+  constructor(@Inject(OAuth2TokenSubject) private tokenSubject: OAuth2TokenSubject) {
   }
 
   /**
@@ -45,6 +45,6 @@ export class RequireLoggedInGuard implements CanActivate {
    * @return An observable, resolving to true if the token indicates the user is logged in.
    */
   public canActivate(): Observable<boolean> {
-    return this.tokenSubject.map(t => TokenUtil.isValid(t));
+    return this.tokenSubject.pipe(map((t) => TokenUtil.isValid(t)));
   }
 }

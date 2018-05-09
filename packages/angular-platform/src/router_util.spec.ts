@@ -16,13 +16,13 @@
  *
  */
 
-import { inject, TestBed } from '@angular/core/testing';
-import { locationInitializer } from './router_util';
-import { APP_INITIALIZER, Injector } from '@angular/core';
-import { RouterTestingModule } from '@angular/router/testing';
-import { Router } from '@angular/router';
-import { NoopComponent } from './index';
 import { CommonModule } from '@angular/common';
+import { APP_INITIALIZER, Injector } from '@angular/core';
+import { inject, TestBed } from '@angular/core/testing';
+import { Router } from '@angular/router';
+import { RouterTestingModule } from '@angular/router/testing';
+import { NoopComponent } from './index';
+import { locationInitializer } from './router_util';
 
 /**
  * Unit tests for the router utility injector
@@ -32,17 +32,17 @@ describe('Router utility export', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [
-        {provide: APP_INITIALIZER, multi: true, useFactory: locationInitializer, deps: [ Injector ]}
+        {provide: APP_INITIALIZER, multi: true, useFactory: locationInitializer, deps: [ Injector ]},
       ],
       declarations: [
-        NoopComponent
+        NoopComponent,
       ],
       imports: [
         CommonModule,
         RouterTestingModule.withRoutes([
-          {path: '', component: NoopComponent}
-        ])
-      ]
+          {path: '', component: NoopComponent},
+        ]),
+      ],
     });
   });
 

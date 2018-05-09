@@ -30,6 +30,6 @@ export enum SortOrder {
   /**
    * The HTTP parameter value used to indicate an descending sort.
    */
-  Descending = 'DESC'
+  Descending = 'DESC',
 
 }

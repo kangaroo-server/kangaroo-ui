@@ -14,16 +14,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+import { TestBed } from '@angular/core/testing';
 import * as all from './index';
 import { ErrorModule } from './index';
-import { TestBed } from '@angular/core/testing';
 
 /**
  * Unit tests for the ErrorModule
  */
 describe('ErrorModule', () => {
   const expectedExports = [
-    'ErrorModule'
+    'ErrorModule',
   ];
 
   expectedExports.forEach((name) => {
@@ -38,9 +38,9 @@ describe('ErrorModule', () => {
       TestBed.configureTestingModule(
         {
           imports: [
-            ErrorModule
+            ErrorModule,
           ],
-          providers: []
+          providers: [],
         }).compileComponents();
     });
   });

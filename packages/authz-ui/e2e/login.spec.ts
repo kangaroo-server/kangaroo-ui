@@ -15,9 +15,9 @@
  * limitations under the License.
  */
 
+import { browser, ElementFinder } from 'protractor';
 import { ApplicationPage, LoginPage } from './pages';
 import { ProtractorUtil } from './util/protractor.util';
-import { browser, ElementFinder } from 'protractor';
 
 /**
  * Login/logout page.
@@ -79,7 +79,7 @@ describe('Login page', () => {
     const token = await browser.driver.executeScript(() => {
       return window.localStorage.getItem('_kangaroo_token');
     });
-    const decodedToken = JSON.parse(<string> token);
+    const decodedToken = JSON.parse(token as string);
     expect(decodedToken).toBeDefined();
 
     // Assert that there's a logout button

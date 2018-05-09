@@ -15,11 +15,11 @@
  * limitations under the License.
  */
 
+import { Inject, Injectable } from '@angular/core';
+import { ReplaySubject, Subscription } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { OAuth2TokenSubject } from './o-auth2-token.subject';
-import { Subscription } from 'rxjs/Subscription';
-import { ReplaySubject } from 'rxjs/ReplaySubject';
 import { TokenUtil } from './util/token.util';
-import { Injectable } from '@angular/core';
 
 /**
  * Convenience injector. Are we logged in?
@@ -37,11 +37,13 @@ export class LoggedInSubject extends ReplaySubject<boolean> {
   /**
    * Create a new token subject.
    */
-  constructor(public token: OAuth2TokenSubject) {
+  constructor(@Inject(OAuth2TokenSubject) public token: OAuth2TokenSubject) {
     super(1);
 
     this.subscription = token
-      .map((t) => TokenUtil.isValid(t))
+      .pipe(
+        map((t) => TokenUtil.isValid(t)),
+      )
       .subscribe((value) => this.next(value));
   }
 }

@@ -15,23 +15,23 @@
  * limitations under the License.
  */
 
-import { NgModule } from '@angular/core';
-import { RouterModule } from '@angular/router';
-import { ROUTES } from './routes';
-import { LoginComponent } from './login.component';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { ConfigModule } from '../config';
-import { KangarooOAuth2Module } from '@kangaroo/angular-authn';
+import { NgModule } from '@angular/core';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {
   MatButtonModule,
   MatCardModule,
   MatFormFieldModule,
   MatInputModule,
-  MatToolbarModule
+  MatToolbarModule,
 } from '@angular/material';
-import { FlexLayoutModule } from '@angular/flex-layout';
+import { RouterModule } from '@angular/router';
+import { KangarooOAuth2Module } from '@kangaroo/angular-authn';
+import { ConfigModule } from '../config';
 import { KangarooLayoutModule } from '../layout';
+import { LoginComponent } from './login.component';
+import { ROUTES } from './routes';
 
 /**
  * This module handles the login pages, as well as the route-guards and services necessary
@@ -41,7 +41,7 @@ import { KangarooLayoutModule } from '../layout';
  */
 @NgModule({
   declarations: [
-    LoginComponent
+    LoginComponent,
   ],
   imports: [
     CommonModule,
@@ -51,11 +51,11 @@ import { KangarooLayoutModule } from '../layout';
     KangarooOAuth2Module,
     RouterModule.forChild(ROUTES),
 
-    KangarooLayoutModule
+    KangarooLayoutModule,
   ],
   exports: [
-    RouterModule
-  ]
+    RouterModule,
+  ],
 })
 export class LoginModule {
 }

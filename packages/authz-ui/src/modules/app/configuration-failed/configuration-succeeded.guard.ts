@@ -16,13 +16,11 @@
  *
  */
 
-
-import { ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot } from '@angular/router';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
+import { ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot } from '@angular/router';
+import { Observable } from 'rxjs';
+import { catchError, map } from 'rxjs/internal/operators';
 import { KangarooConfigurationSubject } from '../../config';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/catch';
 
 /**
  * This route guard only permits access if the configuration has succeeded.
@@ -50,7 +48,9 @@ export class ConfigurationSucceededGuard implements CanActivate {
   canActivate(route: ActivatedRouteSnapshot,
               state: RouterStateSnapshot): Observable<boolean> {
     return this.configProvider
-      .map(() => true)
-      .catch(() => [ false ]);
+      .pipe(
+        map(() => true),
+        catchError(() => [ false ]),
+      );
   }
 }

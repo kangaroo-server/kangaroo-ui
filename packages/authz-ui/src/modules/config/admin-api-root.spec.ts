@@ -28,7 +28,7 @@ describe('AdminApiRoot', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [ AdminApiRoot ],
-      imports: [ BrowserModule ]
+      imports: [ BrowserModule ],
     });
   });
 

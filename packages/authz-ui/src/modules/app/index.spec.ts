@@ -15,9 +15,9 @@
  * limitations under the License.
  *
  */
+import { TestBed } from '@angular/core/testing';
 import * as all from './index';
 import { ApplicationModule } from './index';
-import { TestBed } from '@angular/core/testing';
 
 /**
  * Unit tests for the ApplicationModule
@@ -25,7 +25,7 @@ import { TestBed } from '@angular/core/testing';
 describe('ApplicationModule', () => {
 
   const expectedExports = [
-    'ApplicationModule'
+    'ApplicationModule',
   ];
 
   expectedExports.forEach((name) => {
@@ -40,7 +40,7 @@ describe('ApplicationModule', () => {
       TestBed.configureTestingModule(
         {
           imports: [ ApplicationModule ],
-          providers: []
+          providers: [],
         }).compileComponents();
     });
   });

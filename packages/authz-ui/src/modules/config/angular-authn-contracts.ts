@@ -16,11 +16,12 @@
  */
 
 import { FactoryProvider } from '@angular/core';
+import { ADMIN_API_ROOT, OAUTH2_API_ROOT, OAUTH2_CLIENT_ID, OAUTH2_CLIENT_SCOPES } from '@kangaroo/angular-authn';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/internal/operators';
+import { AdminApiRoot } from './admin-api-root';
 import { KangarooConfigurationSubject } from './kangaroo-configuration.subject';
 import { OAuthApiRoot } from './oauth-api-root';
-import { ADMIN_API_ROOT, OAUTH2_API_ROOT, OAUTH2_CLIENT_ID, OAUTH2_CLIENT_SCOPES } from '@kangaroo/angular-authn';
-import { AdminApiRoot } from './admin-api-root';
-import { Observable } from 'rxjs/Observable';
 
 /**
  * API Root factory.
@@ -38,7 +39,7 @@ export function oauthApiRootFactory(apiRoot): Observable<string> {
 export const oauthApiRootProvider: FactoryProvider = {
   provide: OAUTH2_API_ROOT,
   useFactory: oauthApiRootFactory,
-  deps: [ OAuthApiRoot ]
+  deps: [ OAuthApiRoot ],
 };
 
 /**
@@ -48,7 +49,7 @@ export const oauthApiRootProvider: FactoryProvider = {
  * @returns A provider only for the client id.
  */
 export function clientIdFactory(config: KangarooConfigurationSubject): Observable<string> {
-  return config.map((conf) => conf.client);
+  return config.pipe(map((conf) => conf.client));
 }
 
 /**
@@ -57,7 +58,7 @@ export function clientIdFactory(config: KangarooConfigurationSubject): Observabl
 export const clientIdProvider: FactoryProvider = {
   provide: OAUTH2_CLIENT_ID,
   useFactory: clientIdFactory,
-  deps: [ KangarooConfigurationSubject ]
+  deps: [ KangarooConfigurationSubject ],
 };
 
 /**
@@ -67,7 +68,7 @@ export const clientIdProvider: FactoryProvider = {
  * @returns A provider only for the client scopes.
  */
 export function clientScopesFactory(config: KangarooConfigurationSubject): Observable<string[]> {
-  return config.map((conf) => conf.scopes);
+  return config.pipe(map((conf) => conf.scopes));
 }
 
 /**
@@ -76,7 +77,7 @@ export function clientScopesFactory(config: KangarooConfigurationSubject): Obser
 export const clientScopesProvider: FactoryProvider = {
   provide: OAUTH2_CLIENT_SCOPES,
   useFactory: clientScopesFactory,
-  deps: [ KangarooConfigurationSubject ]
+  deps: [ KangarooConfigurationSubject ],
 };
 
 /**
@@ -95,5 +96,5 @@ export function adminApiRootFactory(apiRoot): Observable<string> {
 export const adminApiRootProvider: FactoryProvider = {
   provide: ADMIN_API_ROOT,
   useFactory: adminApiRootFactory,
-  deps: [ AdminApiRoot ]
+  deps: [ AdminApiRoot ],
 };

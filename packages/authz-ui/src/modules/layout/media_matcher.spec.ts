@@ -15,9 +15,9 @@
  * limitations under the License.
  */
 
+import { LayoutModule } from '@angular/cdk/layout';
 import { inject, TestBed } from '@angular/core/testing';
 import { MobileMediaQuery, mobileMediaQueryProvider } from './media_matcher';
-import { LayoutModule } from '@angular/cdk/layout';
 
 /**
  * Unit test for the responsive breakpoint.
@@ -28,12 +28,12 @@ describe('MediaMatcher', () => {
 
     TestBed.configureTestingModule({
       providers: [
-        mobileMediaQueryProvider
+        mobileMediaQueryProvider,
       ],
       declarations: [],
       imports: [
-        LayoutModule
-      ]
+        LayoutModule,
+      ],
     });
   });
 

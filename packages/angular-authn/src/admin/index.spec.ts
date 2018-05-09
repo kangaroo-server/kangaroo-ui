@@ -15,11 +15,11 @@
  * limitations under the License.
  *
  */
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { TestBed } from '@angular/core/testing';
+import { BrowserModule } from '@angular/platform-browser';
 import * as all from './index';
 import { KangarooAuthorizationAdminModule } from './index';
-import { TestBed } from '@angular/core/testing';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { BrowserModule } from '@angular/platform-browser';
 
 /**
  * Unit tests for the KangarooAuthorizationAdminModule
@@ -41,7 +41,7 @@ describe('KangarooAuthorizationAdminModule', () => {
 
     'ClientType',
     'TokenType',
-    'ADMIN_API_ROOT'
+    'ADMIN_API_ROOT',
   ];
 
   expectedExports.forEach((name) => {
@@ -64,8 +64,8 @@ describe('KangarooAuthorizationAdminModule', () => {
           imports: [
             BrowserModule,
             HttpClientTestingModule,
-            KangarooAuthorizationAdminModule.forRoot('')
-          ]
+            KangarooAuthorizationAdminModule.forRoot(''),
+          ],
         }).compileComponents();
     });
   });

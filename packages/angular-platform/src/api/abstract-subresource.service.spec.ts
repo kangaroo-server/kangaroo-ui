@@ -16,14 +16,14 @@
  *
  */
 
-import { Inject, InjectionToken, Optional } from '@angular/core';
-import { async, TestBed } from '@angular/core/testing';
-import { AbstractSubresourceService } from './abstract-subresource.service';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { Inject, Injectable, InjectionToken, Optional } from '@angular/core';
+import { async, TestBed } from '@angular/core/testing';
+import { ObservableInput } from 'rxjs';
+import { AbstractSubresourceService } from './abstract-subresource.service';
 import { CommonModel } from './common.model';
 import { SortOrder } from './sort-order.enum';
-import { ObservableInput } from 'rxjs/Observable';
 
 /**
  * Test API root.
@@ -53,9 +53,10 @@ describe('AbstractSubresourceService', () => {
   /**
    * Test class, exposing request.
    */
+  @Injectable()
   class TestEntityService extends AbstractSubresourceService<ParentEntity, TestEntity> {
 
-    constructor(http: HttpClient,
+    constructor(@Inject(HttpClient) http: HttpClient,
                 @Optional() @Inject(API_ROOT) apiRoot: ObservableInput<string>) {
       super('parent', 'test', http, apiRoot);
     }
@@ -65,13 +66,13 @@ describe('AbstractSubresourceService', () => {
     id: 'test_id',
     createdDate: 10000,
     modifiedDate: 20000,
-    name: 'test_name'
+    name: 'test_name',
   };
   const parentEntity: TestEntity = {
     id: 'parent_id',
     createdDate: 10000,
     modifiedDate: 20000,
-    name: 'test_name'
+    name: 'test_name',
   };
 
   let service: TestEntityService;
@@ -84,13 +85,12 @@ describe('AbstractSubresourceService', () => {
           TestEntityService,
           {
             provide: API_ROOT,
-            useValue: Promise.resolve('http://example.com/v1')
-          }
+            useValue: Promise.resolve('http://example.com/v1'),
+          },
         ],
         imports: [
-          HttpClientModule,
-          HttpClientTestingModule
-        ]
+          HttpClientTestingModule,
+        ],
       });
 
       service = TestBed.get(TestEntityService);
@@ -129,7 +129,7 @@ describe('AbstractSubresourceService', () => {
     beforeEach(() => {
       TestBed.configureTestingModule({
         providers: [ TestEntityService ],
-        imports: [ HttpClientModule, HttpClientTestingModule ]
+        imports: [ HttpClientModule, HttpClientTestingModule ],
       });
 
       service = TestBed.get(TestEntityService);
@@ -146,8 +146,8 @@ describe('AbstractSubresourceService', () => {
         service
           .browse(parentEntity,
             {
-              'foo': 'bar',
-              'lol': 'cat'
+              foo: 'bar',
+              lol: 'cat',
             })
           .subscribe();
 
@@ -215,8 +215,8 @@ describe('AbstractSubresourceService', () => {
       it('should map filters to the query', async(() => {
         service
           .search(parentEntity, 'query', {
-            'foo': 'bar',
-            'lol': 'cat'
+            foo: 'bar',
+            lol: 'cat',
           })
           .subscribe();
 

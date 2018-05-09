@@ -37,5 +37,5 @@ export function windowFactory(): Window {
  */
 export const windowProvider: FactoryProvider = {
   provide: WINDOW,
-  useFactory: windowFactory
+  useFactory: windowFactory,
 };

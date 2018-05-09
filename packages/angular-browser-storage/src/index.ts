@@ -17,27 +17,26 @@
  */
 
 import { NgModule } from '@angular/core';
-import { SessionStore } from './session.store';
-import { MemoryStore } from './memory.store';
-import { LocalStore } from './local.store';
 import { LoggerModule } from '@kangaroo/angular-logger';
+import { LocalStore } from './local.store';
+import { MemoryStore } from './memory.store';
+import { SessionStore } from './session.store';
 import { windowProvider } from './window';
 
 export * from './local.store';
 export * from './memory.store';
 export * from './session.store';
 
-
 @NgModule({
   providers: [
     LocalStore,
     MemoryStore,
     SessionStore,
-    windowProvider
+    windowProvider,
   ],
   imports: [
-    LoggerModule.forModule('BrowserStorageModule')
-  ]
+    LoggerModule,
+  ],
 })
 export class BrowserStorageModule {
 }

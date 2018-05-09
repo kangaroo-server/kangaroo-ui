@@ -1,18 +1,12 @@
 {
-  "$schema": "./node_modules/ng-packagr/package.schema.json",
-  "version": "1.0.0",
-  "dest": "lib",
-  "comments": "none",
-  "licensePath": "../../LICENSE",
+  "$schema": "../../node_modules/ng-packagr/ng-package.schema.json",
+  "dest": "./lib",
+  "deleteDestPath": false,
   "lib": {
     "entryFile": "src/index.ts",
     "umdModuleIds": {
       "@kangaroo/rxjs-storage": "kangaroo.rxjs-storage",
       "@kangaroo/angular-platform": "kangaroo.angular-platform"
     }
-  },
-  "languageLevel": [
-    "dom",
-    "es2017"
-  ]
+  }
 }
