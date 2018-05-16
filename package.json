@@ -21,6 +21,7 @@
     "@types/jasmine": "~2.8.7",
     "@types/karma": "~1.7.3",
     "@types/node": "~8.9.0",
+    "chokidar-cli": "^1.2.0",
     "codelyzer": "^4.3.0",
     "commitizen": "~2.9.6",
     "cz-conventional-changelog": "~2.1.0",
@@ -57,7 +58,8 @@
     "pretest": "jasmine",
     "test": "wsrun test.ci --fast-exit --serial",
     "clean": "rimraf node_modules 'packages/*/(node_modules|*.tgz|lib|dist)'",
-    "pack": "wsrun pack"
+    "pack": "wsrun pack",
+    "start": "wsrun start"
   },
   "workspaces": [
     "packages/*"
