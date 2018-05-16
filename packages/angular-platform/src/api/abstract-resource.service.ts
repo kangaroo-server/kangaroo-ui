@@ -17,9 +17,9 @@
  */
 
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { from, Observable, ObservableInput } from 'rxjs';
+import { BehaviorSubject, from, Observable, ObservableInput } from 'rxjs';
 import { map, mergeMap } from 'rxjs/operators';
+import { HttpUtil } from '../util/http-util';
 import { CommonModel } from './common.model';
 import { ListResponse } from './list-response.model';
 
@@ -34,6 +34,12 @@ export abstract class AbstractResourceService<T extends CommonModel> {
    * The current calculated API root.
    */
   private readonly apiRoot: Observable<string>;
+
+  /**
+   * An observable for all results from a browse operation. This will
+   * be automatically retriggered in the case an operation changes the data set.
+   */
+  private readonly allEntities: BehaviorSubject<T[]> = new BehaviorSubject<T[]>([]);
 
   /**
    * Create a new instance of the service.
@@ -51,27 +57,17 @@ export abstract class AbstractResourceService<T extends CommonModel> {
   /**
    * Search this group of resources.
    *
-   * @param query The search query, required.
+   * @param q The search query, required.
    * @param filters A list of additional filter parameters.
    * @param offset The search result offset.
    * @param limit The number of results returned.
    * @return The search results.
    */
-  public search(query: string,
+  public search(q: string,
                 filters?: { [ key: string ]: string },
                 offset?: number,
                 limit?: number): Observable<ListResponse<T>> {
-    let params: HttpParams = new HttpParams();
-    if (filters) {
-      Object.keys(filters)
-        .forEach((key) => {
-          params = params.append(key, filters[ key ]);
-        });
-    }
-    params = params
-      .set('q', query)
-      .set('offset', offset && offset.toString() || undefined)
-      .set('limit', limit && limit.toString() || undefined);
+    const params: HttpParams = HttpUtil.buildHttpParams(filters, {q, offset, limit});
 
     return this.apiRoot
       .pipe(
@@ -95,17 +91,7 @@ export abstract class AbstractResourceService<T extends CommonModel> {
                 order?: string,
                 offset?: number,
                 limit?: number): Observable<ListResponse<T>> {
-    let params: HttpParams = new HttpParams();
-    if (filters) {
-      Object.keys(filters).forEach((key) => {
-        params = params.append(key, filters[ key ]);
-      });
-    }
-    params = params
-      .set('sort', sort || undefined)
-      .set('order', order || undefined)
-      .set('offset', offset && offset.toString() || undefined)
-      .set('limit', limit && limit.toString() || undefined);
+    const params: HttpParams = HttpUtil.buildHttpParams(filters, {sort, order, offset, limit});
 
     return this.apiRoot
       .pipe(
