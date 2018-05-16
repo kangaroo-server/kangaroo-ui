@@ -20,6 +20,7 @@
     "lint": "ng lint",
     "lint.ci": "ng lint --format checkstyle --force > ./reports/checkstyle-result.xml",
     "build": "ng build",
-    "nsp": "nsp check ./"
+    "nsp": "nsp check ./",
+    "start": "chokidar 'src/**/*.ts' 'src/**/*.scss' 'src/**/*.html' -c 'ng build'"
   }
 }
