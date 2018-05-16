@@ -19,6 +19,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { from, Observable, ObservableInput } from 'rxjs';
 import { map, mergeMap } from 'rxjs/operators';
+import { HttpUtil } from '../util/http-util';
 import { CommonModel } from './common.model';
 import { ListResponse } from './list-response.model';
 
@@ -53,28 +54,18 @@ export abstract class AbstractSubresourceService<P extends CommonModel, E extend
    * Search this group of resources.
    *
    * @param parent The parent entity.
-   * @param query The search query, required.
+   * @param q The search query, required.
    * @param filters A list of additional filter parameters.
    * @param offset The search result offset.
    * @param limit The number of results returned.
    * @return The search results.
    */
   public search(parent: P,
-                query: string,
+                q: string,
                 filters?: { [ key: string ]: string },
                 offset?: number,
                 limit?: number): Observable<ListResponse<E>> {
-    let params: HttpParams = new HttpParams();
-    if (filters) {
-      Object.keys(filters)
-        .forEach((key) => {
-          params = params.append(key, filters[ key ]);
-        });
-    }
-    params = params
-      .set('q', query)
-      .set('offset', offset && offset.toString() || undefined)
-      .set('limit', limit && limit.toString() || undefined);
+    const params: HttpParams = HttpUtil.buildHttpParams(filters, {q, offset, limit});
 
     return this.apiRoot
       .pipe(
@@ -100,17 +91,7 @@ export abstract class AbstractSubresourceService<P extends CommonModel, E extend
                 order?: string,
                 offset?: number,
                 limit?: number): Observable<ListResponse<E>> {
-    let params: HttpParams = new HttpParams();
-    if (filters) {
-      Object.keys(filters).forEach((key) => {
-        params = params.append(key, filters[ key ]);
-      });
-    }
-    params = params
-      .set('sort', sort || undefined)
-      .set('order', order || undefined)
-      .set('offset', offset && offset.toString() || undefined)
-      .set('limit', limit && limit.toString() || undefined);
+    const params: HttpParams = HttpUtil.buildHttpParams(filters, {sort, order, offset, limit});
 
     return this.apiRoot
       .pipe(
