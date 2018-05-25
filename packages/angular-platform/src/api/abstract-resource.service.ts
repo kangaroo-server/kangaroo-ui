@@ -17,29 +17,24 @@
  */
 
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { BehaviorSubject, from, Observable, ObservableInput } from 'rxjs';
-import { map, mergeMap } from 'rxjs/operators';
+import { from, Observable, ObservableInput } from 'rxjs';
+import { map, switchMap, tap } from 'rxjs/operators';
 import { HttpUtil } from '../util/http-util';
+import { AbstractCrudService } from './abstract-crud.service';
 import { CommonModel } from './common.model';
 import { ListResponse } from './list-response.model';
 
 /**
- * This class attaches the oauth2 token credentials to API calls.
+ * An abstract implementation of the common resource api pattern.
  *
  * @author Michael Krotscheck
  */
-export abstract class AbstractResourceService<T extends CommonModel> {
+export abstract class AbstractResourceService<T extends CommonModel> extends AbstractCrudService<T> {
 
   /**
    * The current calculated API root.
    */
   private readonly apiRoot: Observable<string>;
-
-  /**
-   * An observable for all results from a browse operation. This will
-   * be automatically retriggered in the case an operation changes the data set.
-   */
-  private readonly allEntities: BehaviorSubject<T[]> = new BehaviorSubject<T[]>([]);
 
   /**
    * Create a new instance of the service.
@@ -49,13 +44,17 @@ export abstract class AbstractResourceService<T extends CommonModel> {
    * @param apiRootProvider Observable source of the root URL to the admin API. Optional.
    */
   protected constructor(private resourcesStub: string,
-                        private http: HttpClient,
+                        http: HttpClient,
                         apiRootProvider: ObservableInput<string>) {
+    super(http);
     this.apiRoot = from(apiRootProvider || [ '' ]);
   }
 
   /**
    * Search this group of resources.
+   *
+   * The resulting observable will re-emit the list if the user - for some reason or other - makes a modification
+   * to any of the entities of the list.
    *
    * @param q The search query, required.
    * @param filters A list of additional filter parameters.
@@ -68,12 +67,8 @@ export abstract class AbstractResourceService<T extends CommonModel> {
                 offset?: number,
                 limit?: number): Observable<ListResponse<T>> {
     const params: HttpParams = HttpUtil.buildHttpParams(filters, {q, offset, limit});
-
-    return this.apiRoot
-      .pipe(
-        map((root) => this.buildEntityRoot(root, {id: 'search'} as T)),
-        mergeMap((url) => this.http.get<ListResponse<T>>(url, {params})),
-      );
+    const urlObservable = this.apiRoot.pipe(map((root) => this.buildEntityRoot(root, {id: 'search'} as T)));
+    return this.buildListQuery(urlObservable, params);
   }
 
   /**
@@ -92,12 +87,8 @@ export abstract class AbstractResourceService<T extends CommonModel> {
                 offset?: number,
                 limit?: number): Observable<ListResponse<T>> {
     const params: HttpParams = HttpUtil.buildHttpParams(filters, {sort, order, offset, limit});
-
-    return this.apiRoot
-      .pipe(
-        map((root) => this.buildEntityRoot(root, {id: ''} as T)),
-        mergeMap((url) => this.http.get<ListResponse<T>>(url, {params})),
-      );
+    const urlObservable = this.apiRoot.pipe(map((root) => this.buildEntityRoot(root, {id: ''} as T)));
+    return this.buildListQuery(urlObservable, params);
   }
 
   /**
@@ -110,7 +101,8 @@ export abstract class AbstractResourceService<T extends CommonModel> {
     return this.apiRoot
       .pipe(
         map((root) => this.buildEntityRoot(root, {id: ''} as T)),
-        mergeMap((url) => this.http.post<T>(url, entity)),
+        switchMap((url) => this.http.post<T>(url, entity)),
+        tap((result) => this.entityCreated.next(result)),
       );
   }
 
@@ -124,7 +116,8 @@ export abstract class AbstractResourceService<T extends CommonModel> {
     return this.apiRoot
       .pipe(
         map((root) => this.buildEntityRoot(root, {id} as T)),
-        mergeMap((url) => this.http.get<T>(url)),
+        switchMap((url) => this.http.get<T>(url)),
+        tap((result: T) => this.entityUpdated.next(result)),
       );
   }
 
@@ -138,7 +131,8 @@ export abstract class AbstractResourceService<T extends CommonModel> {
     return this.apiRoot
       .pipe(
         map((root) => this.buildEntityRoot(root, entity)),
-        mergeMap((url) => this.http.put<T>(url, entity)),
+        switchMap((url) => this.http.put<T>(url, entity)),
+        tap((result: T) => this.entityUpdated.next(result)),
       );
   }
 
@@ -152,7 +146,8 @@ export abstract class AbstractResourceService<T extends CommonModel> {
     return this.apiRoot
       .pipe(
         map((root) => this.buildEntityRoot(root, entity)),
-        mergeMap((url) => this.http.delete<void>(url)),
+        switchMap((url) => this.http.delete<void>(url)),
+        tap(() => this.entityRemoved.next(entity)),
       );
   }
 

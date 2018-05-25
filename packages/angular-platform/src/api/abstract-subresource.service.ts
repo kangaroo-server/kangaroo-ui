@@ -18,8 +18,9 @@
 
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { from, Observable, ObservableInput } from 'rxjs';
-import { map, mergeMap } from 'rxjs/operators';
+import { map, switchMap } from 'rxjs/operators';
 import { HttpUtil } from '../util/http-util';
+import { AbstractCrudService } from './abstract-crud.service';
 import { CommonModel } from './common.model';
 import { ListResponse } from './list-response.model';
 
@@ -28,7 +29,8 @@ import { ListResponse } from './list-response.model';
  *
  * @author Michael Krotscheck
  */
-export abstract class AbstractSubresourceService<P extends CommonModel, E extends CommonModel> {
+export abstract class AbstractSubresourceService<P extends CommonModel, E extends CommonModel>
+  extends AbstractCrudService<E> {
 
   /**
    * The current calculated API root.
@@ -45,8 +47,9 @@ export abstract class AbstractSubresourceService<P extends CommonModel, E extend
    */
   protected constructor(private parentStub: string,
                         private resourcesStub: string,
-                        private http: HttpClient,
+                        http: HttpClient,
                         apiRootProvider: ObservableInput<string>) {
+    super(http);
     this.apiRoot = from(apiRootProvider || [ '' ]);
   }
 
@@ -66,12 +69,8 @@ export abstract class AbstractSubresourceService<P extends CommonModel, E extend
                 offset?: number,
                 limit?: number): Observable<ListResponse<E>> {
     const params: HttpParams = HttpUtil.buildHttpParams(filters, {q, offset, limit});
-
-    return this.apiRoot
-      .pipe(
-        map((root) => this.buildEntityRoot(root, parent, {id: 'search'} as E)),
-        mergeMap((url) => this.http.get<ListResponse<E>>(url, {params})),
-      );
+    const urlObservable = this.apiRoot.pipe(map((root) => this.buildEntityRoot(root, parent, {id: 'search'} as E)));
+    return this.buildListQuery(urlObservable, params);
   }
 
   /**
@@ -92,12 +91,8 @@ export abstract class AbstractSubresourceService<P extends CommonModel, E extend
                 offset?: number,
                 limit?: number): Observable<ListResponse<E>> {
     const params: HttpParams = HttpUtil.buildHttpParams(filters, {sort, order, offset, limit});
-
-    return this.apiRoot
-      .pipe(
-        map((root) => this.buildEntityRoot(root, parent, {id: ''} as E)),
-        mergeMap((url) => this.http.get<ListResponse<E>>(url, {params})),
-      );
+    const urlObservable = this.apiRoot.pipe(map((root) => this.buildEntityRoot(root, parent, {id: ''} as E)));
+    return this.buildListQuery(urlObservable, params);
   }
 
   /**
@@ -111,7 +106,7 @@ export abstract class AbstractSubresourceService<P extends CommonModel, E extend
     return this.apiRoot
       .pipe(
         map((root) => this.buildEntityRoot(root, parent, {id: ''} as E)),
-        mergeMap((url) => this.http.post<E>(url, entity)),
+        switchMap((url) => this.http.post<E>(url, entity)),
       );
   }
 
@@ -126,7 +121,7 @@ export abstract class AbstractSubresourceService<P extends CommonModel, E extend
     return this.apiRoot
       .pipe(
         map((root) => this.buildEntityRoot(root, parent, {id} as E)),
-        mergeMap((url) => this.http.get<E>(url)),
+        switchMap((url) => this.http.get<E>(url)),
       );
   }
 
@@ -141,7 +136,7 @@ export abstract class AbstractSubresourceService<P extends CommonModel, E extend
     return this.apiRoot
       .pipe(
         map((root) => this.buildEntityRoot(root, parent, entity)),
-        mergeMap((url) => this.http.put<E>(url, entity)),
+        switchMap((url) => this.http.put<E>(url, entity)),
       );
   }
 
@@ -156,7 +151,7 @@ export abstract class AbstractSubresourceService<P extends CommonModel, E extend
     return this.apiRoot
       .pipe(
         map((root) => this.buildEntityRoot(root, parent, entity)),
-        mergeMap((url) => this.http.delete<void>(url)),
+        switchMap((url) => this.http.delete<void>(url)),
       );
   }
 

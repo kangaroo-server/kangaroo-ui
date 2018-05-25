@@ -30,10 +30,10 @@ export interface CommonModel {
   /**
    * Created date timestamp, in milliseconds.
    */
-  createdDate: number;
+  createdDate?: number;
 
   /**
    * Last modified date timestamp, in milliseconds.
    */
-  modifiedDate: number;
+  modifiedDate?: number;
 }
