@@ -24,9 +24,9 @@
     "start": "chokidar 'src/**/*.ts' 'src/**/*.scss' 'src/**/*.html' -c 'ng build'"
   },
   "peerDependencies": {
-    "rxjs": "~6.1.0"
+    "rxjs": "~6.2.0"
   },
   "devDependencies": {
-    "rxjs": "~6.1.0"
+    "rxjs": "~6.2.0"
   }
 }

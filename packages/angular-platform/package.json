@@ -24,15 +24,15 @@
     "start": "chokidar 'src/**/*.ts' 'src/**/*.scss' 'src/**/*.html' -c 'ng build'"
   },
   "peerDependencies": {
-    "@angular/common": "~6.0.0",
-    "@angular/core": "~6.0.0",
-    "rxjs": "~6.1.0",
+    "@angular/common": "~6.0.3",
+    "@angular/core": "~6.0.3",
+    "rxjs": "~6.2.0",
     "zone.js": "~0.8.26"
   },
   "devDependencies": {
-    "@angular/common": "~6.0.0",
-    "@angular/core": "~6.0.0",
-    "rxjs": "~6.1.0",
+    "@angular/common": "~6.0.3",
+    "@angular/core": "~6.0.3",
+    "rxjs": "~6.2.0",
     "zone.js": "~0.8.26"
   }
 }
