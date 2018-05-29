@@ -23,6 +23,7 @@ import {
   MatFormFieldModule,
   MatIconModule,
   MatInputModule,
+  MatListModule,
   MatSidenavModule,
   MatSnackBarModule,
   MatToolbarModule,
@@ -58,6 +59,7 @@ export { MobileMediaQuery } from './media_matcher';
     MatToolbarModule,
     MatSnackBarModule,
     MatSidenavModule,
+    MatListModule,
   ],
   providers: [
     mobileMediaQueryProvider,

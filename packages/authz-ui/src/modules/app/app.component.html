@@ -39,12 +39,13 @@
                          [style.marginTop.px]="mobileQuery.matches ? 56 : 64"
                          (backdropClick)="menuOpened = !menuOpened">
     <mat-sidenav #snav
+                 *ngIf="loggedIn"
                  [mode]="mobileQuery.matches ? 'over' : 'side'"
                  [fixedInViewport]="mobileQuery.matches"
-                 [opened]="(menuOpened || !mobileQuery.matches) && loggedIn"
+                 [opened]="menuOpened || !mobileQuery.matches"
                  fixedTopGap="56"
                  fxFlex="33">
-      <router-outlet name="left"></router-outlet>
+      <kng-primary-menu></kng-primary-menu>
     </mat-sidenav>
 
     <mat-sidenav-content>
