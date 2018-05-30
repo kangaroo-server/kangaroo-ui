@@ -27,12 +27,12 @@ export interface Application extends CommonModel {
   /**
    * Entity ID ID of this application's owner.
    */
-  owner: string;
+  owner?: string;
 
   /**
    * Entity ID for the default role.
    */
-  defaultRole: string;
+  defaultRole?: string;
 
   /**
    * Human readable name for this application.

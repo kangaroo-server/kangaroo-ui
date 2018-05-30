@@ -19,6 +19,7 @@
 import { LayoutModule } from '@angular/cdk/layout';
 import { Location } from '@angular/common';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { async, inject, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
@@ -85,6 +86,7 @@ describe('AppComponent', () => {
         NoopComponent,
         AppComponent,
       ],
+      schemas: [ CUSTOM_ELEMENTS_SCHEMA ],
     })
       .overrideProvider(MobileMediaQuery, {
         useValue: mockMediaQuery,

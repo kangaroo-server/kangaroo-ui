@@ -18,23 +18,26 @@
 
 import { CommonModule } from '@angular/common';
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
+import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
 
-import { AppComponent } from './app.component';
-import { CannotConfigureComponent } from './configuration-failed/cannot-configure.component';
-import { ConfigurationFailedGuard } from './configuration-failed/configuration-failed.guard';
-import { ConfigurationSucceededGuard } from './configuration-failed/configuration-succeeded.guard';
-import { RouterOutletComponent } from './router-outlet.component';
-import { ROUTES } from './routes';
-
-import { KangarooOAuth2Module } from '@kangaroo/angular-authn';
+import { KangarooAuthorizationAdminModule, KangarooOAuth2Module } from '@kangaroo/angular-authn';
 import { KangarooPlatformModule } from '@kangaroo/angular-platform';
 import { ConfigModule } from '../config';
 import { ErrorModule } from '../error';
 import { KangarooLayoutModule } from '../layout';
 import { LoginModule } from '../login';
+
+import { AppComponent } from './app.component';
+import { ApplicationCreateComponent } from './application/application-create.component';
+import { CannotConfigureComponent } from './configuration-failed/cannot-configure.component';
+import { ConfigurationFailedGuard } from './configuration-failed/configuration-failed.guard';
+import { ConfigurationSucceededGuard } from './configuration-failed/configuration-succeeded.guard';
+import { PrimaryMenuComponent } from './menu/primary-menu.component';
+import { RouterOutletComponent } from './router-outlet.component';
+import { ROUTES } from './routes';
 
 /**
  * This module contains all the components of the application shell, including header, configuration error cases,
@@ -48,11 +51,13 @@ import { LoginModule } from '../login';
     CommonModule,
     BrowserModule,
     RouterModule.forRoot(ROUTES),
+    ReactiveFormsModule,
 
     KangarooPlatformModule,
 
     KangarooLayoutModule,
     KangarooOAuth2Module,
+    KangarooAuthorizationAdminModule,
     ConfigModule,
     ErrorModule,
     LoginModule,
@@ -65,6 +70,9 @@ import { LoginModule } from '../login';
     AppComponent,
     RouterOutletComponent,
     CannotConfigureComponent,
+    PrimaryMenuComponent,
+
+    ApplicationCreateComponent,
   ],
   bootstrap: [
     AppComponent,

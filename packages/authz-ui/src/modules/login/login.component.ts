@@ -20,6 +20,7 @@ import { MatSnackBar } from '@angular/material';
 import { Router } from '@angular/router';
 import { OAuth2Service, OAuth2TokenSubject } from '@kangaroo/angular-authn';
 import { finalize } from 'rxjs/internal/operators';
+import { FormUtil } from '../utils/form.util';
 
 /**
  * This component renders the login form.
@@ -66,7 +67,7 @@ export class LoginComponent {
    * @returns Error message, as appropriate.
    */
   public getErrorMessage(control: FormControl) {
-    return control.hasError('required') ? 'You must enter a value' : '';
+    return FormUtil.getErrorMessage(control.errors);
   }
 
   /**

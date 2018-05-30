@@ -15,8 +15,6 @@
  * limitations under the License.
  */
 
-
-
 #application {
   position: absolute;
   top: 0;
@@ -34,8 +32,11 @@
     & > mat-sidenav {
       width: 200px;
     }
-    & > mat-sidenav-content {
 
+    & > mat-sidenav-content {
+      .main-container {
+        margin: 30px;
+      }
     }
   }
 }

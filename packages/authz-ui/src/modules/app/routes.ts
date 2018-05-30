@@ -19,9 +19,11 @@
 import { Routes } from '@angular/router';
 import { RequireLoggedInGuard } from '@kangaroo/angular-authn';
 import { NoopComponent } from '@kangaroo/angular-platform';
+import { ApplicationCreateComponent } from './application/application-create.component';
 import { CannotConfigureComponent } from './configuration-failed/cannot-configure.component';
 import { ConfigurationFailedGuard } from './configuration-failed/configuration-failed.guard';
 import { ConfigurationSucceededGuard } from './configuration-failed/configuration-succeeded.guard';
+import { RouterOutletComponent } from './router-outlet.component';
 
 /**
  * Root application routes. Actual functional routes are provided by different modules.
@@ -41,6 +43,18 @@ export const ROUTES: Routes = [
       RequireLoggedInGuard,
       ConfigurationSucceededGuard,
     ],
+  },
+  {
+    path: 'application',
+    component: RouterOutletComponent,
+    canActivate: [
+      RequireLoggedInGuard,
+      ConfigurationSucceededGuard,
+    ],
+    children: [ {
+      path: 'create',
+      component: ApplicationCreateComponent,
+    } ],
   },
   {
     path: 'configuration-failed',

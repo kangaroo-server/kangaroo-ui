@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017 Michael Krotscheck
+ * Copyright (c) 2018 Michael Krotscheck
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy
@@ -14,26 +14,3 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-/**
- * This interface describes an application instance.
- *
- * @author Michael Krotscheck
- */
-export interface CommonModel {
-
-  /**
-   * The entity ID, usually a UUID.
-   */
-  id?: string;
-
-  /**
-   * Created date timestamp, in milliseconds.
-   */
-  createdDate?: number;
-
-  /**
-   * Last modified date timestamp, in milliseconds.
-   */
-  modifiedDate?: number;
-}
