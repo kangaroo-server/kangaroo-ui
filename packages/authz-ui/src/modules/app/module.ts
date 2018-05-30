@@ -18,6 +18,7 @@
 
 import { CommonModule } from '@angular/common';
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
+import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
@@ -30,6 +31,7 @@ import { KangarooLayoutModule } from '../layout';
 import { LoginModule } from '../login';
 
 import { AppComponent } from './app.component';
+import { ApplicationCreateComponent } from './application/application-create.component';
 import { CannotConfigureComponent } from './configuration-failed/cannot-configure.component';
 import { ConfigurationFailedGuard } from './configuration-failed/configuration-failed.guard';
 import { ConfigurationSucceededGuard } from './configuration-failed/configuration-succeeded.guard';
@@ -49,6 +51,7 @@ import { ROUTES } from './routes';
     CommonModule,
     BrowserModule,
     RouterModule.forRoot(ROUTES),
+    ReactiveFormsModule,
 
     KangarooPlatformModule,
 
@@ -68,6 +71,8 @@ import { ROUTES } from './routes';
     RouterOutletComponent,
     CannotConfigureComponent,
     PrimaryMenuComponent,
+
+    ApplicationCreateComponent,
   ],
   bootstrap: [
     AppComponent,

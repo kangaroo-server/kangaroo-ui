@@ -18,7 +18,7 @@
 
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Application, ApplicationService } from '@kangaroo/angular-authn';
-import { ListResponse, SortOrder } from '@kangaroo/angular-platform';
+import { SortOrder } from '@kangaroo/angular-platform';
 import { Observable } from 'rxjs/internal/Observable';
 import { map } from 'rxjs/operators';
 
@@ -37,7 +37,7 @@ export class PrimaryMenuComponent implements OnInit, OnDestroy {
   /**
    * Subscription for the current application list.
    */
-  private applications$: Observable<Application[]>;
+  public applications$: Observable<Application[]>;
 
   /**
    * Constructor.

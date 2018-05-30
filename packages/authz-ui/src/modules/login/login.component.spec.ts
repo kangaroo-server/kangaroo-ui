@@ -151,16 +151,6 @@ describe('LoginComponent', () => {
       });
   }));
 
-  it('should properly parse error messages from form controls', async(() => {
-    const controller: LoginComponent = fixture.componentInstance;
-
-    const unrecognizedMessage = controller.getErrorMessage({hasError: () => false} as any);
-    const recognizedMessage = controller.getErrorMessage({hasError: () => true} as any);
-
-    expect(unrecognizedMessage).toBe('');
-    expect(recognizedMessage).toBe('You must enter a value');
-  }));
-
   it('should not display an error when there are none', async(() => {
     const controller: LoginComponent = fixture.componentInstance;
     controller.loginGroup.setErrors([]);
