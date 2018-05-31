@@ -1,0 +1,45 @@
+{
+  "name": "@kangaroo/ng-authn",
+  "version": "1.0.0",
+  "description": "OAuth2 API Injectees for Angular2+",
+  "license": "Apache-2.0",
+  "author": {
+    "name": "Michael Krotscheck",
+    "email": "krotscheck@gmail.com",
+    "url": "https://krotscheck.net/"
+  },
+  "typings": "lib/kangaroo-ng-authn.d.ts",
+  "main": "lib/bundles/kangaroo-ng-authn.umd.js",
+  "module": "lib/esm5/kangaroo-ng-authn.js",
+  "es2015": "lib/esm2015/kangaroo-ng-authn.js",
+  "metadata": "lib/kangaroo-ng-authn.metadata.json",
+  "scripts": {
+    "test": "ng test",
+    "test.ci": "ng test --watch false",
+    "lint": "ng lint",
+    "lint.ci": "ng lint --format checkstyle --force > ./reports/checkstyle-result.xml",
+    "build": "ng build",
+    "nsp": "nsp check ./",
+    "start": "chokidar 'src/**/*.ts' 'src/**/*.scss' 'src/**/*.html' -c 'ng build'"
+  },
+  "peerDependencies": {
+    "@angular/common": "~6.0.3",
+    "@angular/core": "~6.0.3",
+    "@angular/platform-browser": "~6.0.3",
+    "@angular/platform-browser-dynamic": "~6.0.3",
+    "@kangaroo/ng-platform": "1.0.0",
+    "@kangaroo/rxjs-storage": "1.0.0",
+    "rxjs": "~6.2.0",
+    "zone.js": "~0.8.26"
+  },
+  "devDependencies": {
+    "@angular/common": "~6.0.3",
+    "@angular/core": "~6.0.3",
+    "@angular/platform-browser": "~6.0.3",
+    "@angular/platform-browser-dynamic": "~6.0.3",
+    "@kangaroo/ng-platform": "1.0.0",
+    "@kangaroo/rxjs-storage": "1.0.0",
+    "rxjs": "~6.2.0",
+    "zone.js": "~0.8.26"
+  }
+}

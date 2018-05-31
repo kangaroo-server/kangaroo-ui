@@ -18,7 +18,7 @@
 
 import { ChangeDetectorRef, Component } from '@angular/core';
 import { NavigationCancel, Router } from '@angular/router';
-import { LoggedInSubject, OAuth2Service, OAuth2TokenSubject } from '@kangaroo/angular-authn';
+import { LoggedInSubject, OAuth2Service, OAuth2TokenSubject } from '@kangaroo/ng-authn';
 import { filter, map, switchMap, tap } from 'rxjs/operators';
 import { KangarooConfigurationSubject } from '../config';
 import { MobileMediaQuery } from '../layout';

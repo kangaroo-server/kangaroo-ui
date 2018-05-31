@@ -22,7 +22,7 @@ import { By } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
-import { OAuth2Service, OAuth2Token, OAuth2TokenSubject } from '@kangaroo/angular-authn';
+import { OAuth2Service, OAuth2Token, OAuth2TokenSubject } from '@kangaroo/ng-authn';
 import { BehaviorSubject, from, throwError } from 'rxjs';
 import { KangarooLayoutModule } from '../layout';
 import { LoginComponent } from './login.component';

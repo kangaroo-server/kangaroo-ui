@@ -13,25 +13,30 @@
  *
  * See the License for the specific language governing permissions and
  * limitations under the License.
- */
-
-import { Routes } from '@angular/router';
-import { RequireLoggedOutGuard } from '@kangaroo/ng-authn';
-import { ConfigurationSucceededGuard } from '../app/configuration-failed/configuration-succeeded.guard';
-import { LoginComponent } from './login.component';
-
-/**
- * All routes used by the login module.
  *
- * @author Michael Krotscheck
  */
-export const ROUTES: Routes = [
-  {
-    path: 'login',
-    component: LoginComponent,
-    canActivate: [
-      RequireLoggedOutGuard,
-      ConfigurationSucceededGuard,
-    ],
-  },
-];
+
+import { NgModule } from '@angular/core';
+import { LoggerModule } from '@kangaroo/ng-logger';
+import { LocalStore } from './local.store';
+import { MemoryStore } from './memory.store';
+import { SessionStore } from './session.store';
+import { windowProvider } from './window';
+
+export * from './local.store';
+export * from './memory.store';
+export * from './session.store';
+
+@NgModule({
+  providers: [
+    LocalStore,
+    MemoryStore,
+    SessionStore,
+    windowProvider,
+  ],
+  imports: [
+    LoggerModule,
+  ],
+})
+export class BrowserStorageModule {
+}

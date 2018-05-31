@@ -17,8 +17,8 @@
  */
 
 import { Routes } from '@angular/router';
-import { RequireLoggedInGuard } from '@kangaroo/angular-authn';
-import { NoopComponent } from '@kangaroo/angular-platform';
+import { RequireLoggedInGuard } from '@kangaroo/ng-authn';
+import { NoopComponent } from '@kangaroo/ng-platform';
 import { ApplicationCreateComponent } from './application/application-create.component';
 import { CannotConfigureComponent } from './configuration-failed/cannot-configure.component';
 import { ConfigurationFailedGuard } from './configuration-failed/configuration-failed.guard';

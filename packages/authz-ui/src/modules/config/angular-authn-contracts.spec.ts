@@ -17,7 +17,7 @@
 
 import { async, inject, TestBed } from '@angular/core/testing';
 import { BrowserModule } from '@angular/platform-browser';
-import { ADMIN_API_ROOT, OAUTH2_API_ROOT, OAUTH2_CLIENT_ID, OAUTH2_CLIENT_SCOPES } from '@kangaroo/angular-authn';
+import { ADMIN_API_ROOT, OAUTH2_API_ROOT, OAUTH2_CLIENT_ID, OAUTH2_CLIENT_SCOPES } from '@kangaroo/ng-authn';
 import { ObservableInput, ReplaySubject, zip } from 'rxjs';
 import { AdminApiRoot } from './admin-api-root';
 import {
@@ -33,7 +33,7 @@ import { OAuthApiRoot } from './oauth-api-root';
 /**
  * Unit tests for external contracts.
  */
-describe('Contracts for @kangaroo/angular-authn', () => {
+describe('Contracts for @kangaroo/ng-authn', () => {
 
   const mockConfigSubject = new ReplaySubject<KangarooConfiguration>();
   const mockConfig: KangarooConfiguration = {

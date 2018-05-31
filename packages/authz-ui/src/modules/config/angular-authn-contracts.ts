@@ -16,7 +16,7 @@
  */
 
 import { FactoryProvider } from '@angular/core';
-import { ADMIN_API_ROOT, OAUTH2_API_ROOT, OAUTH2_CLIENT_ID, OAUTH2_CLIENT_SCOPES } from '@kangaroo/angular-authn';
+import { ADMIN_API_ROOT, OAUTH2_API_ROOT, OAUTH2_CLIENT_ID, OAUTH2_CLIENT_SCOPES } from '@kangaroo/ng-authn';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/internal/operators';
 import { AdminApiRoot } from './admin-api-root';

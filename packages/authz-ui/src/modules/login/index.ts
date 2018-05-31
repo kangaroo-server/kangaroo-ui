@@ -27,7 +27,7 @@ import {
   MatToolbarModule,
 } from '@angular/material';
 import { RouterModule } from '@angular/router';
-import { KangarooOAuth2Module } from '@kangaroo/angular-authn';
+import { KangarooOAuth2Module } from '@kangaroo/ng-authn';
 import { ConfigModule } from '../config';
 import { KangarooLayoutModule } from '../layout';
 import { LoginComponent } from './login.component';

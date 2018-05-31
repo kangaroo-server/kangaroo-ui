@@ -1,0 +1,36 @@
+{
+  "$schema": "../../node_modules/ng-packagr/package.schema.json",
+  "name": "@kangaroo/ng-browser-storage",
+  "version": "1.0.0",
+  "description": "A type-safe, consistent API for browser storage.",
+  "license": "Apache-2.0",
+  "author": {
+    "name": "Michael Krotscheck",
+    "email": "krotscheck@gmail.com",
+    "url": "https://krotscheck.net/"
+  },
+  "typings": "lib/kangaroo-ng-browser-storage.d.ts",
+  "main": "lib/bundles/kangaroo-ng-browser-storage.umd.js",
+  "module": "lib/esm5/kangaroo-ng-browser-storage.js",
+  "es2015": "lib/esm2015/kangaroo-ng-browser-storage.js",
+  "metadata": "lib/kangaroo-ng-browser-storage.metadata.json",
+  "scripts": {
+    "test": "ng test",
+    "test.ci": "ng test --watch false",
+    "lint": "ng lint",
+    "lint.ci": "ng lint --format checkstyle --force > ./reports/checkstyle-result.xml",
+    "build": "ng build",
+    "nsp": "nsp check ./",
+    "start": "chokidar 'src/**/*.ts' 'src/**/*.scss' 'src/**/*.html' -c 'ng build'"
+  },
+  "peerDependencies": {
+    "@angular/core": "~6.0.3",
+    "@kangaroo/ng-logger": "~1.0.0",
+    "rxjs": "~6.2.0"
+  },
+  "devDependencies": {
+    "@angular/core": "~6.0.3",
+    "@kangaroo/ng-logger": "~1.0.0",
+    "rxjs": "~6.2.0"
+  }
+}
