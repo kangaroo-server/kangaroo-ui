@@ -23,8 +23,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
 
-import { KangarooAuthorizationAdminModule, KangarooOAuth2Module } from '@kangaroo/angular-authn';
-import { KangarooPlatformModule } from '@kangaroo/angular-platform';
+import { KangarooAuthorizationAdminModule, KangarooOAuth2Module } from '@kangaroo/ng-authn';
+import { KangarooPlatformModule } from '@kangaroo/ng-platform';
 import { ConfigModule } from '../config';
 import { ErrorModule } from '../error';
 import { KangarooLayoutModule } from '../layout';

@@ -13,25 +13,26 @@
  *
  * See the License for the specific language governing permissions and
  * limitations under the License.
+ *
  */
 
-import { Routes } from '@angular/router';
-import { RequireLoggedOutGuard } from '@kangaroo/ng-authn';
-import { ConfigurationSucceededGuard } from '../app/configuration-failed/configuration-succeeded.guard';
-import { LoginComponent } from './login.component';
+import { CommonModel } from '@kangaroo/ng-platform';
 
 /**
- * All routes used by the login module.
+ * This interface describes a client referrer url.
  *
  * @author Michael Krotscheck
  */
-export const ROUTES: Routes = [
-  {
-    path: 'login',
-    component: LoginComponent,
-    canActivate: [
-      RequireLoggedOutGuard,
-      ConfigurationSucceededGuard,
-    ],
-  },
-];
+export interface ClientReferrer extends CommonModel {
+
+  /**
+   * Entity ID ID of the client to whom this url is registered.
+   */
+  client: string;
+
+  /**
+   * The redirection uri.
+   */
+  uri: string;
+
+}

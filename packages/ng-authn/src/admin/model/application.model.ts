@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018 Michael Krotscheck
+ * Copyright (c) 2017 Michael Krotscheck
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy
@@ -15,23 +15,33 @@
  * limitations under the License.
  */
 
-import { Routes } from '@angular/router';
-import { RequireLoggedOutGuard } from '@kangaroo/ng-authn';
-import { ConfigurationSucceededGuard } from '../app/configuration-failed/configuration-succeeded.guard';
-import { LoginComponent } from './login.component';
+import { CommonModel } from '@kangaroo/ng-platform';
 
 /**
- * All routes used by the login module.
+ * This interface describes an application instance.
  *
  * @author Michael Krotscheck
  */
-export const ROUTES: Routes = [
-  {
-    path: 'login',
-    component: LoginComponent,
-    canActivate: [
-      RequireLoggedOutGuard,
-      ConfigurationSucceededGuard,
-    ],
-  },
-];
+export interface Application extends CommonModel {
+
+  /**
+   * Entity ID ID of this application's owner.
+   */
+  owner?: string;
+
+  /**
+   * Entity ID for the default role.
+   */
+  defaultRole?: string;
+
+  /**
+   * Human readable name for this application.
+   */
+  name: string;
+
+  /**
+   * Description for this application.
+   */
+  description: string;
+
+}

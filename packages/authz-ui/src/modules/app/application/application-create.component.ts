@@ -21,7 +21,7 @@ import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material';
 import { Router } from '@angular/router';
-import { ApplicationService } from '@kangaroo/angular-authn';
+import { ApplicationService } from '@kangaroo/ng-authn';
 import { finalize } from 'rxjs/internal/operators';
 import { FormUtil } from '../../utils/form.util';
 

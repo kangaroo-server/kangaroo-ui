@@ -17,8 +17,8 @@
  */
 
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Application, ApplicationService } from '@kangaroo/angular-authn';
-import { SortOrder } from '@kangaroo/angular-platform';
+import { Application, ApplicationService } from '@kangaroo/ng-authn';
+import { SortOrder } from '@kangaroo/ng-platform';
 import { Observable } from 'rxjs/internal/Observable';
 import { map } from 'rxjs/operators';
 

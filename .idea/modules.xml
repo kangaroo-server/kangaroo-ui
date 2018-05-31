@@ -2,14 +2,15 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/packages/angular-authn/angular-authn.iml" filepath="$PROJECT_DIR$/packages/angular-authn/angular-authn.iml" />
-      <module fileurl="file://$PROJECT_DIR$/@kangaroo/angular-authn/angular-authn.iml" filepath="$PROJECT_DIR$/@kangaroo/angular-authn/angular-authn.iml" />
-      <module fileurl="file://$PROJECT_DIR$/packages/angular-browser-storage/angular-browser-storage.iml" filepath="$PROJECT_DIR$/packages/angular-browser-storage/angular-browser-storage.iml" />
-      <module fileurl="file://$PROJECT_DIR$/@kangaroo/angular-browser-storage/angular-browser-storage.iml" filepath="$PROJECT_DIR$/@kangaroo/angular-browser-storage/angular-browser-storage.iml" />
-      <module fileurl="file://$PROJECT_DIR$/packages/angular-logger/angular-logger.iml" filepath="$PROJECT_DIR$/packages/angular-logger/angular-logger.iml" />
-      <module fileurl="file://$PROJECT_DIR$/@kangaroo/angular-logger/angular-logger.iml" filepath="$PROJECT_DIR$/@kangaroo/angular-logger/angular-logger.iml" />
-      <module fileurl="file://$PROJECT_DIR$/packages/angular-platform/angular-platform.iml" filepath="$PROJECT_DIR$/packages/angular-platform/angular-platform.iml" />
-      <module fileurl="file://$PROJECT_DIR$/@kangaroo/angular-platform/angular-platform.iml" filepath="$PROJECT_DIR$/@kangaroo/angular-platform/angular-platform.iml" />
+      <module fileurl="file://$PROJECT_DIR$/packages/ng-authn/ng-authn.iml" filepath="$PROJECT_DIR$/packages/ng-authn/ng-authn.iml" />
+      <module fileurl="file://$PROJECT_DIR$/@kangaroo/ng-authn/ng-authn.iml" filepath="$PROJECT_DIR$/@kangaroo/ng-authn/ng-authn.iml" />
+      <module fileurl="file://$PROJECT_DIR$/packages/ng-browser-storage/ng-browser-storage.iml" filepath="$PROJECT_DIR$/packages/ng-browser-storage/ng-browser-storage.iml" />
+      <module fileurl="file://$PROJECT_DIR$/@kangaroo/ng-browser-storage/ng-browser-storage.iml" filepath="$PROJECT_DIR$/@kangaroo/ng-browser-storage/ng-browser-storage.iml" />
+      <module fileurl="file://$PROJECT_DIR$/packages/ng-logger/ng-logger.iml" filepath="$PROJECT_DIR$/packages/ng-logger/ng-logger.iml" />
+      <module fileurl="file://$PROJECT_DIR$/@kangaroo/ng-logger/ng-logger.iml" filepath="$PROJECT_DIR$/@kangaroo/ng-logger/ng-logger.iml" />
+      <module fileurl="file://$PROJECT_DIR$/packages/ng-platform/ng-platform.iml" filepath="$PROJECT_DIR$/packages/ng-platform/ng-platform.iml" />
+      <module fileurl="file://$PROJECT_DIR$/@kangaroo/ng-platform/ng-platform.iml" filepath="$PROJECT_DIR$/@kangaroo/ng-platform/ng-platform.iml" />
+      <module fileurl="file://$PROJECT_DIR$/packages/authz-ui/authz-ui.iml" filepath="$PROJECT_DIR$/packages/authz-ui/authz-ui.iml" />
       <module fileurl="file://$PROJECT_DIR$/@kangaroo/authz-ui/authz-ui.iml" filepath="$PROJECT_DIR$/@kangaroo/authz-ui/authz-ui.iml" />
       <module fileurl="file://$PROJECT_DIR$/@kangaroo/devkit/devkit.iml" filepath="$PROJECT_DIR$/@kangaroo/devkit/devkit.iml" />
       <module fileurl="file://$PROJECT_DIR$/packages/jwt/jwt.iml" filepath="$PROJECT_DIR$/packages/jwt/jwt.iml" />
