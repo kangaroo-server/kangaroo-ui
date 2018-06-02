@@ -1,5 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
 @import '~@angular/material/theming';
+@import './palette';
 @import url('//fonts.googleapis.com/icon?family=Material+Icons');
 @import url('//fonts.googleapis.com/css?family=Roboto:300,400,500"');
 
@@ -13,8 +14,8 @@
 // Define the palettes for your theme using the Material Design palettes available in palette.scss
 // (imported above). For each palette, you can optionally specify a default, lighter, and darker
 // hue. Available color palettes: https://www.google.com/design/spec/style/color.html
-$kangaroo-primary: mat-palette($mat-brown);
-$kangaroo-accent: mat-palette($mat-amber, A200, A100, A400);
+$kangaroo-primary: mat-palette($md-primary);
+$kangaroo-accent: mat-palette($md-accent, A200, A100, A400);
 $kangaroo-grey: mat-palette($mat-grey);
 
 // The warn palette is optional (defaults to red).
